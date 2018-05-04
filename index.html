@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<!-- settings -->
+	<meta name="apple-mobile-web-app-capable" content="no">
+	<meta name="mobile-web-app-capable" content="no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+	
+	<title>SEPIA Framework</title>
+	<meta name="application-name" content="SEPIA Framework"/>
+	<meta name="apple-mobile-web-app-title" content="SEPIA Framework">
+	<meta name="description" content="S.E.P.I.A. - The framework for your own personal assistant.">
+	
+	<meta name="theme-color" content="#000">
+	<link rel="icon" sizes="192x192" href="img/icon.png">
+	<link rel="apple-touch-icon" href="img/icon.png">
+	<meta property="og:image" content="img/icon.png"/>
+	<!-- imports -->
+	<link rel="stylesheet" href="css/style.css" title='main'>
+	<style>
+	#site-window {
+		background: #000;
+		font-weight: 300;
+	}
+	#site-main {
+		background: #000;
+		color: #ffffff;
+	}
+	.welcome-box {
+		height: 75vh;
+	}
+	.welcome-box img {
+		height: 285px;
+	}
+	.welcome-box h1 {
+		font-size: 48px;
+		font-weight: 300;
+	}
+	.welcome-box ul {
+		min-width: 178px;
+		font-size: 28px;
+		list-style-type: none;
+		margin: 0 0;
+		padding: 0;
+	}
+	.center-content {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	</style>
+</head>
+<body>
+	<div id="site-window">
+		<!-- Header -->
+		<div id="site-header" class="hide">
+			<div id="site-header-content">
+				<div class="title">Welcome</div>
+			</div>
+		</div>
+		<!-- Top menu -->
+		<div id="site-top-bar" class="hide">
+			<div id="menu-btn" class="nav-bar-button site-button"><i class="material-icons md-24">&#xE5D2;</i><span>Menu</span></div>
+			<div id="site-top-bar-dynamic">
+				<img src="img/icon.png" alt="SEPIA" height="42" width="42">
+			</div>
+			<div id="account-btn" class="nav-bar-button site-button"><i class="material-icons md-24">&#xE853;</i><span>Account</span></div>
+		</div>
+		<div id="site-top-bar-accent" class="hide"></div>
+		<!-- Main -->
+		<div id="site-main">
+			<!-- page sections -->
+			<div id="site-main-views">
+				<!-- page 1 -->
+				<div id="page1" class="site-view">
+					<section class="welcome-box center-content">
+						<img src="img/logo.png" alt="SEPIA">
+						<h1>S.E.P.I.A.</h1>
+						<ul>
+							<!--<li><u>S</u>erver-based</li>
+							<li><u>E</u>xtendable</li>
+							<li><u>P</u>ersonal</li>
+							<li><u>I</u>ntelligent</li>
+							<li><u>A</u>ssistant</li>-->
+							<span class="txt-rotate"
+								data-period="2000"
+								data-rotate='[ "Server-based", "Extendable", "Personal", "Intelligent", "Assistant" ]'>
+							</span>
+						</ul>
+					</section>
+				</div>
+			</div>
+		</div>
+		<!-- Footer -->
+		<div id="site-footer" class="hide">
+		</div>
+	</div>
+<!-- LOW PRIO STYLESHEETS -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,600" rel="stylesheet">
+<!-- JS -->
+<!--<script src="js-static/jquery-3.1.1.min.js"></script>-->
+<script src="js/index.js"></script>
+</body>
+</html>
