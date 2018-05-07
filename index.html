@@ -31,6 +31,12 @@
 		z-index: 99;
 		left: 0;
 		top: 0;
+		box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
+	}
+	#top-bar-logo {
+		/*height: 36px;
+		width: 36px;*/
+		cursor: pointer;
 	}
 	#site-main {
 		background: #000;
@@ -46,6 +52,7 @@
 	.welcome-box img {
 		height: 285px;
 		width: 285px;
+		user-select: none;
 	}
 	.welcome-box h1 {
 		font-size: 48px;
@@ -75,7 +82,7 @@
 	
 	#welcome-scroll-indicator {	
 		position: absolute;
-		right: 0px;
+		right: -16px;
 		bottom: 36px;
 		animation: bounce 2s infinite;
 	}
@@ -83,6 +90,10 @@
 		0% { transform: translate(0px, 0px); }
 		50%   { transform: translate(0px, 10px); }
 		100% { transform: translate(0px, 0px); }
+	}
+	
+	.material-icons {
+		user-select: none;
 	}
 	
 	</style>
@@ -126,7 +137,7 @@
 								data-type='["Server-based", "Extendable", "Personal", "Intelligent", "Assistant"]'>
 							</span>
 						</ul>
-						<div id="welcome-scroll-indicator"><i class="material-icons  md-24">keyboard_arrow_down</i></div>
+						<div id="welcome-scroll-indicator"><i class="material-icons md-24">keyboard_arrow_down</i></div>
 					</section>
 					<section class="info-box center-content">
 						<h3>Your own server</h3>
