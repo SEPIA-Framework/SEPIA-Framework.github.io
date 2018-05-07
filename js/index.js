@@ -47,4 +47,25 @@ window.onload = function() {
 			$(data.target).css(styles);
 		});
 	});
+	
+	//Fullscreen mode
+	document.getElementById('welcome-logo').addEventListener("click", function(){
+		enterFullscreen();
+	});
 };
+
+//Switch to fullscreen
+function enterFullscreen(element){
+	if (!element){
+		element = document.documentElement;
+	}
+	if(element.requestFullscreen){
+		element.requestFullscreen();
+	}else if(element.mozRequestFullScreen){
+		element.mozRequestFullScreen();
+	}else if(element.msRequestFullscreen){
+		element.msRequestFullscreen();
+	}else if(element.webkitRequestFullscreen){
+		element.webkitRequestFullscreen();
+	}
+}
