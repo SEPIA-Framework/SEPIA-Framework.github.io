@@ -17,6 +17,12 @@ window.onload = function() {
 		console.log('Uses touch events');
 	}, false);
 	
+	//on resize
+	$(window).resize(function() {
+		updateScreen();
+	});
+	updateScreen();
+	
 	//Create text effects
 	var textEffects = new Tools.TextEffects();
 	textEffects.autoLoad();
@@ -28,11 +34,13 @@ window.onload = function() {
 			if (data.visibility == 0){
 				showTopBar = true;
 				$("#site-top-bar").removeClass('hide');
+				$("#welcome-scroll-indicator").fadeOut(300);
 			}
 		}else{
 			if (data.visibility == 1.0){
 				showTopBar = false;
 				$("#site-top-bar").addClass('hide');
+				$("#welcome-scroll-indicator").fadeIn(300);
 			}
 		}
 	});
@@ -52,7 +60,16 @@ window.onload = function() {
 	document.getElementById('welcome-logo').addEventListener("click", function(){
 		enterFullscreen();
 	});
+	document.getElementById('top-bar-logo').addEventListener("click", function(){
+		enterFullscreen();
+	});
 };
+
+//Update some screen elements
+function updateScreen(){
+	//welcome box
+	$('.welcome-box').css("min-height", $(window).height());
+}
 
 //Switch to fullscreen
 function enterFullscreen(element){
