@@ -23,15 +23,24 @@
 		background: #000;
 		font-weight: 300;
 	}
+	#site-top-bar {
+		position: fixed;
+		z-index: 99;
+		left: 0;
+		top: 0;
+	}
 	#site-main {
 		background: #000;
 		color: #ffffff;
 	}
 	.welcome-box {
-		height: 75vh;
+		height: 50px;
+		min-height: 75vh;
+		width: 100%;
 	}
 	.welcome-box img {
 		height: 285px;
+		width: 285px;
 	}
 	.welcome-box h1 {
 		font-size: 48px;
@@ -44,8 +53,11 @@
 		margin: 0 0;
 		padding: 0;
 	}
-	.center-content {
+	.info-box {
+		min-height: 150px;
 		width: 100%;
+	}
+	.center-content {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -64,13 +76,15 @@
 		</div>
 		<!-- Top menu -->
 		<div id="site-top-bar" class="hide">
-			<div id="menu-btn" class="nav-bar-button site-button"><i class="material-icons md-24">&#xE5D2;</i><span>Menu</span></div>
-			<div id="site-top-bar-dynamic">
-				<img src="img/icon.png" alt="SEPIA" height="42" width="42">
+			<div id="site-top-bar-content">
+				<!--<div id="menu-btn" class="nav-bar-button site-button"><i class="material-icons md-24">&#xE5D2;</i><span>Menu</span></div>-->
+				<div id="site-top-bar-dynamic">
+					<img src="img/icon.png" alt="SEPIA" height="42" width="42">
+				</div>
+				<!--<div id="account-btn" class="nav-bar-button site-button"><i class="material-icons md-24">&#xE853;</i><span>Account</span></div>-->
 			</div>
-			<div id="account-btn" class="nav-bar-button site-button"><i class="material-icons md-24">&#xE853;</i><span>Account</span></div>
+			<div id="site-top-bar-accent"></div>
 		</div>
-		<div id="site-top-bar-accent" class="hide"></div>
 		<!-- Main -->
 		<div id="site-main">
 			<!-- page sections -->
@@ -78,7 +92,7 @@
 				<!-- page 1 -->
 				<div id="page1" class="site-view">
 					<section class="welcome-box center-content">
-						<img src="img/logo.png" alt="SEPIA">
+						<img id="welcome-logo" src="img/logo.png" alt="SEPIA">
 						<h1>S.E.P.I.A.</h1>
 						<ul>
 							<!--<li><u>S</u>erver-based</li>
@@ -86,11 +100,34 @@
 							<li><u>P</u>ersonal</li>
 							<li><u>I</u>ntelligent</li>
 							<li><u>A</u>ssistant</li>-->
-							<span class="txt-rotate"
+							<span class="text-effects-typing"
 								data-period="2000"
-								data-rotate='[ "Server-based", "Extendable", "Personal", "Intelligent", "Assistant" ]'>
+								data-type='["Server-based", "Extendable", "Personal", "Intelligent", "Assistant"]'>
 							</span>
 						</ul>
+					</section>
+					<section class="info-box center-content">
+						<h3>Your own server</h3>
+						<p>Your account and all your data is completely private since you run your own server.</p>
+					</section>
+					<section class="info-box center-content">
+						<h3>Extendable</h3>
+						<p>Create your own commands on-the-fly inside the S.E.P.I.A. app, use the SDK to make complex services or just watch what the community does.
+						Since S.E.P.I.A. is open-source and free everybody can contribute.</p>
+					</section>
+					<section class="info-box center-content">
+						<h3>Personal</h3>
+						<p>Use the data stored inside your assistant to trigger personal answers and actions.</p>
+					</section>
+					<section class="info-box center-content">
+						<h3>Intelligent</h3>
+						<p>S.E.P.I.A. is designed to understand your requests spoken (or typed) in natural language.</p>
+					</section>
+					<section class="info-box center-content">
+						<h3>Assistant</h3>
+						<p>Your own, private and personal assistant that helps you get through the day.</p>
+					</section>
+					<section class="info-box center-content">
 					</section>
 				</div>
 			</div>
@@ -103,7 +140,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,600" rel="stylesheet">
 <!-- JS -->
-<!--<script src="js-static/jquery-3.1.1.min.js"></script>-->
-<script src="js/index.js"></script>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="js/text-effects.js" charset="UTF-8"></script>
+<script type="text/javascript" src="js/scroll-effects.js" charset="UTF-8"></script>
+<script type="text/javascript" src="js/index.js" charset="UTF-8"></script>
 </body>
 </html>

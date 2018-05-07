@@ -1,68 +1,50 @@
+var Tools = new Object();
+if (build_text_effects) build_text_effects(Tools);
+if (build_scroll_effects) build_scroll_effects(Tools);
+
 //Settings
 var usesTouch = false;
+var showTopBar = false;
 
-//Check for touch event
-window.addEventListener('touchstart', function onFirstTouch() {
-	//add touch-device class, set state, remove listener
-	document.body.classList.add('touch-device');
-	usesTouch = true;
-	window.removeEventListener('touchstart', onFirstTouch, false);
-	console.log('Uses touch events');
-}, false);
-
-var TxtRotate = function(el, toRotate, period) {
-  this.toRotate = toRotate;
-  this.el = el;
-  this.loopNum = 0;
-  this.period = parseInt(period, 10) || 2000;
-  this.txt = '';
-  this.tick();
-  this.isDeleting = false;
-};
-
-TxtRotate.prototype.tick = function() {
-	var i = this.loopNum % this.toRotate.length;
-	var fullTxt = this.toRotate[i];
-
-	if (this.isDeleting) {
-		this.txt = fullTxt.substring(0, this.txt.length - 1);
-	} else {
-		this.txt = fullTxt.substring(0, this.txt.length + 1);
-	}
-
-	this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
-
-	var that = this;
-	var delta = 300 - Math.random() * 100;
-
-	if (this.isDeleting) { delta /= 2; }
-
-	if (!this.isDeleting && this.txt === fullTxt) {
-		delta = this.period;
-		this.isDeleting = true;
-	} else if (this.isDeleting && this.txt === '') {
-		this.isDeleting = false;
-		this.loopNum++;
-		delta = 500;
-	}
-
-	setTimeout(function() {
-		that.tick();
-	}, delta);
-};
-
+//Start
 window.onload = function() {
-	var elements = document.getElementsByClassName('txt-rotate');
-	for (var i=0; i<elements.length; i++) {
-		var toRotate = elements[i].getAttribute('data-rotate');
-		var period = elements[i].getAttribute('data-period');
-		if (toRotate) {
-			new TxtRotate(elements[i], JSON.parse(toRotate), period);
+	//Check for touch event
+	window.addEventListener('touchstart', function onFirstTouch() {
+		//add touch-device class, set state, remove listener
+		document.body.classList.add('touch-device');
+		usesTouch = true;
+		window.removeEventListener('touchstart', onFirstTouch, false);
+		console.log('Uses touch events');
+	}, false);
+	
+	//Create text effects
+	var textEffects = new Tools.TextEffects();
+	textEffects.autoLoad();
+	
+	//Create scroll effects
+	var scrollEffects = new Tools.ScrollEffects();
+	var topBarScrollAnim = new scrollEffects.CustomAction('site-main-views', 'welcome-logo', null, function(data){
+		if (!showTopBar){
+			if (data.visibility == 0){
+				showTopBar = true;
+				$("#site-top-bar").removeClass('hide');
+			}
+		}else{
+			if (data.visibility == 1.0){
+				showTopBar = false;
+				$("#site-top-bar").addClass('hide');
+			}
 		}
-	}
-	// INJECT CSS
-	var css = document.createElement("style");
-	css.type = "text/css";
-	css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
-	document.body.appendChild(css);
+	});
+	var pAnimOptions = {pixelDuration: 150};
+	$('.info-box').each(function(){
+		var scrollAnim = new scrollEffects.CustomAction('site-main-views', this, pAnimOptions, function(data){
+			//console.log(JSON.stringify(data));
+			var styles = {
+				transition: "opacity 0.25s",
+				opacity: data.visibility
+			};
+			$(data.target).css(styles);
+		});
+	});
 };
