@@ -48,9 +48,10 @@ window.onload = function() {
 	$('.info-box').each(function(){
 		var scrollAnim = new scrollEffects.CustomAction('site-main-views', this, pAnimOptions, function(data){
 			//console.log(JSON.stringify(data));
+			var vis = Math.max(data.visibility, 0.20);
 			var styles = {
 				transition: "opacity 0.25s",
-				opacity: data.visibility
+				opacity: vis
 			};
 			$(data.target).css(styles);
 		});
