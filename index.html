@@ -22,9 +22,22 @@
 	html {
 		background: #222;
 	}
+	h3, 
+	b {
+		font-weight: 500;
+	}	
+	
 	#site-window {
 		background: #000;
 		font-weight: 300;
+	}
+	#site-window a {
+		color: #CEFF1A;
+		text-decoration: underline;
+	}
+	#site-window a span {
+		color: #fff;
+		text-decoration: none;
 	}
 	#site-top-bar {
 		position: fixed;
@@ -79,11 +92,17 @@
 	.center-content div {
 		max-width: 100%;
 	}
+	.center-content-row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-around;
+	}
 	
 	#welcome-scroll-indicator {	
 		position: absolute;
 		right: -16px;
-		bottom: 36px;
+		bottom: 48px;
 		animation: bounce 2s infinite;
 	}
 	@keyframes bounce {
@@ -137,6 +156,7 @@
 								data-type='["Server-based", "Extendable", "Personal", "Intelligent", "Assistant"]'>
 							</span>
 						</ul>
+						<br>
 						<div id="welcome-scroll-indicator"><i class="material-icons md-24">keyboard_arrow_down</i></div>
 					</section>
 					<section class="info-box center-content">
@@ -161,6 +181,11 @@
 						<p>Your own, private and personal assistant that helps you get through the day.</p>
 					</section>
 					<section class="info-box center-content">
+						<!-- empty -->
+					</section>
+					<section class="center-content-row">
+						<a href="https://github.com/SEPIA-Framework"><span>Source code</span></a>
+						<a href="https://github.com/SEPIA-Framework/sepia-docs/wiki"><span>Wiki</span></a>
 					</section>
 				</div>
 			</div>
@@ -171,7 +196,7 @@
 	</div>
 <!-- LOW PRIO STYLESHEETS -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,600" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 <!-- JS -->
 <script type="text/javascript" src="js/jquery-3.1.1.min.js" charset="UTF-8"></script>
 <script type="text/javascript" src="js/text-effects.js" charset="UTF-8"></script>
