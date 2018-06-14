@@ -58,6 +58,9 @@ window.onload = function() {
 	});
 	var kwAnimOptions = {pixelDuration: 150};
 	$('.topic-keywords').each(function(){
+		$(this).css({
+			color: "#888"
+		});
 		var scrollAnim = new scrollEffects.CustomAction('site-main-views', this, kwAnimOptions, function(data){
 			//console.log(JSON.stringify(data));
 			if (data.visibility == 1.0){
@@ -72,6 +75,9 @@ window.onload = function() {
 	});
 	var imgAnimOptions = {pixelDuration: 150};
 	$('.topic-images').each(function(){
+		$(this).css({
+			transform: "scaleX(0.001)"
+		});
 		var scrollAnim = new scrollEffects.CustomAction('site-main-views', this, imgAnimOptions, function(data){
 			//console.log(JSON.stringify(data));
 			if (data.visibility == 1.0){
