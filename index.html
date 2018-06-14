@@ -38,22 +38,16 @@
 	html {
 		background: #222;
 	}
-	h3 {
-		font-size: 24px;
-		font-weight: 400;
-		text-align: center;
-		color: #ceff1a;
-	}
 	b {
 		font-weight: 500;
-	}
-	p {
-		font-size: 20px;
 	}
 	div img {
 		max-width: 100%;
 	}
 	.material-icons {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
 		user-select: none;
 	}
 	
@@ -97,7 +91,7 @@
 		width: 100%;
 	}
 	.welcome-box img {
-		height: 285px;
+		/*height: 285px;*/
 		width: 285px;
 		user-select: none;
 	}
@@ -126,8 +120,7 @@
 			height: 480px;
 		}
 		.welcome-box img {
-			height: 200px;
-			width: 200px;
+			width: 250px;
 		}
 		.welcome-box h1 {
 			font-size: 32px;
@@ -135,12 +128,40 @@
 		.welcome-box h2 {
 			font-size: 21px;
 		}
+		.welcome-box ul {
+			font-size: 24px;
+		}
+	}
+	@media screen and (max-height: 500px) {
+		.welcome-box img {
+			width: 200px;
+		}
 	}
 	
 	.info-box {
 		min-height: 150px;
 		width: 100%;
+		font-size: 20px;
 	}
+	.info-box h3 {
+		font-size: 24px;
+		font-weight: 400;
+		text-align: center;
+		color: #ceff1a;
+	}
+	.info-box .text {
+		text-align: left;
+		padding: 0 16px;
+	}
+	
+	.bottom-box {
+		min-height: 50px;
+		width: 100%;
+		font-size: 20px;
+		margin-top: 64px;
+		margin-bottom: 32px;
+	}
+	
 	.center-content {
 		display: flex;
 		flex-direction: column;
@@ -158,48 +179,59 @@
 		justify-content: space-around;
 	}
 	
-	.section-62-38 {
+	.section-common {
 		width: 100%;
 		padding: 16px;
 		margin-bottom: 64px;
 		text-align: center;
 	}
-	.section-62-38 div {
+	.section-common div {
 		display: inline-block;
-		vertical-align: top;
 		padding: 0;
 		margin: 0;
 		vertical-align: middle;
+		text-align: center;
 	}
-	.section-62-38 div img {
+	.section-common div img {
 		width: 100%;
 		max-width: 400px;
 	}
+	
+	.section-100 div {
+		padding: 8px 0;
+	}
+	
 	.section-62-38 div p {
 		display: inline-block;
 	}
 	.section-62-38 .bigger {
 		width: 61%;
-		text-align: left;
-		max-width: 550px;
+		/*max-width: 550px;*/
 	}
 	.section-62-38 .smaller {
 		width: 38%;
-		text-align: right;
 	}
+	
 	@media screen and (max-width: 850px) {
-		.section-62-38 {
+		.info-box .text {
+			padding-left: 0;
+			padding-right: 0;
+		}
+		.section-common {
 			padding: 0;
 		}
 		.section-62-38 div {
 			width: 100% !important;
 			padding: 8px 0;
-			text-align: center !important;
 		}
 	}
 	
 	.topic-keywords {
-		color: #ceff1a;
+		/*color: #ceff1a;*/
+		color: #ddd;
+	}
+	.topic-images {
+		transform: scaleX(0.01);
 	}
 	
 	#welcome-scroll-indicator {	
@@ -207,6 +239,7 @@
 		right: -16px;
 		bottom: 48px;
 		animation: bounce 2s infinite;
+		cursor: pointer;
 	}
 	@keyframes bounce {
 		0% { transform: translate(0px, 0px); }
@@ -260,9 +293,24 @@
 						<div id="welcome-scroll-indicator"><i class="material-icons md-24">keyboard_arrow_down</i></div>
 					</section>
 					<section class="info-box center-content">
-						<div class="section-62-38">
+						<div class="section-common section-100">
+							<h3>What is SEPIA?</h3>
+							<div class="text">
+								<p>
+								The <span class="topic-keywords">"A"</span> in SEPIA stands for <span class="topic-keywords">assistant</span> and that is what it claims to be, 
+								you know like Apple's Siri, Amazon's Alexa or Microsoft's Cortana, just a very special, private, customizable version that really belongs to you!
+								In fact SEPIA is not only a <span class="topic-keywords">ready-to-use, cross-platform app</span> for iOS, Android and desktop browsers 
+								but also a whole <span class="topic-keywords">framework for DIY AI assistants</span>.
+								You want to build your own smart-speaker or home-assistant or you simply want to use a virtual assistant that respects your privacy? 
+								Then you found the right place to start :-)
+								</p>
+							</div>
+						</div>
+					</section>
+					<section class="info-box center-content">
+						<div class="section-common section-62-38">
 							<h3>You control your data</h3>
-							<div class="bigger">
+							<div class="bigger text">
 								<p>
 								Backbone of the SEPIA framework is <span class="topic-keywords">your own, secure web-server</span>. It runs all the core-modules like the Elasticsearch database, 
 								the user-account management, the natural-language-understanding (NLU) and the chat-module. Additionally it connects the NLU to smart-services
@@ -272,17 +320,17 @@
 								</p>
 							</div>
 							<div class="smaller">
-								<img id="sepia-connected-img" src="img/SEPIA_connected.png" alt="SEPIA connected">
+								<img id="sepia-connected-img" class="topic-images" src="img/SEPIA_connected.png" alt="SEPIA connected">
 							</div>
 						</div>
 					</section>
 					<section class="info-box center-content">
-						<div class="section-62-38">
+						<div class="section-common section-62-38">
 							<h3>You shape your assistant</h3>
 							<div class="smaller">
-								<img id="sepia-connected-img" src="img/placeholder.png" alt="SEPIA teach UI">
+								<img id="sepia-customize-img" class="topic-images" src="img/placeholder.png" alt="SEPIA customize">
 							</div>
-							<div class="bigger">
+							<div class="bigger text">
 								<p>
 								SEPIA is <span class="topic-keywords">extendable</span> and can be improved and individualized in many ways. 
 								You can create your own commands on-the-fly and teach SEPIA new stuff using the app (iOS, Android or browser) or you can build complex, voice-controlled smart-services with the Java SDK. 
@@ -293,9 +341,9 @@
 						</div>
 					</section>
 					<section class="info-box center-content">
-						<div class="section-62-38">
+						<div class="section-common section-62-38">
 							<h3>Do private stuff</h3>
-							<div class="bigger">
+							<div class="bigger text">
 								<p>
 								Since you control the data and shape your assistant SEPIA's services and answers can <span class="topic-keywords">use your personal profile to give you individual results</span> 
 								without this strange feeling in your stomach that you might get when you don't know who else is reading your messages or collecting information about you.
@@ -304,36 +352,26 @@
 								</p>
 							</div>
 							<div class="smaller">
-								<img id="sepia-connected-img" src="img/placeholder.png" alt="SEPIA teach UI">
+								<img id="sepia-personal-img" class="topic-images" src="img/placeholder.png" alt="SEPIA personal">
 							</div>
 						</div>
 					</section>
 					<section class="info-box center-content">
-						<div class="section-62-38">
+						<div class="section-common section-62-38">
 							<h3>Natural dialog and smart actions</h3>
 							<div class="smaller">
-								<img id="sepia-connected-img" src="img/placeholder.png" alt="SEPIA teach UI">
+								<img id="sepia-smart-img" class="topic-images" src="img/placeholder.png" alt="SEPIA smart">
 							</div>
-							<div class="bigger">
+							<div class="bigger text">
 								<p>
-								SEPIA is designed to understand your requests spoken (or typed) in natural language, extract as much information as possible and combine it in a <span class="topic-keywords">smart and intelligent way</span>
+								SEPIA is designed to understand your requests spoken (or typed) in natural language, extract as much information as possible and combine it in an <span class="topic-keywords">intelligent</span> way
 								with an ever growing number of useful services. If a service is missing some parameters to fulfil the request SEPIA can start a dialog and ask you questions.
 								On top of that SEPIA will try to show you relevant information depending for example on the time of the day or your personal preferences.
 								</p>
 							</div>
 						</div>
 					</section>
-					<section class="info-box center-content">
-						<h3>Assistant</h3>
-						<p>
-						The <span class="topic-keywords">"A"</span> in SEPIA, that is what it claims to be, you know like Apple's Siri, Amazon's Alexa or Microsoft's Cortana, 
-						just your very special, private, individual version that really belongs to you!
-						</p>
-					</section>
-					<section class="info-box center-content">
-						<!-- empty -->
-					</section>
-					<section class="center-content-row">
+					<section class="bottom-box center-content-row">
 						<a href="https://github.com/SEPIA-Framework"><span>Source code</span></a>
 						<a href="https://github.com/SEPIA-Framework/sepia-docs/wiki"><span>Wiki</span></a>
 					</section>

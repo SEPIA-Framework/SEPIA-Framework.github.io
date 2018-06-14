@@ -50,16 +50,24 @@ function build_scroll_effects(ParentObj){
 					distanceBottom: (fromBottom + heightOffset),
 					visibilityTop: percentVisibleTop,
 					visibilityBottom: percentVisibleBottom,
-					visibility: Math.min(percentVisibleTop, percentVisibleBottom)
+					visibility: Math.min(percentVisibleTop, percentVisibleBottom),
+					clearScrollEvent: clearScroll
 				});
 			}
-			//init
-			submitData();
 			
 			//listen to scroll
-			jQuery(scrollArea).scroll(function(){
+			var scrollHandler = function(){
 				submitData();
-			});
+			}
+			jQuery(scrollArea).scroll(scrollHandler);
+			
+			//remove listener
+			var clearScroll = function(){
+				jQuery(scrollArea).off("scroll", scrollHandler);
+			}
+			
+			//init
+			submitData();
 		}
 	}
 }
