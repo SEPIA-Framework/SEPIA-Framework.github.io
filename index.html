@@ -31,6 +31,8 @@
 	<meta property="og:type" content="website"/>
 	<meta property="og:locale" content="en_GB"/>
 	<meta property="og:locale:alternate" content="en_US"/>
+	
+	<!-- search engine stuff -->
 	<meta name="google-site-verification" content="72lMaa2nPRTRlYjMIBqtUGRBOrGY7TncOVdVI6u6UGA" />
 
 	<!-- imports -->
@@ -178,6 +180,7 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-around;
+		flex-wrap: wrap;
 	}
 	
 	.section-common {
@@ -376,7 +379,25 @@
 					<section class="bottom-box center-content-row">
 						<a href="https://github.com/SEPIA-Framework"><span>Source code</span></a>
 						<a href="https://github.com/SEPIA-Framework/sepia-docs/wiki"><span>Wiki</span></a>
+						<a href="#attributions" class="popup-button" data-window-id="attributions-popup"><span>Credits</span></a>
 					</section>
+				</div>
+				<!-- pop-ups -->
+				<div id="attributions-popup" class="site-popup" style="display:none;">
+					<div class="site-popup-window">
+						<button class="popup-close-btn" onclick="closePopup(this)">X</button>
+						<div>
+							<h3>Credits</h3>
+							<p>
+							SEPIA, website design and programming by <a href="http://bytemind.de" title="FQ" target="_blank"><span>Florian Quirin</span></a>
+							</p>
+							<p>
+							Additional icons by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank"><span>Freepik</span></a> 
+							and <a href="https://www.flaticon.com/authors/zlatko-najdenovski" title="Z. Najdenovski" target="_blank"><span>Z. Najdenovski</span></a> 
+							from <a href="https://www.flaticon.com" title="Flaticon" target="_blank"><span>www.flaticon.com</span></a>
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

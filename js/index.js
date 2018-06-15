@@ -17,11 +17,22 @@ window.onload = function() {
 		console.log('Uses touch events');
 	}, false);
 	
-	//on resize
+	//On resize
 	$(window).resize(function() {
 		updateScreen();
 	});
 	updateScreen();
+	
+	//Initialize pop-up windows
+	$('.popup-button').each(function(){
+		var btn = this;
+		$(btn).on('click', function(event){
+			event.preventDefault();
+			var popupId = btn.getAttribute("data-window-id");
+			console.log(popupId);
+			$('#' + popupId).fadeIn(300);
+		});
+	});
 	
 	//Create text effects
 	var textEffects = new Tools.TextEffects();
@@ -129,4 +140,9 @@ function enterFullscreen(element){
 	}else if(element.webkitRequestFullscreen){
 		element.webkitRequestFullscreen();
 	}
+}
+
+//Close pop-up windows
+function closePopup(closeBtnEle){
+	$(closeBtnEle).closest(".site-popup").fadeOut(150);
 }
