@@ -3,11 +3,11 @@
 ::-webkit-scrollbar {
 	width: 5px;
 	height: 5px;
-	background: rgba(255,255,255,0.15);
+	background: rgba(255,255,255,0.05);
 }
 ::-webkit-scrollbar-thumb {
 	border-radius: 5px;
-	background: rgba(255,255,255,0.15);
+	background: rgba(255,255,255,0.25);
 }
 * {
 	box-sizing: border-box;

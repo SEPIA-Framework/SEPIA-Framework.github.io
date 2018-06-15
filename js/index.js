@@ -29,7 +29,6 @@ window.onload = function() {
 		$(btn).on('click', function(event){
 			event.preventDefault();
 			var popupId = btn.getAttribute("data-window-id");
-			console.log(popupId);
 			$('#' + popupId).fadeIn(300);
 		});
 	});
