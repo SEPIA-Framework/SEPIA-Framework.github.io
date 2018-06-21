@@ -164,6 +164,9 @@
 		margin-top: 64px;
 		margin-bottom: 32px;
 	}
+	.bottom-box a {
+		margin: 8px;
+	}
 	
 	.center-content {
 		display: flex;
@@ -199,6 +202,25 @@
 	.section-common div img {
 		width: 100%;
 		max-width: 400px;
+	}
+	.section-common .more-info {
+		/*display: inline-block;*/
+		float: right;
+		border-radius: 3px;
+		border: 1px solid #ffffff;
+		color: #ffffff !important;
+		text-decoration: none !important;
+		font-size: 80%;
+		white-space: nowrap;
+		vertical-align: middle;
+		margin: 16px 16px 0 16px;
+		padding: 2px 4px;
+		cursor: pointer;
+		transition: color 0.5s, border-color 0.5s;
+	}
+	.section-common .more-info:hover {
+		border-color: #ceff1a !important;
+		color: #ceff1a !important;
 	}
 	
 	.section-100 div {
@@ -317,12 +339,12 @@
 							<h3>You control your data</h3>
 							<div class="bigger text">
 								<p>
-								Backbone of the SEPIA framework is <span class="topic-keywords">your own, secure web-server and cloud-service</span>. It runs all the core-modules like the Elasticsearch database, 
+								Backbone of the SEPIA-Framework is <span class="topic-keywords">your own, secure web-server</span>. It runs all the core-modules like the Elasticsearch database, 
 								the user-account management, the natural-language-understanding (NLU) and the chat-module. Additionally it connects the NLU to smart-services
-								like reminders, to-do lists, news, IoT interfaces and many more. Thanks to Java the SEPIA back-end runs on basically any OS (Linux, Windows or Mac). 
-								It is optimized for single-board computers like the <span class="topic-keywords">Raspberry Pi</span> 
-								but can also be scaled up <span class="topic-keywords">and</span> hosted on multiple servers in <span class="topic-keywords">larger networks</span>.
-								All your data is kept safe inside your own environment.
+								like reminders, to-do lists, news, IoT interfaces and many more while keeping your data in a safe environment. 
+								Thanks to Java the SEPIA back-end works on virtually any OS (Linux, Windows or Mac). It is optimized for single-board computers like the <span class="topic-keywords">Raspberry Pi</span>
+								to run inside your private network but can also be scaled up <span class="topic-keywords">and</span> hosted as <span class="topic-keywords">cloud-service</span>.
+								<a class="more-info" href="https://github.com/SEPIA-Framework/sepia-assist-server" target="_blank">Learn more</a>
 								</p>
 							</div>
 							<div class="smaller">
@@ -339,22 +361,24 @@
 							<div class="bigger text">
 								<p>
 								SEPIA is <span class="topic-keywords">extendable</span> and can be improved and individualized in many ways. 
-								You can create your own commands on-the-fly and teach SEPIA new stuff using the app (iOS, Android or browser) or you can build complex, voice-controlled smart-services with the Java SDK. 
-								Everything from a simple answer to a multi-step dialog with cloud-service integration is possible. If that's still not enough feel free to dive deeper into the code 
-								and replace certain modules or rebuild SEPIA completely. Every part of the framework is <span class="topic-keywords">open-source, free and everybody can contribute</span>.
+								You can create your <span class="topic-keywords">own commands on-the-fly</span> and teach SEPIA new stuff using the app (iOS, Android or browser) or you can build complex, 
+								voice-controlled <span class="topic-keywords">smart-services with the Java SDK</span>. Everything from a simple answer to a multi-step dialog with cloud-service integration is possible. 
+								If that's still not enough feel free to dive deeper into the code and replace certain modules or rebuild SEPIA completely. 
+								Every part of the framework is <span class="topic-keywords">open-source, free and everybody can contribute</span>.
+								<a class="more-info" href="https://github.com/SEPIA-Framework/sepia-html-client-app" target="_blank">Learn more</a>
 								</p>
 							</div>
 						</div>
 					</section>
 					<section class="info-box center-content">
 						<div class="section-common section-62-38">
-							<h3>Do private stuff</h3>
+							<h3>Be connected while staying private</h3>
 							<div class="bigger text">
 								<p>
 								Since you control the data and shape your assistant SEPIA's services and answers can <span class="topic-keywords">use your personal profile to give you individual results</span> 
 								without this strange feeling in your stomach that you might get when you don't know who else is reading your messages or collecting information about you.
-								Connect your own IoT devices to SEPIA and keep all the controls protected in your own environment or use a third-party service like Google Maps but share only an anonymous address without any context so
-								Google will never know if you are driving to your grandma or your girlfriend/boyfriend.
+								Connect your own IoT devices to SEPIA and keep all the controls protected in your own environment or <span class="topic-keywords">use a third-party service</span>
+								like Google Maps but share only an <span class="topic-keywords">anonymous</span> address without any context so	Google will never know if you are driving to your grandma or your girlfriend/boyfriend.
 								</p>
 							</div>
 							<div class="smaller">
