@@ -454,6 +454,10 @@ body {
 	color: inherit;
 	text-decoration: none;
 	opacity: 0.25;
+	transition: opacity 0.5s;
+}
+.sepiaFW-notouch-device #sepiaFW-login-links a:hover {
+	opacity: 1.0;
 }
 
 #sepiaFW-main-window input, #sepiaFW-main-window button, #sepiaFW-main-window article {
