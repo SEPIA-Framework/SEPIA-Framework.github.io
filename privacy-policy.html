@@ -138,11 +138,21 @@
 	}
 	function getSepiaServerInfo(){
 		var host = getURLParameter("host") || getURLParameter("server") || "http://localhost:20726";
+		//TODO: this wont catch all valid combinations, but it's a start
+		if (host == "localhost") host = "http://localhost:20726";
 		if (!endsWith(host, "/sepia")) host += "/sepia";
-		if (!host.indexOf("http") == 0) host = "https://" + host;
+		if (!host.indexOf("http") == 0){
+			if ((host.indexOf("localhost") == 0) || (host.indexOf("192.") == 0)){
+				host = "http://" + host;
+			}else{
+				host = "https://" + host;
+			}
+		}		
+		console.log("Host URL: " + host);
 		function success(data){
+			console.log('Got answer.');
 			$('#check-server-result').html("<br>" +
-				"<b>Checked server via:</b> " + host + " and found:<br>" +
+				"<b>Checked server via:</b> " + host + "<br>" +
 				"<b>Name:</b> " + data.server + "<br>" +
 				"<b>Version:</b> " + data.version + "<br>" +
 				"<b>Policy:</b> " + data.privacy_policy + "<br>" +
@@ -150,6 +160,7 @@
 			);
 		}
 		function error(data){
+			console.log('Got error.');
 			$('#check-server-result').html("<br>" +
 				"<b>Checked server via:</b> " + host + "<br>" +
 				"Got <b>no result!</b> Please check your server settings or contact your host about problems with the configuration."
