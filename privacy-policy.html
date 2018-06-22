@@ -34,7 +34,10 @@
 	<br>
 	<b><u>IMPORTANT:</u></b> The SEPIA-Framework is a modular system and you can decide to mix public and private components as you require. For example this can be done by using an official, public client, but connect it to a private server via the host-name settings in the menu.
 	When you are using non-official, public SEPIA servers, clients or websites additional conditions might apply that cannot be covered by this policy! The operator of these servers, clients or websites is responsible to make them available and point you to his own policy.<br>
-	<b>WE STRONGLY ADVISE to use only servers that you really TRUST or you host yourself!</b>
+	<b>WE STRONGLY ADVISE to use only servers that you really TRUST or you host yourself!</b><br>
+	<br>
+	Get server info: <button id="check-server-info" onclick="getSepiaServerInfo()">CHECK SERVER</button>
+	<div id="check-server-result"></div>
 	<!-- add method here to call privacy policy for custom servers -->
 	<br>
 	<h2>Policy</h2>
@@ -124,4 +127,40 @@
 	If you are using an official, public SEPIA server and we make any changes to this Policy that materially affect our practices with regard to the personal information we have previously collected from you, we will provide you with notice in advance of such change by highlighting the change via email notice.
 	</div>
 </body>
+<!-- JS -->
+<script type="text/javascript" src="js/jquery-3.1.1.min.js" charset="UTF-8"></script>
+<script>
+	function getURLParameter(name){
+		return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+	}
+	function endsWith(str, suffix) {
+		return str.indexOf(suffix, str.length - suffix.length) !== -1;
+	}
+	function getSepiaServerInfo(){
+		var host = getURLParameter("host") || getURLParameter("server") || "http://localhost:20726";
+		if (!endsWith(host, "/sepia")) host += "/sepia";
+		if (!host.indexOf("http") == 0) host = "https://" + host;
+		function success(data){
+			$('#check-server-result').html("<br>" +
+				"<b>Checked server via:</b> " + host + " and found:<br>" +
+				"<b>Name:</b> " + data.server + "<br>" +
+				"<b>Version:</b> " + data.version + "<br>" +
+				"<b>Policy:</b> " + data.privacy_policy + "<br>" +
+				"<b>Signature:</b> " + data.signature + "<br>"
+			);
+		}
+		function error(data){
+			$('#check-server-result').html("<br>" +
+				"<b>Checked server via:</b> " + host + "<br>" +
+				"Got <b>no result!</b> Please check your server settings or contact your host about problems with the configuration."
+			);
+		}
+		$.ajax({
+			dataType: "json",
+			url: (host + "/assist/validate"),
+			success: success,
+			error: error
+		});
+	}
+</script>
 </html>
