@@ -464,10 +464,6 @@ body {
 	border-radius: 3px;
 }
 
-#sepiaFW-main-window {
-	padding: 0px;
-}
-
 #sepiaFW-nav-bar, #sepiaFW-chat-controls-form, #sepiaFW-chat-controls-right {
 	background-color: #ceff1a;
 	border-radius: 0px;
@@ -502,9 +498,13 @@ body {
 	        flex-direction: column;
 	width: 100%;
 	height: 100%;
+	padding: 0px;
 	transition: opacity 0.3s;
 	color: #2f3035;
 	overflow: visible;
+}
+#sepiaFW-main-window h2 {
+	font-weight: 300;
 }
 #sepiaFW-main-window button {
 	cursor: pointer;
