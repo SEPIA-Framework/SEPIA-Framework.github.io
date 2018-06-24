@@ -2,6 +2,12 @@
 
 ## Release History
 
+### v0.11.2 beta - 2018.06.24
+
+- Added first version of demo-mode when skipping login
+- Improved log-in menu with drop-down for hostname
+- Added new skin "Essential", a black-and-white version of SEPIA
+
 ### v0.11.1 beta - 2018.06.22
 
 Added improved privacy policy handling and updated tutorial with test-buttons.
