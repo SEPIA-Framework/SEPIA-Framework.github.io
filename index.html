@@ -149,6 +149,7 @@
 	}
 	.info-box h3 {
 		font-size: 24px;
+		margin: 28px;
 		font-weight: 400;
 		text-align: center;
 		color: #ceff1a;
@@ -204,6 +205,9 @@
 		width: 100%;
 		max-width: 400px;
 	}
+	.section-common div.extra-margin-top {
+		margin: 12px 0;
+	}
 	.section-common .more-info {
 		/*display: inline-block;*/
 		float: right;
@@ -227,6 +231,9 @@
 	.section-100 div {
 		padding: 8px 0;
 	}
+	.section-100 div img {
+		max-width: 700px;
+	}
 	
 	.section-62-38 div p {
 		display: inline-block;
@@ -239,6 +246,17 @@
 		width: 38%;
 	}
 	
+	.section-50-50 div {
+		width: 49%;
+		/*max-width: 550px;*/
+	}
+	.section-50-50 div p {
+		display: inline-block;
+	}
+	.section-50-50 div img {
+		max-width: 512px;
+	}
+	
 	@media screen and (max-width: 850px) {
 		.info-box .text {
 			padding-left: 0;
@@ -247,7 +265,8 @@
 		.section-common {
 			padding: 0;
 		}
-		.section-62-38 div {
+		.section-62-38 div,
+		.section-50-50 div {
 			width: 100% !important;
 			padding: 8px 0;
 		}
@@ -354,12 +373,12 @@
 						</div>
 					</section>
 					<section class="info-box center-content">
-						<div class="section-common section-62-38">
+						<div class="section-common section-100">
 							<h3>You shape your assistant</h3>
-							<div class="smaller">
-								<img id="sepia-customize-img" class="topic-images" src="img/placeholder.png" alt="SEPIA customize">
+							<div class="extra-margin-top">
+								<img id="sepia-customize-img" class="topic-images" src="img/teach-ui.png" alt="SEPIA customize">
 							</div>
-							<div class="bigger text">
+							<div class="text">
 								<p>
 								SEPIA is <span class="topic-keywords">extendable</span> and can be improved and individualized in many ways. 
 								You can create your <span class="topic-keywords">own commands on-the-fly</span> and teach SEPIA new stuff using the app (iOS, Android or browser) or you can build complex, 
@@ -383,7 +402,7 @@
 								</p>
 							</div>
 							<div class="smaller">
-								<img id="sepia-personal-img" class="topic-images" src="img/placeholder.png" alt="SEPIA personal">
+								<img id="sepia-personal-img" class="topic-images" src="img/word-cloud.svg" alt="SEPIA personal">
 							</div>
 						</div>
 					</section>
@@ -391,7 +410,7 @@
 						<div class="section-common section-62-38">
 							<h3>Natural dialog and smart actions</h3>
 							<div class="smaller">
-								<img id="sepia-smart-img" class="topic-images" src="img/placeholder.png" alt="SEPIA smart">
+								<img id="sepia-smart-img" class="topic-images" src="img/SEPIA_smart.png" alt="SEPIA smart">
 							</div>
 							<div class="bigger text">
 								<p>

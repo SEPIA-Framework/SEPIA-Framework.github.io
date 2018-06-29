@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="600px" height="600px" viewBox="85 85 435 420">
+<defs>
+<style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Open+Sans:400:latin-ext); </style>
+</defs>
+<clipPath id="cp5">
+<path d="M 0,0 L 600,0 L600,600 L 0,600 z M 0,0 L 700,0 L 700,700 L 0,700 z" fill-rule="evenodd">
+</path>
+</clipPath>
+<g clip-path="url(#cp5)">
+</g>
+<rect x="0" y="0" width="700" height="700" opacity="1" fill="rgb(0, 0, 0)" stroke="none">
+</rect>
+<text x="-129.29666137695312" y="3.02361696" style="font: normal 30.236169600000004px 'Open Sans'" text-anchor="start" dy="11.951055177865616" opacity="1" fill="#fff" stroke="none" transform="translate(297, 297) rotate(-18000)">recommendations</text>
+<text x="-98.86002349853516" y="3.02361696" style="font: normal 30.236169600000004px 'Open Sans'" text-anchor="start" dy="11.951055177865616" opacity="1" fill="#fff" stroke="none" transform="translate(309, 321) rotate(-18000)">appointments</text>
+<text x="-68.34957885742188" y="3.02361696" style="font: normal 30.236169600000004px 'Open Sans'" text-anchor="start" dy="11.951055177865616" opacity="1" fill="#ceff1a" stroke="none" transform="translate(288, 273) rotate(-12959.999999999998)">individual</text>
+<text x="-72.93277740478516" y="3.02361696" style="font: normal 30.236169600000004px 'Open Sans'" text-anchor="start" dy="11.951055177865616" opacity="1" fill="#fff" stroke="none" transform="translate(282, 249) rotate(-13679.999999999998)">reminders</text>
+<text x="-61.7589111328125" y="3.02361696" style="font: normal 30.236169600000004px 'Open Sans'" text-anchor="start" dy="11.951055177865616" opacity="1" fill="#ceff1a" stroke="none" transform="translate(258, 225) rotate(-14759.999999999998)">personal</text>
+<text x="-49.04991912841797" y="3.02361696" style="font: normal 30.236169600000004px 'Open Sans'" text-anchor="start" dy="11.951055177865616" opacity="1" fill="#ceff1a" stroke="none" transform="translate(396, 345) rotate(-17639.999999999996)">private</text>
+<text x="-21.67613983154297" y="3.02361696" style="font: normal 30.236169600000004px 'Open Sans'" text-anchor="start" dy="11.951055177865616" opacity="1" fill="#fff" stroke="none" transform="translate(321, 339) rotate(-11160)">my</text>
+<text x="-38.101234436035156" y="2.771648879999999" style="font: normal 27.7164888px 'Open Sans'" text-anchor="start" dy="10.955133913043479" opacity="1" fill="#fff" stroke="none" transform="translate(399, 273) rotate(-15839.999999999998)">music</text>
+<text x="-37.53296661376953" y="2.771648879999999" style="font: normal 27.7164888px 'Open Sans'" text-anchor="start" dy="10.955133913043479" opacity="1" fill="#fff" stroke="none" transform="translate(357, 231) rotate(-3239.9999999999995)">home</text>
+<text x="-113.05361938476562" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(300, 402) rotate(-16920)">custom-commands</text>
+<text x="-84.77633666992188" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(255, 255, 255)" stroke="none" transform="translate(294, 426) rotate(-2880)">entertainment</text>
+<text x="-81.71985626220703" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(261, 156) rotate(-360)">smart-devices</text>
+<text x="-58.319488525390625" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(159, 276) rotate(-9360.000000000002)">to-do-lists</text>
+<text x="-66.62185668945312" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(192, 204) rotate(-4320)">living-room</text>
+<text x="-61.10540008544922" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(85, 85, 85)" stroke="none" transform="translate(426, 366) rotate(-17639.999999999996)">navigation</text>
+<text x="-60.38584899902344" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(85, 85, 85)" stroke="none" transform="translate(294, 450) rotate(-18000)">recreation</text>
+<text x="-51.03800964355469" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="#fff" stroke="none" transform="translate(177, 378) rotate(-7200)">favorites</text>
+<text x="-58.48554229736328" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(153, 153, 153)" stroke="none" transform="translate(153, 252) rotate(-6120.000000000001)">education</text>
+<text x="-54.59880828857422" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(180, 180) rotate(-6479.999999999999)">shopping</text>
+<text x="-49.23609924316406" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(153, 153, 153)" stroke="none" transform="translate(408, 246) rotate(-10799.999999999998)">contacts</text>
+<text x="-57.77830505371094" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(399, 168) rotate(-720)">messages</text>
+<text x="-46.76383972167969" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(453, 318) rotate(-1440)">location</text>
+<text x="-52.021995544433594" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(85, 85, 85)" stroke="none" transform="translate(141, 228) rotate(-14039.999999999998)">searches</text>
+<text x="-47.29271697998047" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(85, 85, 85)" stroke="none" transform="translate(258, 132) rotate(-4680.000000000001)">pictures</text>
+<text x="-47.03443145751953" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(354, 138) rotate(-5399.999999999999)">hobbies</text>
+<text x="-41.11821746826172" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="#fff" stroke="none" transform="translate(294, 474) rotate(-360)">friends</text>
+<text x="-42.77870178222656" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(85, 85, 85)" stroke="none" transform="translate(468, 294) rotate(-10799.999999999998)">holiday</text>
+<text x="-38.71361541748047" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(85, 85, 85)" stroke="none" transform="translate(171, 420) rotate(-2160)">fitness</text>
+<text x="-42.981651306152344" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(85, 85, 85)" stroke="none" transform="translate(192, 444) rotate(-6479.999999999999)">finance</text>
+<text x="-41.29656219482422" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(255, 255, 255)" stroke="none" transform="translate(396, 444) rotate(-8640)">culture</text>
+<text x="-38.62751007080078" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(153, 153, 153)" stroke="none" transform="translate(426, 423)">events</text>
+<text x="-36.979347229003906" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(450, 390) rotate(-1800)">places</text>
+<text x="-32.40997314453125" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(471, 270) rotate(-14759.999999999998)">office</text>
+<text x="-35.70631408691406" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="#fff" stroke="none" transform="translate(480, 342) rotate(-1800)">family</text>
+<text x="-37.16383361816406" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(85, 85, 85)" stroke="none" transform="translate(288, 114) rotate(-10080)">health</text>
+<text x="-37.563575744628906" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(153, 153, 153)" stroke="none" transform="translate(144, 396) rotate(-8280)">timers</text>
+<text x="-29.15667724609375" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(372, 468) rotate(-8280)">work</text>
+<text x="-30.601898193359375" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(187, 187, 187)" stroke="none" transform="translate(222, 468) rotate(-3959.9999999999995)">news</text>
+<text x="-19.72887420654297" y="2.5196807999999997" style="font: normal 25.196808px 'Open Sans'" text-anchor="start" dy="9.959212648221344" opacity="1" fill="rgb(255, 255, 255)" stroke="none" transform="translate(150, 300) rotate(-360)">fun</text>
+</svg>
