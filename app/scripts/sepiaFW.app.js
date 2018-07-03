@@ -26,6 +26,7 @@ SepiaFW.buildSepiaFwPlugins = function(){
 	SepiaFW.webSocket.common = sepiaFW_build_webSocket_common();
 	SepiaFW.webSocket.client = sepiaFW_build_webSocket_client();
 	SepiaFW.client = sepiaFW_build_client_interface();
+	SepiaFW.files = sepiaFW_build_files();
 	SepiaFW.frames = sepiaFW_build_frames();
 	SepiaFW.teach = sepiaFW_build_teach();
 	SepiaFW.offline = sepiaFW_build_offline();
@@ -41,9 +42,13 @@ function sepiaFW_build_dataService(){
 	function save(permanent){
 		try{
 			if (permanent){
-				localStorage.setItem('sepiaFW-data-permanent', JSON.stringify(dataPermanent));
+				if (window.localStorage){
+					localStorage.setItem('sepiaFW-data-permanent', JSON.stringify(dataPermanent));
+				}
 			}else{
-				localStorage.setItem('sepiaFW-data', JSON.stringify(data));
+				if (window.localStorage){
+					localStorage.setItem('sepiaFW-data', JSON.stringify(data));
+				}
 			}
 		}catch (e){
 			SepiaFW.debug.err('Data: localStorage write error! Not available?');
@@ -52,9 +57,13 @@ function sepiaFW_build_dataService(){
 	function load(permanent){
 		try{
 			if (permanent){
-				dataPermanent = JSON.parse(localStorage.getItem('sepiaFW-data-permanent')) || {};
+				if (window.localStorage){
+					dataPermanent = JSON.parse(localStorage.getItem('sepiaFW-data-permanent')) || {};
+				}
 			}else{
-				data = JSON.parse(localStorage.getItem('sepiaFW-data')) || {};
+				if (window.localStorage){
+					data = JSON.parse(localStorage.getItem('sepiaFW-data')) || {};
+				}
 			}
 		}catch (e){
 			if (permanent){
@@ -81,6 +90,54 @@ function sepiaFW_build_dataService(){
 		dataPermanent[key] = value;
 		save(true);
 	}
+	DataService.del = function(key){
+		load();
+		delete data[key];
+		save();
+	}
+	DataService.delPermanent = function(key){
+		load(true);
+		delete dataPermanent[key];
+		save(true);
+	}
+	
+	//clear all stored data (optionally keeping 'permanent')
+	DataService.clearAll = function(keepPermanent){
+		var localDataStatus = "";
+		if (window.localStorage){
+			window.localStorage.clear();
+			localDataStatus = "LocalStorage has been cleared. Permanent data kept: " + keepPermanent + ".";
+			SepiaFW.debug.log("Data: " + localDataStatus);
+		}
+		data = {};
+		//restore permanent data
+		if (keepPermanent){
+			save(true);
+		}
+		return localDataStatus;
+	}
+	
+	//clear app cache if possible
+	DataService.clearAppCache = function(successCallback, errorCallback){
+		if (SepiaFW.ui.isCordova && window.CacheClear){
+			window.CacheClear(function(status) {
+				//Success
+				SepiaFW.debug.log("Data: App cache has been cleared.");
+				if (successCallback) successCallback(status);
+			},function(status) {
+				//Error
+				SepiaFW.debug.err("Data: Error in app cache plugin, deletion failed!");
+				if (errorCallback) errorCallback(status);
+			});
+		}else{
+			SepiaFW.debug.log("Data: No app cache found, deletion not required!?");
+			var status = 'No app cache found, deletion not required!?';
+			if (successCallback) successCallback(status);
+		}
+	}
+	
+	//--------- specific data ----------
+	
 	DataService.updateAccount = function(key, value){
 		var account = DataService.get('account');
 		if (!account){
@@ -90,17 +147,6 @@ function sepiaFW_build_dataService(){
 		account.lastRefresh = new Date().getTime();
 		DataService.set('account', account);
 	}
-	DataService.del = function(key){
-		load();
-		delete data[key];
-		save();
-	}
-	DataService.clearAll = function(){
-		window.localStorage.clear();
-		data = {};
-		//restore permanent data
-		save(true);
-	}
 	
 	return DataService;
 }
@@ -109,13 +155,48 @@ function sepiaFW_build_dataService(){
 function sepiaFW_build_config(){
 	var Config = {};
 	
-	Config.clientInfo = "web_app_v1.0.0";
-	Config.environment = "default";
+	Config.clientInfo = "web_app_v1.0.0";	//defined by client properties
+	var deviceId = "";						//set in settings and freely chosen by user to address his devices directly
+	var deviceIdClean = "";					//clean version of device ID (no spaces, only alphanumeric, lower-case)
+	Config.environment = "default";			//tbd
 	
 	//set client info
 	Config.setClientInfo = function(clientInfo){
 		Config.clientInfo = clientInfo;
 		SepiaFW.debug.log('Config: clientInfo=' + Config.clientInfo);
+	}
+	//get client-device info (for server communication etc.)
+	Config.getClientDeviceInfo = function(){
+		if (deviceIdClean){
+			return (deviceIdClean + "_" + Config.clientInfo);
+		}else{
+			return (Config.clientInfo);
+		}
+	}
+	//set device ID			
+	Config.setDeviceId = function(newDeviceId, skipReload){
+		deviceId = newDeviceId.replace(/[\W]+/g, " ").replace(/\s+/g, " ").trim();
+		deviceIdClean = deviceId.split(" ").join("_").toLowerCase();
+		SepiaFW.data.setPermanent('deviceId', deviceId);
+		Config.broadcastDeviceId(deviceId);
+		if (!skipReload){
+			logoutAndReload();
+		}
+	}
+	//get device ID
+	Config.getDeviceId = function(){
+		return deviceId;
+	}
+	//set hostname
+	Config.setHostName = function(hostName, skipReload){
+		if (hostName){
+			Config.host = hostName;
+			SepiaFW.data.setPermanent("host-name", Config.host);
+			Config.broadcastHostName(Config.host);
+			if (!skipReload){
+				logoutAndReload();
+			}
+		}
 	}
 	
 	//language
@@ -150,26 +231,32 @@ function sepiaFW_build_config(){
 	Config.privacyPolicyUrl = "https://sepia-framework.github.io/privacy-policy.html";
 	Config.clientLicenseUrl = "license.html";
 	
+	//some settings require app-reload
+	function logoutAndReload() {
+		setTimeout(function(){
+			var config = {
+				buttonOneName : SepiaFW.local.g('doit'),
+				buttonOneAction : function(){ 
+					SepiaFW.account.afterLogout = function(){
+						location.reload();
+					}
+					SepiaFW.account.logoutAction();
+				},
+				buttonTwoName : SepiaFW.local.g('back'),
+				buttonTwoAction : function(){}
+			};
+			SepiaFW.ui.showPopup(SepiaFW.local.g("logoutAndReload"), config);
+		}, 500);
+	}
+	
+	//------------ broadcasting functions --------------
+	//TODO: they are sometimes called from other modules which makes them 
+	//kind of setter functions too, ... we should change that
+	
 	//add everything here that needs to be refreshed after host change
 	Config.broadcastHostName = function(hostName){
-		if (hostName){
-			SepiaFW.data.setPermanent("host-name", hostName);
-			setTimeout(function(){
-				var config = {
-					buttonOneName : SepiaFW.local.g('doit'),
-					buttonOneAction : function(){ 
-						SepiaFW.account.afterLogout = function(){
-							location.reload();
-						}
-						SepiaFW.account.logoutAction();
-					},
-					buttonTwoName : SepiaFW.local.g('back'),
-					buttonTwoAction : function(){}
-				};
-				SepiaFW.ui.showPopup("New host requires log-out and app reload.", config);
-			}, 500);
-			SepiaFW.debug.log('Config: broadcasted new host=' + hostName);
-		}
+		//log
+		SepiaFW.debug.log('Config: broadcasted host=' + hostName);
 	}
 	//add everything here that needs to be refreshed after language change
 	Config.broadcastLanguage = function(language){
@@ -198,10 +285,11 @@ function sepiaFW_build_config(){
 	Config.broadcastDeviceId = function(newDeviceId){
 		//menue
 		$('#sepiaFW-menu-deviceId').val(newDeviceId);
-		//log and save
-		SepiaFW.data.set('deviceId', newDeviceId);
+		//log
 		SepiaFW.debug.log('Config: broadcasted deviceId=' + newDeviceId);
 	}
+	
+	//------------------------------------------------
 
 	//link to URL parameter functions - TODO: can we remove this?
 	Config.getURLParameter = SepiaFW.tools.getURLParameter;
