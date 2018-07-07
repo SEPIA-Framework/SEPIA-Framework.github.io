@@ -363,6 +363,10 @@ function sepiaFW_build_tools(){
 		return false;
 	}
 	
+	//check if string starts with certain suffix
+	Tools.startsWith = function(str, prefix) {
+		return str.indexOf(prefix) === 0;
+	}
 	//check if string ends with certain suffix
 	Tools.endsWith = function(str, suffix) {
 		return str.indexOf(suffix, str.length - suffix.length) !== -1;
