@@ -2,13 +2,25 @@
 
 ## Release History
 
-### v0.11.3 beta - 2018.06.24
+### v0.12.0 beta - 2018.07.19
 
-- log-in on multiple devices of same type at the same time using different device IDs
-- preparation of app-admin view to better control active log-ins
-- updated local-notifications plugin for Android 8.0 (including some tweaks for older versions too)
-- increased overall support for Android 8.0
-- added Cordova file plugin to support iOS local page load
+- Added Cordova NativeStorage plugin to make on-device storage more reliable (iOS and Android)
+- Replaced Google geo-coder with OpenStreetMap and fixed some GPS related bugs
+- Improved network-connection check
+- Improved security during login, auto-login will be blocked now when hostname changed
+- Improved hostname handling for links that start with 'http'
+- Fixed TeachUI for iOS
+- Added URL parameters "host" and "q" and implemented request-via-url handling for browser
+- Preparations for notification on-click events and deeplink actions
+- Minor fixes
+
+### v0.11.3 beta - 2018.07.03
+
+- Log-in on multiple devices of same type at the same time using different device IDs
+- Preparation of app-admin view to better control active log-ins
+- Updated local-notifications plugin for Android 8.0 (including some tweaks for older versions too)
+- Increased overall support for Android 8.0
+- Added Cordova file plugin to support iOS local page load
 
 ### v0.11.2 beta - 2018.06.24
 
