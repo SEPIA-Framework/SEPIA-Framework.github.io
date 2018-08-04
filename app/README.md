@@ -2,6 +2,12 @@
 
 ## Release History
 
+### v0.12.1 beta - 2018.08.04
+
+- Added official support for custom speech recognition via settings menu (ASR engine, ASR server). See SEPIA STT-Server in GitHub for more info.
+- Fixed a bug where the swipe areas were broken after returning from a frame-view and settings menu was open
+- Fixed a minor bug in the data interface
+
 ### v0.12.0 beta - 2018.07.19
 
 - Added Cordova NativeStorage plugin to make on-device storage more reliable (iOS and Android)
