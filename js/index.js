@@ -6,6 +6,11 @@ if (build_scroll_effects) build_scroll_effects(Tools);
 var usesTouch = false;
 var showTopBar = false;
 
+//get parameter from URL
+function getURLParameter(name) {
+	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+}
+
 //Start
 window.onload = function() {
 	//Check for touch event
@@ -26,11 +31,14 @@ window.onload = function() {
 	//Initialize pop-up windows
 	$('.popup-button').each(function(){
 		var btn = this;
+		var popupId = btn.getAttribute("data-window-id");
 		$(btn).on('click', function(event){
 			event.preventDefault();
-			var popupId = btn.getAttribute("data-window-id");
 			$('#' + popupId).fadeIn(300);
 		});
+		if (("#" + popupId) == (location.hash + "-popup")){
+			$('#' + popupId).fadeIn(300);
+		}
 	});
 	
 	//Create text effects

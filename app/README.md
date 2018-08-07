@@ -2,6 +2,11 @@
 
 ## Release History
 
+### v0.12.2 beta - 2018.08.05
+
+- Added phonegap-plugin-media-stream to fix MediaDevices interface on Android.
+- Added cordova-plugin-audioinput to fix MediaDevices interface on iOS.
+
 ### v0.12.1 beta - 2018.08.04
 
 - Added official support for custom speech recognition via settings menu (ASR engine, ASR server). See SEPIA STT-Server in GitHub for more info.
