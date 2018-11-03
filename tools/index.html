@@ -72,6 +72,11 @@
 		var customServer = sessionStorage.getItem('customServer');
 		if (customServer){
 			$('#server').val(customServer);
+		}else{
+			var serverViaUrl = getURLParameter('server');
+			if (serverViaUrl){
+				$('#server').val(serverViaUrl);
+			}
 		}
 		var server = sessionStorage.getItem('server');
 		if (server){
@@ -88,10 +93,20 @@
 		smartHomeServer = sessionStorage.getItem('smartHomeServer');
 		if (smartHomeServer){
 			$('#smarthome-server').val(smartHomeServer);
+		}else{
+			var serverViaUrl = getURLParameter('smarthome-server');
+			if (serverViaUrl){
+				$('#smarthome-server').val(serverViaUrl);
+			}
 		}
 		sttServer = sessionStorage.getItem('sttServer');
 		if (sttServer){
 			$('#stt-server').val(sttServer);
+		}else{
+			var serverViaUrl = getURLParameter('stt-server');
+			if (serverViaUrl){
+				$('#stt-server').val(serverViaUrl);
+			}
 		}
 		//show first page
 		openPage('authentication');
@@ -332,7 +347,7 @@
 				</div>
 				<hr>
 				<p><b>Actions</b></p>
-				<div><label>Model: </label><input id="stt-model" type="text" placeholder="/app/kaldi/models/kaldi-generic-de-tdnn_sp" value="/app/share/kaldi_models/kaldi-generic-de-tdnn_sp_sepia_v03"></div>
+				<div><label>Model: </label><input id="stt-model" type="text" placeholder="/opt/kaldi/model/kaldi-generic-de-tdnn_sp" value="/apps/share/kaldi_models/kaldi-generic-de-tdnn_sp_sepia_v03"></div>
 				<hr>
 				<div class="interface_button_box">
 					<button onclick="setSttModel()" class="interface_button">SET MODEL PATH</button>
