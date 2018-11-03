@@ -2,6 +2,17 @@
 
 ## Release History
 
+### v0.14.1 beta - 2018.11.03
+
+- Define custom button for your own commands via the Teach-UI
+- Add music stream commands via Teach-UI
+- Always-On view with animated avatar and controls (beta)
+- Added cordova-plugin https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git
+- Gamepad and hotkey support for remote microphone trigger and other controls (beta)
+- Design update of quick-access menu (bottom left) and additional smaller changes (skins etc.)
+- Fixed bug where radio won't turn off via voice
+- Many smaller fixes
+
 ### v0.12.2 beta - 2018.08.05
 
 - Added phonegap-plugin-media-stream to fix MediaDevices interface on Android.
