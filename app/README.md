@@ -2,6 +2,12 @@
 
 ## Release History
 
+### v0.14.3 beta - 2018.11.07
+
+- Power-events e.g. open Always-On mode on power plugin
+- Updates and refinements to AO mode and hotkeys
+- Bugfixes in e.g. voice control of radio and timer deactivation
+
 ### v0.14.1 beta - 2018.11.03
 
 - Define custom button for your own commands via the Teach-UI
