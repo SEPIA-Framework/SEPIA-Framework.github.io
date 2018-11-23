@@ -3,7 +3,7 @@ function sepiaFW_build_ui(){
 	var UI = {};
 	
 	//some constants
-	UI.version = "v0.14.3";
+	UI.version = "v0.15.1";
 	UI.JQ_RES_VIEW_IDS = "#sepiaFW-result-view, #sepiaFW-chat-output, #sepiaFW-my-view";			//a selector to get all result views e.g. $(UI.JQ_RES_VIEW_IDS).find(...)
 	UI.JQ_ALL_MAIN_VIEWS = "#sepiaFW-result-view, #sepiaFW-chat-output, #sepiaFW-my-view, #sepiaFW-teachUI-editor, #sepiaFW-teachUI-manager, #sepiaFW-frame-page-1, #sepiaFW-frame-page-2"; 	//TODO: frames can have more ...
 	UI.JQ_ALL_SETTINGS_VIEWS = ".sepiaFW-chat-menu-list-container";
@@ -381,8 +381,8 @@ function sepiaFW_build_ui(){
 		UI.assistIconStop = '<i class="material-icons md-mic">&#xE034;</i>';
 		UI.assistIconAwaitAnswer = '<i class="material-icons md-mic-dia">&#xE0B7;</i>';  //&#xE90F;
 		
-		//LOAD other SETTINGS before building the UI:
-		//TODO: this should be simplified with a service!
+		//---------------------- LOAD other SETTINGS before building the UI:
+		//TODO: this should be simplified with a service! ... for the start we could move it to the 'data' module
 		
 		//TTS
 		if (SepiaFW.speech){
@@ -427,6 +427,20 @@ function sepiaFW_build_ui(){
 			if (typeof SepiaFW.inputControls.useGamepads == 'undefined') SepiaFW.inputControls.useGamepads = false;
 			SepiaFW.debug.info("Gamepads are " + ((SepiaFW.client.allowBackgroundConnection)? "SUPPORTED" : "NOT SUPPORTED"));
 		}
+		//Wake-word trigger
+		if (SepiaFW.wakeTriggers){
+			SepiaFW.wakeTriggers.useWakeWord = SepiaFW.data.get('useWakeWord');
+			if (typeof SepiaFW.wakeTriggers.useWakeWord == 'undefined') SepiaFW.wakeTriggers.useWakeWord = false;
+			SepiaFW.debug.info("Wake-word 'Hey SEPIA' is " + ((SepiaFW.wakeTriggers.useWakeWord)? "ALLOWED" : "NOT ALLOWED"));
+		}
+		//Smart microphone toggle
+		if (SepiaFW.speech){
+			SepiaFW.speech.useSmartMicToggle = SepiaFW.data.get('useSmartMicToggle');
+			if (typeof SepiaFW.speech.useSmartMicToggle == 'undefined') SepiaFW.speech.useSmartMicToggle = false;
+			SepiaFW.debug.info("Smart microphone toggle is " + ((SepiaFW.speech.useSmartMicToggle)? "ON" : "OFF"));
+		}
+
+		//-------------------------------------------------------------------------------------------------
 		
 		//build UI logic and general buttons
 		UI.build.uiButtonsAndLogic();
@@ -561,6 +575,7 @@ function sepiaFW_build_ui(){
 	var myViewUpdateInterval = 30*60*1000; 		//<- automatic updates will not be done more than once within this interval
 	var lastMyViewUpdate = 0;
 	var myViewUpdateTimer;
+	var contextEventsLoadDelayTimer = undefined;
 	UI.updateMyView = function(forceUpdate, checkGeolocationFirst){
 		//is client active?
 		if (!SepiaFW.client.isActive() || !SepiaFW.assistant.id){
@@ -579,6 +594,7 @@ function sepiaFW_build_ui(){
 			//location update?
 			if (SepiaFW.geocoder && SepiaFW.geocoder.autoGPS){
 				if ((new Date().getTime() - SepiaFW.geocoder.lastBestLocationUpdate) > SepiaFW.geocoder.autoRefreshInterval){
+					//console.log('---------------GET BEST LOCATION--------------'); 		//DEBUG
 					SepiaFW.geocoder.getBestLocation();
 				}else{
 					UI.updateMyView(false, false);
@@ -596,21 +612,26 @@ function sepiaFW_build_ui(){
 				lastMyViewUpdate = now;
 				
 				//contextual events update
-				SepiaFW.events.loadContextualEvents();
+				if (contextEventsLoadDelayTimer) clearTimeout(contextEventsLoadDelayTimer);
+				contextEventsLoadDelayTimer = setTimeout(function(){
+					//console.log('---------------GET CONTEXT EVENTS--------------'); 		//DEBUG
+					SepiaFW.events.loadContextualEvents(forceUpdate); 						//We use a safety wait here because GPS is usually to late
+				}, 1000);
 				
 				//check for near timeEvents (within 18h (before) and 120h (past))
 				var maxTargetTime = now + 18*60*60*1000;
 				var includePastMs = 120*60*60*1000;
 				var nextTimers = SepiaFW.events.getNextTimeEvents(maxTargetTime, '', includePastMs);
+				var myView = document.getElementById('sepiaFW-my-view'); 		//TODO: don't we have a method for this or a permanent variable?
 				$.each(nextTimers, function(index, Timer){
 					//check if alarm is present in myView 	
-					var timerPresentInMyView = $('#sepiaFW-my-view').find('[data-id="' + Timer.data.eventId + '"]');
+					var timerPresentInMyView = $(myView).find('[data-id="' + Timer.data.eventId + '"]');
 					if (timerPresentInMyView.length == 0){
 						//recreate timer and add to myView
 						var action = Timer.data;
 						action.info = "set";
 						action.type = Timer.data.eleType; 	//TODO: this is just identical by chance!!!
-						SepiaFW.ui.actions.timerAndAlarm(action, document.getElementById('sepiaFW-my-view'));
+						SepiaFW.ui.actions.timerAndAlarm(action, myView);
 					}
 				});
 
@@ -1155,15 +1176,15 @@ function sepiaFW_build_ui(){
 	UI.scrollToBottom = function(targetId, delay){
 		setTimeout(function(){
 			var scrollable = $('#' + targetId);
-			scrollable.animate({ scrollTop: scrollable[0].scrollHeight}, 250);
-		}, (delay? delay : 330));
+			scrollable.animate({ scrollTop: scrollable[0].scrollHeight}, 380);
+		}, (delay? delay : 200));
 	}
 	//Scroll to top
 	UI.scrollToTop = function(targetId, delay){
 		setTimeout(function(){
 			var scrollable = $('#' + targetId);
-			scrollable.animate({ scrollTop: 0}, 250);
-		}, (delay? delay : 330));
+			scrollable.animate({ scrollTop: 0}, 380);
+		}, (delay? delay : 200));
 	}
 	//Scroll to id inside scrollable element given by id, if scrollable is empty uses 'sepiaFW-chat-output'
 	UI.scrollToId = function(targetId, scrollViewId, delay){
@@ -1263,12 +1284,21 @@ function sepiaFW_build_ui(){
 		});
 	}
 	//Add elements to certain result view
+	UI.maxChatMessages = 40;
 	UI.addDataToResultView = function(resultView, entryData, beSilent, autoSwitchView, switchDelay){
 		var target = resultView.target;
+		var $target = $('#' + target);
 		var paneNbr = resultView.paneNumber;
 		
 		if (paneNbr == 1){
 			UI.insertEle(target, entryData);
+			//remove old message(s)?
+			var $allMessages = $target.find('.chatMsg').filter(":visible");
+			if (UI.maxChatMessages && UI.maxChatMessages <= $allMessages.length){
+				//remove old:
+				//$allMessages.slice(0, UI.maxChatMessages).hide();
+				$allMessages.first().hide();
+			}
 			UI.scrollToBottom(target);
 			//check if we should show the missed message note bubble
 			if (!beSilent && (
@@ -1279,11 +1309,11 @@ function sepiaFW_build_ui(){
 				UI.addMissedMessage();
 			}
 		}else if (paneNbr == 0){
-			$('#' + target).prepend(entryData);
+			$target.prepend(entryData);
 			UI.scrollToTop(target);
 		}else{
-			$('#' + target).html('');
-			$('#' + target).prepend(entryData);
+			$target.html('');
+			$target.prepend(entryData);
 			UI.scrollToTop(target);
 		}
 		

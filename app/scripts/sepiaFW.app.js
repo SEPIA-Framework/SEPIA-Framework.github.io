@@ -21,6 +21,7 @@ SepiaFW.buildSepiaFwPlugins = function(){
 	SepiaFW.events = sepiaFW_build_events();
 	SepiaFW.geocoder = sepiaFW_build_geocoder();
 	SepiaFW.audio = sepiaFW_build_audio();
+	SepiaFW.audioRecorder = sepiaFW_build_audio_recorder();
 	SepiaFW.speechWebSocket = sepiaFW_build_speechWebSocket();
 	SepiaFW.speech = sepiaFW_build_speech();
 	SepiaFW.webSocket = new Object();
@@ -33,6 +34,7 @@ SepiaFW.buildSepiaFwPlugins = function(){
 	SepiaFW.offline = sepiaFW_build_offline();
 	SepiaFW.alwaysOn = sepiaFW_build_always_on();
 	SepiaFW.inputControls = sepiaFW_build_input_controls();
+	SepiaFW.wakeTriggers = sepiaFW_build_wake_triggers();
 }
 
 //DATA STORAGE
@@ -441,6 +443,27 @@ function sepiaFW_build_tools(){
 			url = url.replace(new RegExp("(\\?)(" + parameter + "=.*?)($)"), "");
 		}
 		return url;
+	}
+
+	//load script to element (body by default)
+	Tools.loadJS = function(url, successCallback, location){
+		if (!location) location = document.body;
+		
+		var scriptTag = document.createElement('script');
+		scriptTag.src = url;
+
+		if (successCallback){
+			var didExecuteCallback = false;
+			function execute(){
+				if (!didExecuteCallback){
+					didExecuteCallback = true;
+					successCallback();
+				}
+			}
+			scriptTag.onload = execute;
+			scriptTag.onreadystatechange = execute;
+		}
+		location.appendChild(scriptTag);
 	}
 	
 	//check for IP

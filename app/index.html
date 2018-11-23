@@ -125,7 +125,8 @@
 				<button id='sepiaFW-shortcut-btn-shop'><i class="material-icons md-24">&#xE8CC;</i></button>
 				<button id='sepiaFW-shortcut-btn-todo'><i class="material-icons md-24">&#xE85D;</i></button>
 				<button id='sepiaFW-shortcut-btn-radio'><i class="material-icons md-24">&#xE03E;</i></button>
-				<button id='sepiaFW-shortcut-btn-alarm'><i class="material-icons md-24">&#xE855;</i></button>
+				<button id='sepiaFW-shortcut-btn-timer'><i class="material-icons md-24">timer</i></button> <!-- av_timer -->
+				<button id='sepiaFW-shortcut-btn-alarm'><i class="material-icons md-24">alarm</i></button>
 				<button id='sepiaFW-shortcut-btn-weather'><i class="material-icons md-24">&#xE430;</i></button>
 				<button id='sepiaFW-shortcut-btn-news'><i class="material-icons md-24">local_library</i></button>
 				<button id='sepiaFW-shortcut-btn-myEvents'><i class="material-icons md-24">&#xE55A;</i></button>
@@ -259,6 +260,10 @@
 <link rel="stylesheet alternate" href="css/sepiaFW-skin-grid.css" class='sepiaFW-style-skin' title='' data-name='TheGrid'>
 <link rel="stylesheet alternate" href="css/sepiaFW-skin-canny.css" class='sepiaFW-style-skin' title='' data-name='Canny'>
 <link rel="stylesheet alternate" href="css/sepiaFW-skin-minimal.css" class='sepiaFW-style-skin' title='' data-name='Essential'>
+<link rel="stylesheet alternate" href="css/sepiaFW-skin-study.css" class='sepiaFW-style-skin' title='' data-name='Study'>
+<link rel="stylesheet alternate" href="css/sepiaFW-skin-odyssey1.css" class='sepiaFW-style-skin' title='' data-name='Odyssey1'>
+<link rel="stylesheet alternate" href="css/sepiaFW-skin-odyssey2.css" class='sepiaFW-style-skin' title='' data-name='Odyssey2'>
+<link rel="stylesheet alternate" href="css/sepiaFW-skin-malachite.css" class='sepiaFW-style-skin' title='' data-name='Malachite'>
 <!-- START JS -->
 <script src="scripts/jquery-3.1.1.min.js"></script>
 <!--<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>-->
@@ -279,6 +284,7 @@
 <script src="scripts/sepiaFW.assistant.js"></script>
 <script src="scripts/sepiaFW.geocoder.js"></script>
 <script src="scripts/sepiaFW.audio.js"></script>
+<script src="scripts/sepiaFW.audioRecorder.js"></script>
 <script src="scripts/sepiaFW.speechWebSocket.js"></script>
 <script src="scripts/sepiaFW.speech.js"></script>
 <script src="scripts/sepiaFW.webSocket.js"></script>
@@ -288,6 +294,7 @@
 <script src="scripts/sepiaFW.offline.js"></script>
 <script src="scripts/sepiaFW.alwaysOn.js"></script>
 <script src="scripts/sepiaFW.inputControls.js"></script>
+<script src="scripts/sepiaFW.wakeTriggers.js"></script>
 <script type="text/javascript">
 
 	//get some settings via URL parameters
@@ -410,5 +417,6 @@
 		appSetup();
 	}
 </script>
+<!-- Plugins -->
 </body>
 </html>

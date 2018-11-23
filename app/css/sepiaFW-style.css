@@ -1,6 +1,6 @@
 ::-webkit-scrollbar {
-	width: 2px;
-	height: 2px;
+	width: 4px;
+	height: 4px;
 	background: rgba(128,128,128,0.12);
 }
 ::-webkit-scrollbar-thumb {
@@ -23,6 +23,7 @@
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
+.material-icons.md-inherit { font-size: inherit; }
 .material-icons {
 	vertical-align: text-bottom;
 	-webkit-user-select: none;  
@@ -65,7 +66,8 @@ html {
 	background-position: calc(50% + 1px) center;
 }
 html.dark {
-    background-color: #000;
+	background-color: #000;
+	background-image: none;
 }
 body {
     /*font-family: 'Roboto', sans-serif;*/
@@ -338,7 +340,7 @@ body {
 	}
 }
 #sepiaFW-main-window.sepiaFW-skin-mod {
-
+	/* skins should write main-window modifications to this class */
 }
 
 #sepiaFW-main-window input, #sepiaFW-login-box input {
@@ -801,6 +803,14 @@ body {
 #sepiaFW-chat-menu li .sepiaFW-button-inline {
 	float: right;
 	margin: 0;
+	height: 28px;
+	padding: 0px 10px;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#sepiaFW-chat-menu li .sepiaFW-button-inline i {
+	float: none;
 }
 #sepiaFW-chat-menu li .sepiaFW-toggle-btn {
 	float: right;
@@ -818,7 +828,7 @@ body {
 .sepiaFW-toggle-btn .on {
 	user-select: none;
     pointer-events: none;
-	background: rgba(0, 255, 0, 0.5);
+	background: rgba(0, 255, 0, 0.55);
 	border-radius: 3px;
 	border: 0px;
 	height: 100%;

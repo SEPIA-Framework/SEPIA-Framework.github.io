@@ -1,14 +1,14 @@
 html {
-	background-image: url(../img/SEPIA_back-w.png);
-	background-size: auto 50%;
-	background-color: #101418;
+	background-image: url(../img/worldMapColored1.png);
+	background-size: auto 75%;
+	background-color: #1F252A;
 }
 #sepiaFW-main-window {
 	color: #fff;
 }
 @media (min-width: 480px) and (min-height: 481px) {
 	#sepiaFW-main-window {
-		border-color: #2d3034;
+		border-color: #23292e;
 		border-width: 6px;
 		border-radius: 16px;
 		/*overflow: hidden;*/ 	/* we can't use this with position fixed children, its buggy */
@@ -24,62 +24,59 @@ html {
 	}
 }
 
-#sepiaFW-pC 	{ background-color: #101418; }
-#sepiaFW-sC 	{ background-color: #ceff1a; }
-#sepiaFW-sC2 	{ background-color: #08a0c8; 	}
+#sepiaFW-pC 	{ background-color: #1F252A; }
+#sepiaFW-sC 	{ background-color: #405365; }
+#sepiaFW-sC2 	{ background-color: #BAB5A4; 	}
 #sepiaFW-aC 	{ background-color: rgb(186, 42, 42); 	}
-#sepiaFW-aC2 	{ background-color: #08a0c8; 	}
-#sepiaFW-asC 	{ background-color: #ceff1a; 	}
-#sepiaFW-adC 	{ background-color: #ceff1a; 	}
+#sepiaFW-aC2 	{ background-color: #BAB5A4; 	}
+#sepiaFW-asC 	{ background-color: #405365; 	}
+#sepiaFW-adC 	{ background-color: #FED766; 	}
 #sepiaFW-lC 	{ background-color: rgba(150, 150, 150, 0.50); 	}
 
 #sepiaFW-login-box {
-	background: #2d3034;
-	color: #ECEBE7;
+	background: #405365;
+	color: #fff;
 }
 #sepiaFW-login-box p {
-	color: #ECEBE7;
+	color: #fff;
 }
 #sepiaFW-login-box button {
-	background: #ceff1a;
-	color: #101418;
-}
-#sepiaFW-login-links a {
-	opacity: 0.5;
+	background: #975C33;
+	color: #fff;
 }
 
 #sepiaFW-nav-bar, #sepiaFW-chat-controls-form {
-	background: #101418;
-	color: #ECEBE7;
+	background: #1F252A;
+	color: #fff;
 }
 #sepiaFW-chat-controls-right {
-	background: #101418;
-	color: #ECEBE7;
+	background: #1F252A;
+	color: #fff;
 }
 #sepiaFW-chat-controls {
-	background: linear-gradient(rgba(16, 20, 24, 0), #101418, #101418);
-	border-bottom-color: #101418;
+	background: linear-gradient(rgba(31,37,42,0), #1F252A, #1F252A);
+	border-bottom-color: #1F252A;
 }
 
 #sepiaFW-main-window button,
 .sepiaFW-touch-device #sepiaFW-main-window button:hover {
 	background: transparent;
-	color: #ECEBE7;
+	color: #fff;
 }
 .sepiaFW-notouch-device #sepiaFW-main-window button:hover {
 	background: transparent;
-	color: #ceff1a;
+	color: #BAB5A4;
 }
 
 #sepiaFW-assist-btn-area {
-	border-color: #101418;
+	border-color: #23292e;
 }
 #sepiaFW-assist-btn {
-	background: #08a0c8 !important;
-	/*background: linear-gradient(to right, #CEFF1A 0%, #08a0c8 100%) !important;*/
+	background: linear-gradient(to right, #999 0%, #222 100%) !important;
+	/*background: linear-gradient(to right, #CEFF1A 0%, #16ABC3 100%) !important;*/
 }
 .sepiaFW-notouch-device #sepiaFW-assist-btn:hover {
-	background: linear-gradient(to right, #ECEBE7 0%, #bbb 100%) !important;
+	background: linear-gradient(to right, #fff 0%, #bbb 100%) !important;
 }
 #sepiaFW-assist-btn i {
 	display: none !important;
@@ -92,23 +89,23 @@ html {
 */
 
 .sepiaFW-menu {
-	background: #101418;
-	color: #ECEBE7;
+	background: #1F252A;
+	color: #fff;
 }
 .sepiaFW-menu input {
 	background: transparent !important;
 }
 #sepiaFW-chat-controls-more-menu {
-	background: #101418;
+	background: #1F252A;
 	max-width: none;
 }
 #sepiaFW-chat-controls-more-menu button {
-	background: #ceff1a;
-	color: #101418;
+	background: #fff;
+	color: #222;
 }
 #sepiaFW-chat-menu {
-	background: #101418; 
-	color: #ECEBE7;
+	background: #1F252A; 
+	color: #fff;
 }
 #sepiaFW-chat-menu-head-border {
     background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(255,255,255,0.5) 40%,rgba(255,255,255,0.5) 60%,rgba(0,0,0,0) 100%);
@@ -120,88 +117,78 @@ html {
 	background: rgba(75, 75, 75, 0.14);
 }
 #sepiaFW-chat-menu button {
-	border: 1px solid #ECEBE7;
-	background-color: #ceff1a;
-	color: #101418;
+	border: 1px solid white;
 	margin: 4px;
 }
 .sepiaFW-notouch-device #sepiaFW-chat-menu button:hover {
-	background-color: #2d3034 !important;
-	color: #ECEBE7 !important;
+	background-color: #405365 !important;
+	color: #fff !important;
 }
 .sepiaFW-notouch-device #sepiaFW-chat-controls-more-menu button:hover {
-	background-color: #ECEBE7 !important;
-	color: #101418 !important;
-}
-
-.sepiaFW-notouch-device #sepiaFW-main-window .chat-buttons-area button:hover {
-    background-color: #b4df18 !important;
-	color: #101418 !important;
-}
-#sepiaFW-main-window .chat-buttons-area button {
-    background: #ceff1a !important;
-	color: #101418 !important
-}
-#sepiaFW-main-window .chat-buttons-area .my-view-custom-button {
-	background-color: #08a0c8 !important;
-	color: #ECEBE7 !important;
-}
-.sepiaFW-notouch-device #sepiaFW-main-window .chat-buttons-area .my-view-custom-button:hover {
-	background-color: #0ab4e1 !important;
-	color: #ECEBE7 !important;
-}
-#sepiaFW-main-window #sepiaFW-myFirstStart-buttons button {
-	background: #ceff1a !important;
-	color: #101418 !important
-}
-.sepiaFW-notouch-device #sepiaFW-main-window #sepiaFW-myFirstStart-buttons button:hover {
-	background: #f3ff1a !important;
-	color: #101418 !important;
-}
-#sepiaFW-main-window #sepiaFW-myEvents-buttons button,
-#sepiaFW-main-window #sepiaFW-myEvents-buttons-replaced button,
-.sepiaFW-touch-device #sepiaFW-main-window #sepiaFW-myEvents-buttons button {
-    background: #ceff1a !important;
-	color: #101418 !important;
+	background-color: #405365 !important;
+	color: #fff !important;
 }
 /*
+#sepiaFW-myEvents-buttons button,
+#sepiaFW-myEvents-buttons-replaced button,
+.sepiaFW-touch-device #sepiaFW-myEvents-buttons button {
+    background: #3f9f74 !important;
+	color: #fff !important;
+}
 #sepiaFW-myEvents-buttons button:hover {
 	background-color: #dfdff2 !important;
 	color: #000 !important;
 }
 */
+#sepiaFW-main-window .chat-buttons-area button {
+    background: #975C33 !important;
+	color: #fff !important
+}
+.sepiaFW-notouch-device #sepiaFW-main-window .chat-buttons-area button:hover {
+    background-color: #405365 !important;
+	color: #fff !important;
+}
+#sepiaFW-main-window .chat-buttons-area .my-view-custom-button {
+	background-color: #405365 !important;
+	color: #fff !important;
+}
+#sepiaFW-main-window #sepiaFW-myFirstStart-buttons button {
+	background: #BAB5A4 !important;
+	color: #222 !important
+}
 
 #sepiaFW-chat-output .statusUpdate {
     background: rgba(255, 255, 255, 0.05);
-    color: #ECEBE7;
+    color: #fff;
 }
 
 #sepiaFW-chat-output article {
-	background: #2d3034;
-    /*background: #6E7A82;*/
+    background: #975C33;
 	color: #fff;
+	/*background: #2d2d2d;*/
+    /*color: #fff;*/
 }
 #sepiaFW-chat-output article.chatMe {
-	background: #08a0c8;
+	background: #6E665E;
 	color: #fff;
 }
 #sepiaFW-chat-output article.chatMe b, 
 #sepiaFW-chat-output article.chatMe span {
-	color: #ECEBE7;
+	color: #fff;
 }
 #sepiaFW-chat-output article.chatAssistant {
-	background: #ceff1a;
-	color: #101418;
+	background: #405365;
+	color: #fff;
 }
 #sepiaFW-chat-output article.chatAssistant b{
-	color: #101418;
+	color: #fff;
 }
 #sepiaFW-chat-output article.chatAssistant.chatPm{
 	border-left-color: rgba(255, 255, 255, 0.10);
 }
 
 #sepiaFW-chat-controls-swipe-area .sepiaFW-swipeBar-switchable {
-	background: #08a0c8;
+	background: #23292e;
 	color: #fff;
 }
 
@@ -228,36 +215,31 @@ html {
 }
 
 .sepiaFW-cards-list-title {
-	color: #ECEBE7;
-    background: #08a0c8;
+	color: #222;
+    background: #BAB5A4;
 }
 .sepiaFW-cards-list-body {
     color: #222;
 }
 
-.sepiaFW-cards-list-footer {
-	background: #ceff1a;
-	color: #101418;
-}
-
 .sepiaFW-cards-list-body .weatherNowSmall .weatherNowSmallImage {
-	background: #08a0c8;
+	background: #BAB5A4;
 }
 
 /*----- teachUI -----*/
 
 #sepiaFW-teachUI-nav-bar {
-    background: #101418;
-    color: #ECEBE7;
+    background: #1F252A;
+    color: #fff;
 }
 #sepiaFW-teachUI-view {
-    background: #101418;
+    background: #1F252A;
 }
 #sepiaFW-teachUI-view label {
     color: #ceff1a;
 }
 #sepiaFW-teachUI-editor button, 
 #sepiaFW-teachUI-manager button {
-    background: #ceff1a !important;
-    color: #101418 !important;
+    background: #c4ff3e !important;
+    color: #333 !important;
 }

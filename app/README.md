@@ -2,6 +2,24 @@
 
 ## Release History
 
+### v0.15.1 beta - 2018.11.18
+
+- Improved alarms during AlwaysOn-mode
+- Introduced smart-microphone toggle (enable in settings) that auto-activates mic on voice based questions (beta)
+- Added new skins 'Study', 'Odyssey1', 'Odyssey2', reworked 'NeoSepiaDark' and changed old one to 'Malachite', updated 'Grid' and tweaked other styles
+- Fixed some bugs in GPS event handling
+- Improved handling of large lists to show them more often in 'big-results'-view and sorted time-events by date
+- Split Alarms/Timers button in shortcuts into 2 buttons
+- Introduced upper limit for maximal visible chat entries (to improve performance)
+- Added mood indicator to AlwaysOn-mode avatar (mouth angle ^_^)
+- Fixed a bug that crashed app when a Bluetooth devices was (dis)connected
+- Improved hotkeys/gamepad config menu
+- Reworked AudioRecorder module to support different recorder types
+- Introduced new WakeTriggers module and added new config options (e.g. (dis)allow remote hotkey)
+- Improved file reader to handle array-buffers so that we can import WebAssembly code
+- Added Porcupine JS wake-word tool as 'xtension' and beta-test view to experiment with 'Hey SEPIA' (access from settings)
+- Updated demo mode with offline custom buttons and fixed some tutorial issues
+
 ### v0.14.3 beta - 2018.11.07
 
 - Power-events e.g. open Always-On mode on power plugin
