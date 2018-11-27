@@ -572,7 +572,7 @@ function sepiaFW_build_ui(){
 	}
 	
 	//Update myView
-	var myViewUpdateInterval = 30*60*1000; 		//<- automatic updates will not be done more than once within this interval
+	var myViewUpdateInterval = 20*60*1000; 		//<- automatic updates will not be done more than once within this interval
 	var lastMyViewUpdate = 0;
 	var myViewUpdateTimer;
 	var contextEventsLoadDelayTimer = undefined;
@@ -1333,12 +1333,14 @@ function sepiaFW_build_ui(){
 			$inputBar.fadeIn(300);
 			$('.sepiaFW-carousel-pane').removeClass('full-screen');
 			$('#sepiaFW-chat-menu').removeClass('full-screen');
+			$('#sepiaFW-chat-controls').removeClass('full-screen');
 			UI.isInterfaceFullscreen = false;
 		}else{
 			$navBar.fadeOut(300);
 			$inputBar.fadeOut(300);
 			$('.sepiaFW-carousel-pane').addClass('full-screen');
 			$('#sepiaFW-chat-menu').addClass('full-screen');
+			$('#sepiaFW-chat-controls').addClass('full-screen');
 			UI.isInterfaceFullscreen = true;
 		}
 		setTimeout(function(){
