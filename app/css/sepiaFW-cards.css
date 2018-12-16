@@ -1,5 +1,5 @@
 .sepiaFW-cards-flexSize-container {
-    background: rgba(0, 0, 0, 0.10);
+    background: #e5e5e5; /*rgba(0, 0, 0, 0.10);*/
 	position: relative;
 	margin: 5px 0px;
 	border-radius: 3px;
@@ -59,6 +59,19 @@
 
 /* ------ Lists ------ */
 
+/* commons */
+.sepiaFW-list-drag-dummy {
+	position: fixed;
+	pointer-events: none;
+	background: rgba(125, 125, 125, 0.5);
+	margin: 0;
+    padding: 0;
+	z-index: 999;
+}
+.sepiaFW-list-hover-over {
+	opacity: 0.5;
+}
+
 /* header */
 .sepiaFW-cards-list-title {
 	display: flex;
@@ -69,6 +82,7 @@
 	background: rgba(235, 235, 255, 0.95);
 	/*color: #fff;*/
 	/*border-radius: 3px 3px 0 0;*/
+	border-radius: 3px;
 	margin: 0px 5px 0px 5px;
 	width: calc(100% - 10px);
 	min-height: 38px;
@@ -77,15 +91,17 @@
 	font-weight: bold;
 	line-height: 27px;
 }
-.sepiaFW-cards-list-title span {
+.sepiaFW-cards-list-title > span {
 	/*position: absolute;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);*/
-	display: inline-block;
+	display: flex;
+    align-items: center;
 	flex: 0 1 auto;
+	height: 37px;
 	order: 2;
-    padding-top: 3px;
+    padding-top: 0px;
 }
 .sepiaFW-cards-list-title button {
 	flex: 0 1 auto;
@@ -94,9 +110,9 @@
 	padding: 4px 12px !important;
 }
 .sepiaFW-cards-list-contextMenu {
-	position: absolute;
+	/*position: absolute;
 	top: 38px;
-	right: 0px;
+	right: 0px;*/
 	line-height: 17px;
     font-size: 13px;
 	display: none;
@@ -148,12 +164,30 @@
 .sepiaFW-cards-list-body {
 	margin: 0px;
 	padding: 0px;
-	min-height: 5px;
+	min-height: 25px;
 	padding-bottom: 5px;
 }
 .sepiaFW-cards-list-body .listElement {
 	display: flex;
-	min-height: 33px;
+	min-height: 34px;
+	padding-top: 3px;
+}
+.sepiaFW-cards-list-body .listElement:first-child {
+	margin-top: 2px;
+}
+.sepiaFW-cards-list-body .listElement.draggable-toggle {
+	opacity: 0.6;
+}
+.sepiaFW-cards-list-body .listElement.dragging {
+	opacity: 0.2;
+}
+.sepiaFW-cards-list-body .listElement.new-position {
+	animation: list-pulse .500s 1;
+}
+@keyframes list-pulse {
+	0% {	opacity: 0.2;	}
+	33% {	opacity: 0.05;	}
+	100% {	opacity: 1.0;	}
 }
 .sepiaFW-cards-list-body .listElement div {
 	background: rgba(255, 255, 255, 0.90);
@@ -166,34 +200,52 @@
 	display: flex;
     align-items: center;
     justify-content: center;
-	width: 50px;
-	margin: 5px 0px 0px 5px;
+	width: 44px;
+    /*border-right: 3px solid #e5e5e5;*/
+	margin: 0px 3px 0px 5px;
 	user-select: none;
+	cursor: pointer;
 }
 .sepiaFW-cards-list-body .listElement .listCenter {
-	width: calc(100% - 120px);
-	margin: 5px 5px 0px 5px;
-	padding: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: left;
+	width: calc(100% - 101px);
+	margin: 0px 0px 0px 0px;
+	padding: 5px 8px;
 }
 .sepiaFW-cards-list-body .listElement .listRight {
 	display: flex;
     align-items: center;
     justify-content: center;
-	width: 50px;
-	margin: 5px 5px 0px 0px;
+	width: 44px;
+	/*border-left: 2px solid #545454;*/
+	/*background: #bcbebe;*/
+	border-left: 0px solid #fff;
+	background: #d2d2dd;
+	color: #fff;
+	margin: 0px 5px 0px 3px;
 	user-select: none;
 }
-.sepiaFW-notouch-device .sepiaFW-cards-list-body .listElement .listRight:hover {	background: rgba(255, 0, 0, 0.50);		}
+.sepiaFW-notouch-device .sepiaFW-cards-list-body .listElement .listRight:hover {	
+	background: rgba(255, 0, 0, 0.50);		
+}
 
 .sepiaFW-cards-list-body .listElement .checked {
-	background: rgba(0, 255, 0, 0.50);
+	background: rgba(0, 255, 0, 0.50); 		/*#72f272 - rgba(114, 242, 114, 0.75)*/
 }
-.sepiaFW-notouch-device .sepiaFW-cards-list-body .listElement .checked:hover {	background: rgba(0, 255, 255, 0.50);	}
-
-.sepiaFW-cards-list-body .listElement .unchecked {
+.sepiaFW-cards-list-body .listElement .inProgress {
+	background: rgba(242, 242, 114, 0.75); 	/*#f2f272*/
+}
+/*.sepiaFW-cards-list-body .listElement .unchecked {
 	background: rgba(255, 255, 255, 0.90);
+}*/
+/*.sepiaFW-notouch-device .sepiaFW-cards-list-body .listElement .unchecked:hover {	
+	background: rgba(0, 255, 0, 0.50);		
 }
-.sepiaFW-notouch-device .sepiaFW-cards-list-body .listElement .unchecked:hover {	background: rgba(0, 255, 0, 0.50);		}
+.sepiaFW-notouch-device .sepiaFW-cards-list-body .listElement .checked:hover {	
+	background: rgba(0, 255, 255, 0.50);	
+}*/
 
 /* hidden and visible */
 .sepiaFW-cards-list-body .itemHidden {
@@ -208,7 +260,10 @@
 .sepiaFW-cards-list-footer {
 	display: inline-block;
     /*background: rgba(235, 235, 255, 0.33);*/
-	background: rgba(170, 170, 180, 0.33);
+	/*background: rgba(170, 170, 180, 0.33);*/
+	/*background: #d2d2dd;*/
+	background: #eff1ff;
+	border-radius: 3px;
     margin: 0px 5px 5px 5px;
     text-align: center;
     padding: 5px;
@@ -246,8 +301,10 @@
     align-items: center;
     justify-content: center;
 	width: calc(100% - 120px);
+	min-height: 38px;
 	margin: 5px 5px 0px 5px;
 	padding: 5px;
+	font-weight: bold;
 }
 .sepiaFW-cards-list-body .radioStation .radioRight {
 	display: flex;
@@ -324,13 +381,14 @@
 	cursor: pointer;
 	padding: 5px;
 }
-.sepiaFW-notouch-device .sepiaFW-cards-list-body .timeEvent .timeEventRight:hover {	background: rgba(255, 0, 0, 0.50);		}
+.sepiaFW-notouch-device .sepiaFW-cards-list-body .timeEvent .timeEventRight:hover {	background: rgba(255, 0, 0, 0.50);	}
 
 /* ---- News ---- */
 
 .sepiaFW-cards-list-title.newsHeader {
-	background: rgba(255, 255, 255, 0.95);
-	color: #000;
+	background: rgba(255, 255, 255, 0.90);
+	border-radius: 0;
+	font-weight: normal;
 }
 .sepiaFW-cards-list-title.newsHeader span {
 	padding-left: 0px;
@@ -364,6 +422,9 @@
 	margin: 0px;
 	padding: 0px;
 	font-size: 12px;
+}
+.sepiaFW-cards-list-footer.newsFooter {
+    border-radius: 0;
 }
 
 /* ---- Weather ---- */

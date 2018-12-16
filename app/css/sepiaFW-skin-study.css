@@ -17,7 +17,7 @@ html {
 		border-radius: 9px 9px 0 0;
 	}
 	#sepiaFW-chat-controls {
-		border-radius: 0 0 9px 9px;
+		border-radius: 0 0 0px 0px;
 	}
 	.sepiaFW-top-layer-view {
 		border-radius: 7px;
@@ -87,6 +87,11 @@ html {
 	background-color: #ceff1a;
 }
 */
+
+#sepiaFW-chat-controls-speech-box > div {
+	background: #1F252A;
+	color: #fff;
+}
 
 .sepiaFW-menu {
 	background: #1F252A;
@@ -221,7 +226,19 @@ html {
 .sepiaFW-cards-list-body {
     color: #222;
 }
-
+.sepiaFW-cards-list-footer {
+	background: rgba(170, 170, 180, 0.33);
+}
+.sepiaFW-cards-list-body .listElement .checked {
+    background: #4ec48f;
+}
+.sepiaFW-cards-list-body .listElement .inProgress {
+    background: #ebd371;
+}
+.sepiaFW-cards-list-body .listElement .listRight {
+	border-color: #545454;
+	background: #BAB5A4;
+}
 .sepiaFW-cards-list-body .weatherNowSmall .weatherNowSmallImage {
 	background: #BAB5A4;
 }

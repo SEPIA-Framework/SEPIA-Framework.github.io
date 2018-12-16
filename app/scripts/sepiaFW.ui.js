@@ -3,8 +3,8 @@ function sepiaFW_build_ui(){
 	var UI = {};
 	
 	//some constants
-	UI.version = "v0.15.1";
-	UI.JQ_RES_VIEW_IDS = "#sepiaFW-result-view, #sepiaFW-chat-output, #sepiaFW-my-view";			//a selector to get all result views e.g. $(UI.JQ_RES_VIEW_IDS).find(...)
+	UI.version = "v0.15.2";
+	UI.JQ_RES_VIEW_IDS = "#sepiaFW-result-view, #sepiaFW-chat-output, #sepiaFW-my-view";	//a selector to get all result views e.g. $(UI.JQ_RES_VIEW_IDS).find(...) - TODO: same as $('.sepiaFW-results-container') ??
 	UI.JQ_ALL_MAIN_VIEWS = "#sepiaFW-result-view, #sepiaFW-chat-output, #sepiaFW-my-view, #sepiaFW-teachUI-editor, #sepiaFW-teachUI-manager, #sepiaFW-frame-page-1, #sepiaFW-frame-page-2"; 	//TODO: frames can have more ...
 	UI.JQ_ALL_SETTINGS_VIEWS = ".sepiaFW-chat-menu-list-container";
 	UI.JQ_ALL_MAIN_CONTAINERS = "#sepiaFW-my-view, #sepiaFW-chat-output-container, #sepiaFW-result-view";
@@ -157,10 +157,13 @@ function sepiaFW_build_ui(){
 	});
 	
 	//make an info message
-	UI.showInfo = function(text, isErrorMessage){
+	UI.showInfo = function(text, isErrorMessage, customTag){
 		if (UI.build){
 			var message = UI.build.makeMessageObject(text, 'UI', 'client', '');
 			var sEntry = UI.build.statusMessage(message, 'username', true);		//we handle UI messages as errors for now
+			if (customTag){
+				sEntry.dataset.msgCustomTag = customTag;
+			}
 			//get right view
 			var targetViewName = "chat";
 			var resultView = UI.getResultViewByName(targetViewName);
@@ -189,7 +192,7 @@ function sepiaFW_build_ui(){
 		UI.addDataToResultView(resultView, cEntry);
 	}
 	
-	//switch active swipe-bars
+	//get/switch/show/hide active swipe-bars - TODO: can we get rid of the hard-coded dom ids?
 	UI.switchSwipeBars = function(setName){
 		$('.sepiaFW-swipeBar-switchable').hide();
 		if (setName){
@@ -216,6 +219,14 @@ function sepiaFW_build_ui(){
 	}
 	UI.getActiveSwipeBars = function(){
 		return activeSwipeBars;
+	}
+	UI.hideActiveSwipeBars = function(){
+		$('#sepiaFW-swipeBar-container-left').hide();
+		$('#sepiaFW-swipeBar-container-right').hide();
+	}
+	UI.showActiveSwipeBars = function(){
+		$('#sepiaFW-swipeBar-container-left').show();
+		$('#sepiaFW-swipeBar-container-right').show();
 	}
 	var activeSwipeBars = "chat";
 	var lastActiveSwipeBars = "chat";
@@ -256,13 +267,23 @@ function sepiaFW_build_ui(){
 	
 	//missed message handling
 	var missedMessages = 0;
+	UI.handleMissedMessage = function(missed, msgInfo){
+		//is there a frame that can handle missed messages?
+		if (SepiaFW.frames && SepiaFW.frames.isOpen && SepiaFW.frames.canHandleMissedMessages()){
+			SepiaFW.frames.handleMissedMessages(msgInfo);
+		}else{
+			UI.addMissedMessage(missed);		
+		}
+	}
 	UI.addMissedMessage = function(missed){
 		if (missed){
-			missedMessages += missed;
+			missedMessages += missed; 	//Note: use negative to substract
 		}else{
 			missedMessages++;
 		}
-		if ($('#sepiaFW-nav-label-note').css('display') === "none"){
+		if (missedMessages <= 0){
+			$('#sepiaFW-nav-label-note').hide();
+		}else if ($('#sepiaFW-nav-label-note').css('display') === "none"){
 			$('#sepiaFW-nav-label-note').fadeIn(300);
 		}
 		if (missedMessages < 999){
@@ -757,6 +778,9 @@ function sepiaFW_build_ui(){
 	var lastDomEventTS = new Date().getTime();
 	//listener
 	UI.trackIdleTime = function(){
+		function resetTimer() {
+			lastDomEventTS = new Date().getTime();
+		}
 		//DOM Events
 		document.addEventListener("keypress", resetTimer);
 		document.addEventListener("mousemove", resetTimer);
@@ -767,9 +791,6 @@ function sepiaFW_build_ui(){
 		document.onload = resetTimer;
 		document.onscroll = resetTimer;    // scrolling with arrow keys
 		*/
-		function resetTimer() {
-			lastDomEventTS = new Date().getTime();
-		}
 	}
 	//state
 	UI.getIdleTime = function(){
@@ -911,6 +932,12 @@ function sepiaFW_build_ui(){
 		});
 	}
 	
+	//Test for support of special sepiaFW trigger events
+	UI.elementSupportsCustomTriggers = function(ele){
+		var eventsListeners = $._data(ele, "events");
+		return (eventsListeners && !!eventsListeners['sepiaFW-events']);
+	}
+
 	//Simple double-tap
 	UI.simpleDoubleTab = function(ele, callback){
 		var delay = 333;
@@ -999,12 +1026,26 @@ function sepiaFW_build_ui(){
 		var mc = new Hammer.Manager(ele);
 		mc.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }));
 		mc.add(new Hammer.Tap());
-		mc.add(new Hammer.Press({ event: 'firstpress', time : 300}));
-		mc.add(new Hammer.Press({ time : delay}));
+		mc.add(new Hammer.Press({ event: 'firstpress', time: 300 })); 	//catches the press at 300ms to start animations 
+		mc.add(new Hammer.Press({ time: delay }));
 		
 		if (preventTapOnDoubleTap){
 			mc.get('tap').requireFailure('doubletap');		//use this to prevent a 'tap' together with 'doubletap' ... but to introduce a delay on tap
 		}
+
+		//TODO: test sepiaFW-events handler ...
+		$(ele).on('sepiaFW-events', function(e, data){
+			if (data.name === "shortpress"){
+				//console.log('shortpress-trigger');
+				if (callbackShort) callbackShort();
+			}else if (data.name === "longpress"){
+				//console.log('longpress-trigger');
+				if (callbackLong) callbackLong();
+				else if (callbackLongRelease) callbackLongRelease(); 	//... assuming this is what makes most sense according to 'UI.onShortLongPress'
+			}else if (data.name === "doubletap"){
+				if (callbackDouble) callbackDouble();
+			}
+		});
 
 		//if (callbackShort) mc.on("tap", callbackShort);
 		if (callbackShort) mc.on("tap", function(ev){
@@ -1060,14 +1101,6 @@ function sepiaFW_build_ui(){
 			//Short press
 			if (shortCallback) shortCallback();
 		}, undefined, true, false, animateShort);
-		//add a normal event listener with data to enable trigger method
-		$(ele).on('click', function(ev, data){
-			if (data && data.bm_force){
-				if (shortCallback) shortCallback();
-			}else{
-				ev.preventDefault();
-			}
-		});
 	}
 	//Long-press indicator
 	var longPressIndicator = '';
@@ -1122,52 +1155,88 @@ function sepiaFW_build_ui(){
 		var didDown = false;	var didUp = false;
 		var xDown = 0;			var xUp = 0;
 		var yDown = 0;			var yUp = 0;
+		var timeDown = 0;
+		var longPressTime = 625;
+		var timeDownTimer;
+		var resetTimer;
 		$swipeArea.mouseup(function(event){			up(this, event);
 			}).mousedown(function(event){			down(this, event);
-			//}).on('touchstart', function(event){	console.log('touchstart'); down(this, event);
+            //}).on('touchstart', function(event){	console.log('touchstart');
 			//}).on('touchend', function(event){	console.log('touchend'); up(this, event);
 			});
+        if (UI.isIOS){
+            $swipeArea.on('touchstart', function(event){    touchdown(this, event); });
+        }
+        function touchdown(that, ev){
+            //console.log('touchstart');
+            timeDown = new Date().getTime();
+        }
 		function down(that, ev){
+			//console.log('down');
 			if (!didDown){
 				didDown = true;
 				didUp = false;
 				xDown = (ev.center)? ev.center.x : ev.clientX;
 				yDown = (ev.center)? ev.center.y : ev.clientY;
 				$(that).addClass('sepiaFW-fullSize');
+                if (!timeDown){
+                    timeDown = new Date().getTime();
+                }
 				//console.log(ev);
+				timeDownTimer = setTimeout(function(){
+					up(that, ev); 		//note: ev will not be up-to-date here
+				}, longPressTime);
 			}
 		}
 		function up(that, ev){
+			//console.log('up');
+			if (timeDownTimer) clearTimeout(timeDownTimer);
 			if (!didUp){
 				didUp = true;
-				xUp = (ev.center)? ev.center.x : ev.clientX;
-				yUp = (ev.center)? ev.center.y : ev.clientY;
 				$(that).removeClass('sepiaFW-fullSize');
-				var moved = (xDown-xUp)*(xDown-xUp) + (yDown-yUp)*(yDown-yUp);
-				//console.log(moved);
-				if (moved < 100){
-					click(ev);
-				}
+				checkClick(ev);
 				resetTimer = setTimeout(function(){
 					didDown = false;
 				}, 500);
+			}
+            timeDown = 0;
+		}
+		function checkClick(ev){
+			xUp = (ev.center)? ev.center.x : ev.clientX;
+			yUp = (ev.center)? ev.center.y : ev.clientY;
+			var moved = (xDown-xUp)*(xDown-xUp) + (yDown-yUp)*(yDown-yUp);
+			//console.log(moved);
+			if (moved < 100){
+				click(ev);
 			}
 		}
 		function click(ev){
 			if (onClickCallback){
 				onClickCallback(ev);
 			}
+			//pass through the click event to underlying element
 			var x = (ev.center)? ev.center.x : ev.clientX;
 			var y = (ev.center)? ev.center.y : ev.clientY;
 			var that = $swipeArea[0];
 			var thatDisplay = that.style.display;
 			that.style.display = 'none';
 			var elementMouseIsOver = document.elementFromPoint(x, y);
+			that.style.display = thatDisplay;
 			//console.log(elementMouseIsOver.id);
-			$(elementMouseIsOver).trigger('click', { bm_force : true });
-			setTimeout(function(){
+			//supports sepiaFW-events?
+			if (UI.elementSupportsCustomTriggers(elementMouseIsOver)){
+				var durationDown = new Date().getTime() - timeDown;
+				if (timeDown && (durationDown > longPressTime)){
+					$(elementMouseIsOver).trigger('sepiaFW-events', { name: 'longpress'});
+				}else{
+					$(elementMouseIsOver).trigger('sepiaFW-events', { name: 'shortpress'});
+				}
+			}else{
+				$(elementMouseIsOver).trigger('click', { bm_force: true });
+			}
+			/* setTimeout(function(){
 				that.style.display = thatDisplay;
-			}, 500);
+			}, 500); */
 		}
 		return $swipeArea[0];
 	}
@@ -1301,12 +1370,24 @@ function sepiaFW_build_ui(){
 			}
 			UI.scrollToBottom(target);
 			//check if we should show the missed message note bubble
-			if (!beSilent && (
-				!UI.isVisible() 
-				|| (UI.moc && UI.moc.getCurrentPane() !== 1) 
-				//|| (SepiaFW.alwaysOn && SepiaFW.alwaysOn.isOpen) 		//It is a bit too much but ...
-			)){
-				UI.addMissedMessage();
+			if (!beSilent){
+				if (!UI.isVisible() 
+					|| (UI.moc && UI.moc.getCurrentPane() !== 1)
+					|| (SepiaFW.frames && SepiaFW.frames.isOpen)
+					|| (SepiaFW.teach && SepiaFW.teach.isOpen)
+					//Note: this should be all possibilities, don't add more! 
+				){
+					//if (SepiaFW.alwaysOn && SepiaFW.alwaysOn.isOpen) ... use this and let AO-mode decide what to do?
+					var name = (entryData)? entryData.className : undefined;
+					if (name && entryData.firstChild){
+						name += (" " + entryData.firstChild.className);
+					}
+					var info = {
+						"data": entryData,
+						"name": name
+					};
+					UI.handleMissedMessage(1, info);
+				}
 			}
 		}else if (paneNbr == 0){
 			$target.prepend(entryData);

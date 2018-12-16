@@ -17,7 +17,7 @@ html {
 		border-radius: 9px 9px 0 0;
 	}
 	#sepiaFW-chat-controls {
-		border-radius: 0 0 9px 9px;
+		border-radius: 0 0 0px 0px;
 	}
 	.sepiaFW-top-layer-view {
 		border-radius: 7px;
@@ -90,6 +90,11 @@ html {
 	background-color: #ceff1a;
 }
 */
+
+#sepiaFW-chat-controls-speech-box > div {
+	background: #172735;
+	color: #fff;
+}
 
 .sepiaFW-menu {
 	background: #172735;
@@ -227,7 +232,16 @@ html {
 .sepiaFW-cards-list-body {
     color: #222;
 }
-
+.sepiaFW-cards-list-body .listElement .checked {
+    background: #09BBD3
+}
+.sepiaFW-cards-list-body .listElement .inProgress {
+    background: #ffc107;
+}
+.sepiaFW-cards-list-body .listElement .listRight {
+	border-color: #545454;
+	background: #b1b6bd;;
+}
 .sepiaFW-cards-list-footer {
 	background: #FA9D09;
 }

@@ -2,6 +2,16 @@
 
 ## Release History
 
+### v0.15.2 beta - 2018.12.16
+
+- Added drag & drop module and applied it to shopping and to-do list for sorting (activate via long-press on item check-button)
+- Added 3-states support for to-do lists (similar to Kanban-cards: open/in-progress/done)
+- Updated to-do/shopping list design and list context-menu in general
+- Added embedded module with (very) basic offline NLU and services (currently only used for demo-mode e.g. to load a demo list)
+- Added skin 'Professional' (with less rounded corners ^^), improved Neo-Sepia-Dark skin and tweaked some other designs
+- Updated tutorial with new list features and generally more info
+- Added a help and support button to settings menu (pointing to SEPIA docs page)
+
 ### v0.15.1 beta - 2018.11.18
 
 - Improved alarms during AlwaysOn-mode

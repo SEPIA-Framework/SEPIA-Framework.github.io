@@ -13,6 +13,7 @@ SepiaFW.buildSepiaFwPlugins = function(){
 	SepiaFW.ui = sepiaFW_build_ui();
 	SepiaFW.animate = sepiaFW_build_animate();
 	SepiaFW.ui.Carousel = sepiaFW_build_ui_carousel();
+	SepiaFW.ui.dragDrop = sepiaFW_build_ui_drag_and_drop();
 	SepiaFW.ui.notification = sepiaFW_build_ui_notifications();
 	SepiaFW.ui.build = sepiaFW_build_ui_build();
 	SepiaFW.ui.cards = sepiaFW_build_ui_cards();
@@ -35,6 +36,9 @@ SepiaFW.buildSepiaFwPlugins = function(){
 	SepiaFW.alwaysOn = sepiaFW_build_always_on();
 	SepiaFW.inputControls = sepiaFW_build_input_controls();
 	SepiaFW.wakeTriggers = sepiaFW_build_wake_triggers();
+	SepiaFW.embedded = new Object();
+	SepiaFW.embedded.nlu = sepiaFW_build_embedded_nlu();
+	SepiaFW.embedded.services = sepiaFW_build_embedded_services();
 }
 
 //DATA STORAGE

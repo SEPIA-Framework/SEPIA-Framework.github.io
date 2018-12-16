@@ -428,6 +428,7 @@ function sepiaFW_build_ui_build(){
 					+ "<li class='button' id='sepiaFW-menu-btn-account'><span>" + SepiaFW.local.g('account') + "</span><i class='material-icons md-mnu'>&#xE038;</i></li>"
 					+ "<li class='button' id='sepiaFW-menu-btn-addresses'><span>" + SepiaFW.local.g('addresses') + "</span><i class='material-icons md-mnu'>&#xE038;</i></li>"
 					+ "<li class='button' id='sepiaFW-menu-btn-tutorial'><span>" + SepiaFW.local.g('tutorial') + "</span><i class='material-icons md-mnu'>school</i></li>"
+					+ "<li class='button' id='sepiaFW-menu-btn-info'><span>" + SepiaFW.local.g('info_and_help') + "</span><i class='material-icons md-mnu'>help_outline</i></li>"
 					+ "<li class='button' id='sepiaFW-menu-btn-logout'><span>" + SepiaFW.local.g('sign_out') + "</span><i class='material-icons md-mnu'>person_outline</i></li>"
 				+ "</ul>";
 			centerCarouselPane.appendChild(centerPage1);
@@ -539,6 +540,11 @@ function sepiaFW_build_ui_build(){
 			var logoutBtn = document.getElementById("sepiaFW-menu-btn-logout");
 			logoutBtn.addEventListener("click", function(){
 				SepiaFW.account.logoutAction();
+			});
+			//Help button
+			var helpBtn = document.getElementById("sepiaFW-menu-btn-info");
+			helpBtn.addEventListener("click", function(){
+				SepiaFW.ui.actions.openUrlAutoTarget("https://github.com/SEPIA-Framework/sepia-docs", true);
 			});
 			//Tutorial button
 			var tutorialBtn = document.getElementById("sepiaFW-menu-btn-tutorial");
@@ -1242,12 +1248,35 @@ function sepiaFW_build_ui_build(){
 				block.className += ' hidden-by-settings';
 			}
 		}
-		article.innerHTML = ""
-			+ "<b class='" + classes + "'>" + senderText + ": </b>"
-			+ "<span class='status'>" + text + "</span>"
-			+ "<span class='timestamp'>" + time + "</span>";
+		//inner HTML:
+		var articleSender = document.createElement('b');
+		articleSender.className = classes;
+		articleSender.innerHTML = (senderText + ": ");
+		article.appendChild(articleSender);
+
+		var articleText = document.createElement('span');
+		articleText.className = 'status';
+		articleText.innerHTML = text;
+		article.appendChild(articleText);
+
+		var articleTimestamp = document.createElement('span');
+		articleTimestamp.className = 'timestamp';
+		articleTimestamp.innerHTML = time;
+		article.appendChild(articleTimestamp);
 			
 		block.appendChild(article);
+
+		//add quick private message button
+		var closeBtn = articleTimestamp;
+		SepiaFW.ui.longPressShortPressDoubleTab(closeBtn, function(){
+			//long-press
+		},'',function(){
+			//short-press
+			$(article).remove();
+		},function(){
+			//double-tab
+		}, true);
+
 		return block;
 	}
 	

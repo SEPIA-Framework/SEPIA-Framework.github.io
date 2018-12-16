@@ -22,6 +22,7 @@ function sepiaFW_build_strings(){
 	StringsDE.addresses = 'Adressen';
 	StringsDE.logout = 'Logout';
 	StringsDE.closeLogin = 'Weiter ohne Login';
+	StringsDE.info_and_help = 'Infos und Support';
 	//StringsDE.chatInputPlaceholder = 'Deine Nachricht ...';
 	StringsDE.chatInputPlaceholder = '';
 	StringsDE.loginFailedPlain = 'Login fehlgeschlagen!';
@@ -89,7 +90,8 @@ function sepiaFW_build_strings(){
 	StringsDE.data_privacy = 'Datenschutz';
 	StringsDE.tutorial = 'Tutorial';
 	//Offline demo texts
-	StringsDE.demoMode = 'Du befindest dich im Demo-Modus! In diesem Modus kannst du die Einstellungen ändern (z.B. host-name) und das Tutorial anschauen. Um auf deinen Assistenten zuzugreifen melde dich bitte zuerst an.';
+	StringsDE.demoMode = 'Du befindest dich im Demo-Modus! In diesem Modus kannst du die Einstellungen ändern (z.B. hostname), das Tutorial anschauen und mit manchen(!) Teilen des Interfaces spielen. Um auf deinen Assistenten zuzugreifen melde dich bitte zuerst an.';
+	StringsDE.notPossibleInDemoMode = 'Sorry aber das geht noch nicht im Demo-Modus.';
 	StringsDE.demoModeBtn = 'Demo-Modus';
 	StringsDE.myNewsDemoBtn = 'Öffne meine persönlichen News';
 	StringsDE.myRadioDemoBtn = 'Starte mein Lieblingsradio';
@@ -111,6 +113,7 @@ function sepiaFW_build_strings(){
 	StringsEN.addresses = 'Addresses';
 	StringsEN.logout = 'Logout';
 	StringsEN.closeLogin = 'Continue without login';
+	StringsEN.info_and_help = 'Info and support';
 	//StringsEN.chatInputPlaceholder = 'Your message ...';
 	StringsEN.chatInputPlaceholder = '';
 	StringsEN.loginFailedPlain = 'Login failed!';
@@ -178,7 +181,8 @@ function sepiaFW_build_strings(){
 	StringsEN.data_privacy = 'Data privacy';
 	StringsEN.tutorial = 'Tutorial';
 	//Offline demo texts
-	StringsEN.demoMode = 'You are in demo-mode! This mode only allows you to change settings (e.g. host-name) and check out the tutorial. To get access to your assistant please log-in first.';
+	StringsEN.demoMode = 'You are in demo-mode! This mode only allows you to change settings (e.g. hostname), check out the tutorial and play with some(!) parts of the UI. To get access to your assistant please log-in first.';
+	StringsEN.notPossibleInDemoMode = 'Sorry this is not yet possible in demo-mode.';
 	StringsEN.demoModeBtn = 'Demo-Mode';
 	StringsEN.myNewsDemoBtn = 'Open my personal news';
 	StringsEN.myRadioDemoBtn = 'Start my favorite radio station';
