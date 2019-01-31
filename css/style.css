@@ -150,7 +150,7 @@ button {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 #site-top-bar .nav-bar-button {
 	padding: 8px 8px;
@@ -171,6 +171,25 @@ button {
 	#site-top-bar .nav-bar-button span {
 		display: none;
 	}
+}
+.site-top-bar-ele {
+	max-height: 36px;
+	max-width: 150px;
+	width: 80px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 8px;
+}
+.site-top-bar-ele a {
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none !important;
+}
+.site-top-bar-ele img {
+	max-height: 100%;
 }
 #site-top-bar-accent {
 	position: relative;

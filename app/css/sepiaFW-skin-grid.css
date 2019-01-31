@@ -28,6 +28,12 @@ html {
 	box-shadow: 0 0 5px #15abc3;
 	color: #fff;
 }
+.sepiaFW-ao-mode #sepiaFW-nav-bar, 
+.sepiaFW-ao-mode #sepiaFW-chat-controls-form, 
+.sepiaFW-ao-mode #sepiaFW-chat-controls-right {
+	border: 0 !important;
+	box-shadow: 0 0 0px !important;
+}
 #sepiaFW-nav-bar {
 	margin-top: 1px;
 }
@@ -334,7 +340,8 @@ html {
 }
 .sepiaFW-cards-list-body .timeEvent > div,
 .sepiaFW-cards-list-body .radioStation > div,
-.sepiaFW-cards-list-body .weatherNowSmall > div {
+.sepiaFW-cards-list-body .weatherNowSmall > div,
+.sepiaFW-cards-list-body .linkCard > div {
     background: rgba(20, 163, 187, 0.66);
     color: #fff !important;
     box-shadow: 0 0 5px #15abc3;

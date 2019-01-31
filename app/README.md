@@ -2,6 +2,24 @@
 
 ## Release History
 
+### v0.16.0 beta - 2019.01.31
+
+- Added new 'plugin' command (mesh_node_plugin) to the Teach-UI to easily interface with SEPIA Mesh-Nodes (see above)
+- Added speech-to-text output to AlwaysOn-mode
+- Automatically close await-dialog state (yellow mic) after 15s
+- Improved my-view automatic refresh (e.g. after wake-up from background)
+- Fixed link-cards for dark skins and added new 'Nightlife' skin
+- Translated tutorial to German (and added language support to Frames)
+- Added ACTION "switch_language" to experiment with custom services in non-default languages
+- Fixed a bug in the mic-reset function
+- Fixed a bug in Teach-UI for unsupported commands
+
+### v0.15.3 beta - 2018.12.xx (internal release)
+
+- Improved demo-mode with timers, event-buttons, shortcuts menu and more
+- Fixed scroll-into-view bug that shifted slider
+- Fixed links color
+
 ### v0.15.2 beta - 2018.12.16
 
 - Added drag & drop module and applied it to shopping and to-do list for sorting (activate via long-press on item check-button)
