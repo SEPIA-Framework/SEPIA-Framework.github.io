@@ -3,7 +3,7 @@ function sepiaFW_build_ui(){
 	var UI = {};
 	
 	//some constants
-	UI.version = "v0.16.0";
+	UI.version = "v0.16.1";
 	UI.JQ_RES_VIEW_IDS = "#sepiaFW-result-view, #sepiaFW-chat-output, #sepiaFW-my-view";	//a selector to get all result views e.g. $(UI.JQ_RES_VIEW_IDS).find(...) - TODO: same as $('.sepiaFW-results-container') ??
 	UI.JQ_ALL_MAIN_VIEWS = "#sepiaFW-result-view, #sepiaFW-chat-output, #sepiaFW-my-view, #sepiaFW-teachUI-editor, #sepiaFW-teachUI-manager, #sepiaFW-frame-page-1, #sepiaFW-frame-page-2"; 	//TODO: frames can have more ...
 	UI.JQ_ALL_SETTINGS_VIEWS = ".sepiaFW-chat-menu-list-container";
@@ -57,6 +57,23 @@ function sepiaFW_build_ui(){
 				}
 				*/
 			},100);
+		}
+	}
+
+	//Open a view or frame by key (e.g. for URL parameter 'view=xy')
+	UI.openViewOrFrame = function(openView){
+		openView = openView.replace(".html", "").trim();
+		//AO-Mode
+		if (openView == "ao" || openView == "aomode" || openView == "alwayson"){
+			if (SepiaFW.alwaysOn) SepiaFW.alwaysOn.start();
+	
+		//Teach-UI
+		}else if (openView == "teach" || openView == "teachui"){
+			if (SepiaFW.teach) SepiaFW.teach.openUI();
+		
+		//Frame
+		}else{
+			if (SepiaFW.frames) SepiaFW.frames.open({pageUrl: (openView + ".html")});
 		}
 	}
 	
@@ -153,9 +170,13 @@ function sepiaFW_build_ui(){
 			$('#sepiaFW-nav-label').html(newLabel);
 		}
 	}
-	$('#sepiaFW-nav-label').on('click', function(){
-		//TODO: do some button action (maybe depending on scope?)
-	});
+	UI.getLabel = function(){
+		return $('#sepiaFW-nav-label').html();
+	}
+	UI.getDefaultLabel = function(){
+		return defaultLabel;
+	}
+	//Note: for label button actions see ui.build module
 	
 	//make an info message
 	UI.showInfo = function(text, isErrorMessage, customTag){
@@ -383,8 +404,6 @@ function sepiaFW_build_ui(){
 		var lastSkin = SepiaFW.data.get('activeSkin');
 		if (lastSkin){
 			UI.setSkin(lastSkin);
-			//var selBox = document.getElementById("sepiaFW-menu-select-skin");
-			//if (selBox) selBox.selectedIndex = activeSkin;		//<- not working, box not there yet?
 		}else{
 			//get skin colors
 			UI.refreshSkinColors();
@@ -451,14 +470,12 @@ function sepiaFW_build_ui(){
 		}
 		//Wake-word trigger
 		if (SepiaFW.wakeTriggers){
-			SepiaFW.wakeTriggers.useWakeWord = SepiaFW.data.get('useWakeWord');
-			if (typeof SepiaFW.wakeTriggers.useWakeWord == 'undefined') SepiaFW.wakeTriggers.useWakeWord = false;
-			SepiaFW.debug.info("Wake-word 'Hey SEPIA' is " + ((SepiaFW.wakeTriggers.useWakeWord)? "ALLOWED" : "NOT ALLOWED"));
+			SepiaFW.wakeTriggers.initialize();
 		}
 		//Smart microphone toggle
 		if (SepiaFW.speech){
 			SepiaFW.speech.useSmartMicToggle = SepiaFW.data.get('useSmartMicToggle');
-			if (typeof SepiaFW.speech.useSmartMicToggle == 'undefined') SepiaFW.speech.useSmartMicToggle = false;
+			if (typeof SepiaFW.speech.useSmartMicToggle == 'undefined') SepiaFW.speech.useSmartMicToggle = true;
 			SepiaFW.debug.info("Smart microphone toggle is " + ((SepiaFW.speech.useSmartMicToggle)? "ON" : "OFF"));
 		}
 
@@ -807,9 +824,9 @@ function sepiaFW_build_ui(){
 		}, 9000);
 	}
 	
-	//Idle-time
+	//Idle-time and events
 	var lastDomEventTS = new Date().getTime();
-	//listener
+	//listener - NOTE: not to be confused with Client.queueIdleTimeEvent
 	UI.trackIdleTime = function(){
 		function resetTimer() {
 			lastDomEventTS = new Date().getTime();
@@ -820,6 +837,15 @@ function sepiaFW_build_ui(){
 		document.addEventListener("mousedown", resetTimer);		// touchscreen presses
 		document.addEventListener("click", resetTimer);			// touchpad clicks
 		document.addEventListener("touchstart", resetTimer);
+		//custom events
+		document.addEventListener("sepia_state_change", function(e){		//e.g. stt, tts, loading
+			//This one is tricky ... idle time is used for example to show notifications when the UI had no interactons for a while
+			//... but hands-free controls do not trigger one of the upper DOM events. What if SEPIA is covered by a window but used hands-free?
+			if (e.detail && e.detail.state == "listening"){
+				resetTimer();
+			}
+			//console.log(e.detail.state);
+		});
 		/*
 		document.onload = resetTimer;
 		document.onscroll = resetTimer;    // scrolling with arrow keys

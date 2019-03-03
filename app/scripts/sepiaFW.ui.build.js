@@ -177,6 +177,22 @@ function sepiaFW_build_ui_build(){
 				SepiaFW.ui.showAndClearMissedMessages();
 			});
 		}
+		//label button - note: for label content see ui.setLable/getLabel functions
+		var sepiaLabel = document.getElementById("sepiaFW-nav-label");
+		if (sepiaLabel){
+			$(sepiaLabel).off();
+			SepiaFW.ui.longPressShortPressDoubleTap(sepiaLabel, function(){
+				//long-press
+			},'',function(){
+				//short press
+			},function(){
+				//double-tab
+				if (SepiaFW.alwaysOn){
+					SepiaFW.ui.closeAllMenus();
+					SepiaFW.alwaysOn.start();
+				}
+			}, true);
+		}
 		
 		//CHAT CONTROLS
 	
@@ -354,6 +370,10 @@ function sepiaFW_build_ui_build(){
 				SepiaFW.speech.stopSpeech();
 				return;
 			}
+			//stop alarm
+			if (SepiaFW.audio && SepiaFW.audio.isPlaying){
+				SepiaFW.audio.stopAlarmSound();
+			}
 			//fade audio
 			SepiaFW.audio.fadeOutMain();
 			//confirmation sound?
@@ -441,7 +461,7 @@ function sepiaFW_build_ui_build(){
 					+ "<li id='sepiaFW-menu-toggle-GPS-li'><span>GPS: </span></li>"
 					+ "<li id='sepiaFW-menu-toggle-voice-li'><span>Voice output: </span></li>"
 					+ "<li id='sepiaFW-menu-select-voice-li'><span>Voice: </span></li>" 	//option: <i class='material-icons md-mnu'>&#xE5C6;</i>
-					+ "<li id='sepiaFW-menu-toggle-proactiveNotes-li' title='The assistant will remind you in a funny way to make a coffee break etc. :-)'><span>Chatty reminders: </span></li>"
+					+ "<li id='sepiaFW-menu-toggle-proactiveNotes-li' title='The assistant will remind you in a funny way to make a coffee break etc. :-)'><span>Well-being reminders: </span></li>"
 					+ "<li id='sepiaFW-menu-clear-app-cache-li'><span>Clear app data: </span></li>"
 					+ "<li id='sepiaFW-menu-toggle-channelMessages-li' title='Show status messages in chat like someone joined the channel?'><span>Channel status messages: </span></li>"
 					//NOTE: we show this only for Android:
@@ -561,6 +581,10 @@ function sepiaFW_build_ui_build(){
 					option.value = i+1;
 				document.getElementById('sepiaFW-menu-select-skin').appendChild(option);
 			});
+			var activeSkin = SepiaFW.data.get('activeSkin');
+			if (activeSkin){
+				$('#sepiaFW-menu-select-skin').val(activeSkin);
+			}
 			$('#sepiaFW-menu-select-skin').off();
 			$('#sepiaFW-menu-select-skin').on('change', function() {
 				SepiaFW.ui.setSkin($('#sepiaFW-menu-select-skin').val());
@@ -592,8 +616,10 @@ function sepiaFW_build_ui_build(){
 					}, !SepiaFW.speech.skipTTS)
 				);
 
-				//add voice select options
-				document.getElementById('sepiaFW-menu-select-voice-li').appendChild(SepiaFW.speech.getVoices());
+				//add voice select options - delayed due to loading process
+				setTimeout(function(){
+					document.getElementById('sepiaFW-menu-select-voice-li').appendChild(SepiaFW.speech.getVoices());
+				}, 1000);
 				
 				//add speech recognition engine select
 				document.getElementById('sepiaFW-menu-select-stt-li').appendChild(SepiaFW.speech.getSttEngines());
@@ -627,32 +653,15 @@ function sepiaFW_build_ui_build(){
 					}, SepiaFW.speech.useSmartMicToggle)
 				);
 			}
-			//wake-word stuff - Hey SEPIA
+			//Wake-word stuff - Hey SEPIA
 			if (!SepiaFW.wakeTriggers){
 				$('#"sepiaFW-menu-toggle-wake-word-li"').remove();
 			}else{
 				var wakeWordLi = document.getElementById('sepiaFW-menu-toggle-wake-word-li');
-				//toggle
-				wakeWordLi.appendChild(Build.toggleButton('sepiaFW-menu-toggle-wake-word', 
-					function(){
-						SepiaFW.wakeTriggers.useWakeWord = true;
-						SepiaFW.data.set('useWakeWord', true);
-						SepiaFW.debug.info("Wake-word 'Hey SEPIA' is allowed.");
-					},function(){
-						SepiaFW.wakeTriggers.useWakeWord = false;
-						SepiaFW.data.set('useWakeWord', false);
-						SepiaFW.debug.info("Wake-word 'Hey SEPIA' is NOT allowed.");
-					}, SepiaFW.wakeTriggers.useWakeWord)
-				);
-				//spacer
-				wakeWordLi.appendChild(Build.spacer("18px", "28px", "right"));
-				//settings
+				//settings - includes toggles
 				wakeWordLi.appendChild(Build.inlineActionButton('sepiaFW-menu-wake-word-settings', "<i class='material-icons md-inherit'>settings</i>",
 					function(btn){
-						SepiaFW.frames.open({ 
-							pageUrl: "wake-word-test.html"
-							//, theme: "dark"
-						});
+						SepiaFW.wakeWordSettings.open();
 					})
 				);
 			}

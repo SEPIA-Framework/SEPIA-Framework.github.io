@@ -93,11 +93,42 @@ function sepiaFW_build_ui_actions(){
 		funBtn.className = 'chat-button-custom-fun';
 		if (sender) action.sender = sender;
 		funBtn.setAttribute("data-sender", action.sender);
-		SepiaFW.ui.onclick(funBtn, function(){
-			action.fun(funBtn);
-		}, true);
+		if (action.fun && (typeof action.fun === 'string')){
+			if (action.fun.indexOf("controlFun;;") >= 0){
+				//it is a control function given as string...
+				var funParts = action.fun.split(";;");
+				funParts.shift();
+				var fun = funParts.shift();
+				var act = funParts.shift();
+				if (act && act.indexOf("{") == 0){
+					act = JSON.parse(act);
+				}
+				SepiaFW.ui.onclick(funBtn, function(){
+					Actions.clientControlFun({
+						"fun": fun,
+						"controlData": act
+					}, sender);
+				}, true);	
+			}
+		}else if (action.fun){
+			SepiaFW.ui.onclick(funBtn, function(){
+				action.fun(funBtn);
+			}, true);
+		}
 		funBtn.innerHTML = action.title;
+		funBtn.setAttribute("data-fun", action.fun);
+		//funBtn.title = ("Function: " + action.fun);
 		parentBlock.appendChild(funBtn);
+	}
+	//CLIENT Control function
+	Actions.clientControlFun = function(action, sender){
+		if (action && action.fun){
+			if (action.fun in SepiaFW.client.controls){
+				SepiaFW.client.controls[action.fun](action.controlData);
+			}else{
+				SepiaFW.debug.error("Action - client control fun. not existing: " + action.fun); 
+			}
+		}
 	}
 	
 	//BUTTON URLs
@@ -399,7 +430,7 @@ function sepiaFW_build_ui_actions(){
 			//iterate:
 			for (var i = 0; i < data.actionInfo.length; i++) {
 				var type = data.actionInfo[i].type;
-				//run through everything except buttons (that does the UI build method)
+				//run through all actions
 				if (type){
 					if (doButtonsOnly){
 						if (!type.indexOf('button_') === 0){
@@ -444,6 +475,10 @@ function sepiaFW_build_ui_actions(){
 					//BUTTON - custom function
 					}else if (type === 'button_custom_fun'){	
 						Actions.addButtonCustomFunction(data.actionInfo[i], sender, aButtonsArea);
+
+					//Open client control function (pre-defined, "safe" functions)
+					}else if (type === 'client_control_fun'){	
+						Actions.clientControlFun(data.actionInfo[i], sender);
 						
 					//Open URL
 					}else if (type === 'open_in_app_browser'){

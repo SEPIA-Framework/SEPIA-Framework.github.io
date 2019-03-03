@@ -2,6 +2,19 @@
 
 ## Release History
 
+### v0.16.1 beta - 2019.03.xx
+
+- Added new client-controls function including new Teach-UI command (use e.g. to control volume or call Mesh-Nodes form client)
+- New wake-word settings, fixed wake-word for AO-mode, proper settings storing and auto-load of engine
+- Store and load selected voice (per language)
+- New 'view' URL parameter to e.g. launch Always-On mode ('aomode') directly on start
+- New Always-On animations (mouth). AO-mode can be activated via double-tap on SEPIA label (center top)
+- UX tweaks (mic press stops alarm, bigger shortcuts button area etc.) and skin improvements
+- Renamed 'Chatty reminders' to 'Well-being reminders' (and made them opt-in by default) ;-)
+- New idle-time action queue (used e.g. in client-control to get voice feedback on error)
+- Custom environmental variable during AO-mode: avatar_display (use for services)
+- Fixed a bug in Chrome TTS and other minor fixes
+
 ### v0.16.0 beta - 2019.01.31
 
 - Added new 'plugin' command (mesh_node_plugin) to the Teach-UI to easily interface with SEPIA Mesh-Nodes (see above)
