@@ -110,10 +110,15 @@
 		text-align: center;
 		color: #ceff1a;
 	}
-	.welcome-box ul {
+	.welcome-box ul,
+	#welcome-dynamic-text {
 		min-width: 178px;
 		font-size: 28px;
 		list-style-type: none;
+		margin-block-start: 1em;
+		margin-block-end: 1em;
+		margin-inline-start: 0px;
+		margin-inline-end: 0px;
 		/*margin: 0 0;*/
 		margin-right: 8px;
 		padding: 0;
@@ -132,7 +137,8 @@
 		.welcome-box h2 {
 			font-size: 21px;
 		}
-		.welcome-box ul {
+		.welcome-box ul,
+		#welcome-dynamic-text {
 			font-size: 24px;
 		}
 	}
@@ -334,17 +340,19 @@
 						<img id="welcome-logo" src="img/logo.png" alt="SEPIA">
 						<h1>S.E.P.I.A.</h1>
 						<h2>Your own digital voice-assistant</h2>
-						<ul>
-							<!--<li><u>S</u>erver-based</li>
+						<div id="welcome-dynamic-text">
+							<!--<ul>
+							<li><u>S</u>erver-based</li>
 							<li><u>E</u>xtendable</li>
 							<li><u>P</u>ersonal</li>
 							<li><u>I</u>ntelligent</li>
-							<li><u>A</u>ssistant</li>-->
+							<li><u>A</u>ssistant</li>
+							</ul>-->
 							<span class="text-effects-typing"
 								data-period="2000"
 								data-type='["Server-based", "Extendable", "Personal", "Intelligent", "Assistant"]'>
 							</span>
-						</ul>
+						</div>
 						<br>
 						<div id="welcome-scroll-indicator"><i class="material-icons md-24">keyboard_arrow_down</i></div>
 					</section>

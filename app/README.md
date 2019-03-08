@@ -2,7 +2,7 @@
 
 ## Release History
 
-### v0.16.1 beta - 2019.03.xx
+### v0.16.1 beta - 2019.03.xx (dev release)
 
 - Added new client-controls function including new Teach-UI command (use e.g. to control volume or call Mesh-Nodes form client)
 - New wake-word settings, fixed wake-word for AO-mode, proper settings storing and auto-load of engine
