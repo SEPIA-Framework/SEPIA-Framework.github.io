@@ -4,6 +4,16 @@
 function sepiaFW_build_client_controls(){
     var Controls = {};
 
+    function parseAction(action){
+        var req;
+        if (typeof action === "string"){
+            req = JSON.parse(action);
+        }else{
+            req = action;
+        }
+        return req;
+    }
+
     //Open/close settings menu
     Controls.settings = function(controlData){
         if (controlData && controlData.action){
@@ -50,10 +60,15 @@ function sepiaFW_build_client_controls(){
                 //volumeDown
                 volumeDown();
                 return true;
-            }else if (controlData.action == "set"){
+            }else if (controlData.action.match(/volume;;\d/gi).length == 1){
                 //volumeSet
-                volumeSet(controlData.volume);       //TODO: untested and not fully implemented yet
-                return true;
+                var vol = parseInt(controlData.action.split(";;")[1]);       //no data, we have the shortcut here ;-)
+                if (vol){
+                    volumeSet(vol);       //TODO: untested and not fully implemented yet
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
                 SepiaFW.debug.error("Client controls - Unsupported action in 'settings': " + controlData.action);
             }
@@ -89,16 +104,21 @@ function sepiaFW_build_client_controls(){
         }
     }
 
+    //CLEXI send
+    Controls.clexi = function(controlData){
+        if (SepiaFW.clexi && controlData.action){
+            var req = parseAction(controlData.action);
+            //console.log(req);
+            SepiaFW.clexi.send(req.xtension, req.data);
+            return true;
+        }
+        return false;
+    }
+
     //Mesh-Node call
     Controls.meshNode = function(controlData){
-        //TODO
         if (controlData.action){
-            var req;
-            if (typeof controlData.action === "string"){
-                req = JSON.parse(controlData.action);
-            }else{
-                req = controlData.action;
-            }
+            var req = parseAction(controlData.action);
             //console.log(req);
             return callMeshNode(req.url, req.pin, req.plugin, req.data);
         }
@@ -121,18 +141,12 @@ function sepiaFW_build_client_controls(){
             }
 
             //Feedback (to server and user ... server just loads a chat message in this case, but one could send real data back)
-            SepiaFW.client.queueIdleTimeEvent(function(){
-                var options = {};   //things like skipTTS etc. (see sendCommand function)
-                var dataset = {
-                    info: "direct_cmd",
-                    cmd: "chat;;reply=<error_client_control_0a>;;",
-                    newReceiver: SepiaFW.assistant.id
-                };
-                SepiaFW.client.sendCommand(dataset, options);
-            }, 2000, 30000, function(){
-                //Fallback:
-                SepiaFW.ui.showInfo(SepiaFW.local.g('mesh_node_fail'));
-            });
+            if (SepiaFW.assistant){
+                SepiaFW.assistant.waitForOpportunityAndSay("<error_client_control_0a>", function(){
+                    //Fallback after max-wait:
+                    SepiaFW.ui.showInfo(SepiaFW.local.g('mesh_node_fail'));
+                }, 2000, 30000);    //min-wait, max-wait
+            }
         });
         return true;
     }

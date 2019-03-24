@@ -3,7 +3,7 @@ function sepiaFW_build_ui(){
 	var UI = {};
 	
 	//some constants
-	UI.version = "v0.16.1";
+	UI.version = "v0.17.0";
 	UI.JQ_RES_VIEW_IDS = "#sepiaFW-result-view, #sepiaFW-chat-output, #sepiaFW-my-view";	//a selector to get all result views e.g. $(UI.JQ_RES_VIEW_IDS).find(...) - TODO: same as $('.sepiaFW-results-container') ??
 	UI.JQ_ALL_MAIN_VIEWS = "#sepiaFW-result-view, #sepiaFW-chat-output, #sepiaFW-my-view, #sepiaFW-teachUI-editor, #sepiaFW-teachUI-manager, #sepiaFW-frame-page-1, #sepiaFW-frame-page-2"; 	//TODO: frames can have more ...
 	UI.JQ_ALL_SETTINGS_VIEWS = ".sepiaFW-chat-menu-list-container";
@@ -373,7 +373,6 @@ function sepiaFW_build_ui(){
 		}
 		
 		//is standalone app?
-		UI.isStandaloneWebApp = isStandaloneWebApp();
 		function isStandaloneWebApp(){
 			if (UI.isCordova){
 				isStandalone = true;
@@ -391,6 +390,20 @@ function sepiaFW_build_ui(){
 			}
 			return isStandalone;
 		}
+		UI.isStandaloneWebApp = isStandaloneWebApp();
+
+		//is tiny app?
+		function isTinyApp(){
+			var urlParam = SepiaFW.tools.getURLParameter("isTiny");
+			if (urlParam && urlParam == "true"){
+				urlParam = true;
+			}
+			if (urlParam){
+				document.documentElement.className += " sepiaFW-tiny-app";
+			}
+			return urlParam;
+		}
+		UI.isTinyApp = isTinyApp();
 		
 		//client
 		SepiaFW.config.setClientInfo(((UI.isIOS)? 'iOS_' : '') 
@@ -462,11 +475,10 @@ function sepiaFW_build_ui(){
 			}
 			SepiaFW.debug.info("Power-status tracking is " + ((SepiaFW.alwaysOn.trackPowerStatus)? "ALLOWED" : "NOT ALLOWED"));
 		}
-		//Gamepad support
+		//Gamepad, Hotkeys and BLE-Beacon support
 		if (SepiaFW.inputControls){
-			SepiaFW.inputControls.useGamepads = SepiaFW.data.get('useGamepads');
-			if (typeof SepiaFW.inputControls.useGamepads == 'undefined') SepiaFW.inputControls.useGamepads = false;
-			SepiaFW.debug.info("Gamepads are " + ((SepiaFW.client.allowBackgroundConnection)? "SUPPORTED" : "NOT SUPPORTED"));
+			SepiaFW.inputControls.initializeGamepads();
+			SepiaFW.inputControls.initializeBluetoothBeacons();
 		}
 		//Wake-word trigger
 		if (SepiaFW.wakeTriggers){
@@ -477,6 +489,10 @@ function sepiaFW_build_ui(){
 			SepiaFW.speech.useSmartMicToggle = SepiaFW.data.get('useSmartMicToggle');
 			if (typeof SepiaFW.speech.useSmartMicToggle == 'undefined') SepiaFW.speech.useSmartMicToggle = true;
 			SepiaFW.debug.info("Smart microphone toggle is " + ((SepiaFW.speech.useSmartMicToggle)? "ON" : "OFF"));
+		}
+		//CLEXI.js support
+		if (SepiaFW.clexi){
+			SepiaFW.clexi.initialize();
 		}
 
 		//-------------------------------------------------------------------------------------------------
@@ -777,13 +793,13 @@ function sepiaFW_build_ui(){
 		SepiaFW.debug.info('UI.listenToVisibilityChange: ' + document[visibility]);
 		
 		//became visible
-		//if (SepiaFW.client.isActive()){
+		if (!SepiaFW.account || !SepiaFW.account.isLoginBoxOpen()){		//SepiaFW.client.isActive()
 			if (!isFirstVisibilityChange && (UI.isVisible() || forceTriggerVisible)){
 				//update myView (is automatically skipped if called too early)
 				UI.updateMyView(false, true, 'visibilityChange');
 			}
 			isFirstVisibilityChange = false;
-		//}
+		}
 	}
 	//broadcaster for myView show
 	var isFirstMyViewShow = true;

@@ -178,7 +178,7 @@ function sepiaFW_build_ui_build(){
 			});
 		}
 		//label button - note: for label content see ui.setLable/getLabel functions
-		var sepiaLabel = document.getElementById("sepiaFW-nav-label");
+		var sepiaLabel = document.getElementById("sepiaFW-nav-label-box");
 		if (sepiaLabel){
 			$(sepiaLabel).off();
 			SepiaFW.ui.longPressShortPressDoubleTap(sepiaLabel, function(){
@@ -468,17 +468,22 @@ function sepiaFW_build_ui_build(){
 					+ "<li id='sepiaFW-menu-toggle-runBackgroundConnection-li' title='Try to keep connected in background?'><span>Allow background activity: </span></li>"
 					//NOTE: we show this only if battery status API supported:
 					+ "<li id='sepiaFW-menu-toggle-trackPowerStatus-li' title='Observe power plug and battery status?'><span>Track power status: </span></li>"
-					+ "<li id='sepiaFW-menu-toggle-gamepad-li' title='Support gamepads as remote?'><span>Gamepads/Hotkeys: </span></li>"
+					+ "<li id='sepiaFW-menu-input-controls-li' title='Settings for remote input devices, e.g. gamepads'><span>Remote controls: </span></li>"
 					+ "<li id='sepiaFW-menu-assistant-host-li' title='Assistant hostname, e.g.: my.example.org/sepia, localhost or [IP]'>"
 						+ "<span>Hostname: </span>"
-						+ "<input id='sepiaFW-menu-assistant-host' type='url' placeholder='my.example.org/sepia'>"
+						+ "<input id='sepiaFW-menu-assistant-host' type='url' placeholder='my.example.org/sepia' spellcheck='false'>"
 					+ "</li>"
 					+ "<li id='sepiaFW-menu-toggle-smartMic-li' title='Automatically activate mic input after voice based question?'><span>Smart microphone: </span></li>"
 					+ "<li id='sepiaFW-menu-toggle-wake-word-li' title='Use client wake-word detection?'><span>Hey SEPIA: </span></li>"
 					+ "<li id='sepiaFW-menu-select-stt-li' title='Speech recognition engine.'><span>ASR engine: </span></li>"
 					+ "<li id='sepiaFW-menu-stt-socket-url-li' title='Server for custom (socket) speech recognition engine.'>"
 						+ "<span>" + "ASR server" + ": </span>"
-						+ "<input id='sepiaFW-menu-stt-socket-url' type='url'>"
+						+ "<input id='sepiaFW-menu-stt-socket-url' type='url' spellcheck='false'>"
+					+ "</li>"
+					+ "<li id='sepiaFW-menu-toggle-clexi-li' title='Connect to CLEXI server on start.'><span>Connect to CLEXI: </span></li>"
+					+ "<li id='sepiaFW-menu-clexi-socket-url-li' title='Server for Node.js CLEXI by Bytemind.de'>"
+						+ "<span>" + "CLEXI server" + ": </span>"
+						+ "<input id='sepiaFW-menu-clexi-socket-url' type='url' spellcheck='false'>"
 					+ "</li>"
 					+ "<li id='sepiaFW-menu-administration-li'>"
 						+ "<button id='sepiaFW-menu-ui-dataprivacy-btn'>" + SepiaFW.local.g('data_privacy') + "</button>"
@@ -653,6 +658,34 @@ function sepiaFW_build_ui_build(){
 					}, SepiaFW.speech.useSmartMicToggle)
 				);
 			}
+			//CLEXI stuff
+			if (SepiaFW.clexi && SepiaFW.clexi.isSupported){
+				//add CLEXI toggle
+				document.getElementById('sepiaFW-menu-toggle-clexi-li').appendChild(Build.toggleButton('sepiaFW-menu-toggle-clexi', 
+					function(){
+						SepiaFW.data.set('clexiConnect', true);
+						SepiaFW.debug.info("CLEXI connection is ENABLED");
+						SepiaFW.clexi.setup();
+					},function(){
+						SepiaFW.data.set('clexiConnect', false);
+						SepiaFW.debug.info("CLEXI connection is DISABLED");
+						SepiaFW.clexi.close();
+					}, SepiaFW.clexi.doConnect)
+				);
+				
+				//CLEXI server URL
+				var clexiServerInput = document.getElementById("sepiaFW-menu-clexi-socket-url");
+				clexiServerInput.placeholder = "wss://raspberrypi.local:8443";
+				clexiServerInput.value = SepiaFW.clexi.socketURI || "";
+				clexiServerInput.addEventListener("change", function(){
+					var newHost = this.value;
+					this.blur();
+					SepiaFW.clexi.setSocketURI(newHost);
+				});
+			}else{
+				$('#sepiaFW-menu-toggle-clexi-li').remove();
+				$('#sepiaFW-menu-clexi-socket-url-li').remove();
+			}
 			//Wake-word stuff - Hey SEPIA
 			if (!SepiaFW.wakeTriggers){
 				$('#"sepiaFW-menu-toggle-wake-word-li"').remove();
@@ -777,32 +810,13 @@ function sepiaFW_build_ui_build(){
 			}
 			//support gamepads as remotes and hotkeys in Always-On (by default)
 			if (SepiaFW.inputControls){
-				var listEntry = document.getElementById('sepiaFW-menu-toggle-gamepad-li');
-				//Toggle on/off button
-				listEntry.appendChild(Build.toggleButton('sepiaFW-menu-toggle-gamepad', 
-					function(){
-						SepiaFW.inputControls.useGamepads = true;
-						SepiaFW.data.set('useGamepads', true);
-						SepiaFW.debug.info("Gamepad support activated");
-						SepiaFW.inputControls.setup(); //.listenToGamepadConnectEvent();
-					},function(){
-						SepiaFW.inputControls.useGamepads = false;
-						SepiaFW.data.set('useGamepads', false);
-						SepiaFW.debug.info("Gamepad support deactivated");
-						SepiaFW.inputControls.setup();
-					}, SepiaFW.inputControls.useGamepads)
-				);
-				//spacer
-				listEntry.appendChild(Build.spacer("18px", "28px", "right"));
+				var inputControls = document.getElementById('sepiaFW-menu-input-controls-li');
 				//settings
-				listEntry.appendChild(Build.inlineActionButton('sepiaFW-menu-gamepad-settings', "<i class='material-icons md-inherit'>settings</i>",
+				inputControls.appendChild(Build.inlineActionButton('sepiaFW-menu-input-controls-settings', "<i class='material-icons md-inherit'>settings</i>",
 					function(btn){
 						SepiaFW.inputControls.openSettings();
 					})
 				);
-			}else{
-				document.getElementById('sepiaFW-menu-toggle-gamepad-li').appendChild(Build.toggleButton('sepiaFW-menu-toggle-gamepad', 
-					function(){}, function(){}, false));
 			}
 			//Account-Language
 			document.getElementById("sepiaFW-menu-account-language-li").appendChild(SepiaFW.ui.build.languageSelector("sepiaFW-menu-account-language-dropdown", function(selectedLanguage){

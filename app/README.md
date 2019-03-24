@@ -2,18 +2,22 @@
 
 ## Release History
 
-### v0.16.1 beta - 2019.03.xx (dev release)
+### v0.17.0 beta - 2019.03.24
 
-- Added new client-controls function including new Teach-UI command (use e.g. to control volume or call Mesh-Nodes form client)
+- Added support for Bluetooth LE beacons to be used as remote control triggers
+- Added Node.js CLEXI integration to handle BLE support on e.g. Desktop browsers
+- Improved remote control settings (aka gamepad settings) to support BLE beacons
+- Added new client-controls function including new Teach-UI command (use e.g. to control volume or call Mesh-Nodes and CLEXI form client)
 - New wake-word settings, fixed wake-word for AO-mode, proper settings storing and auto-load of engine
 - Store and load selected voice (per language)
 - New 'view' URL parameter to e.g. launch Always-On mode ('aomode') directly on start
+- New 'isTiny' URL parameter to be able to handle very small screens (e.g. 240x240) via sepiaFW-style-tiny.css file
 - New Always-On animations (mouth). AO-mode can be activated via double-tap on SEPIA label (center top)
 - UX tweaks (mic press stops alarm, bigger shortcuts button area etc.) and skin improvements
 - Renamed 'Chatty reminders' to 'Well-being reminders' (and made them opt-in by default) ;-)
 - New idle-time action queue (used e.g. in client-control to get voice feedback on error)
 - Custom environmental variable during AO-mode: avatar_display (use for services)
-- Fixed a bug in Chrome TTS and other minor fixes
+- Fixed a bug in Chrome TTS and other minor bug- and UX-fixes
 
 ### v0.16.0 beta - 2019.01.31
 
