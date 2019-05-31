@@ -2,6 +2,38 @@
 
 ## Release History
 
+### v0.18.0 beta - 2019.05.31
+
+- Added new 'music-search' and 'media' function to client-controls with Android MEDIA_BUTTON Intent support
+- Added selector for default music app including YouTube, Spotify, Apple Music (Browser/Mobile) and VLC (Android only)
+- Added music-search as link-card type and added support for YouTube embedded videos (including stop and next command interface)
+- Added new skins "Spots" and "DarkCanary"
+- Added new context menu for cards to link and timer cards with buttons like 'share' and 'copy' (link)
+- Added 'add to Android calendar' and 'add to Android alarms' buttons to timer cards
+- Improved link-cards
+- New and upgraded implementation for universal deeplinks (e.g. share reminders, requests, links, etc.)
+- Filled Teach-UI help button with many examples and info for each command
+- Added Teach-UI support for flex-parameters in sentence_connect (see new help for more info)
+- Added new platform_controls command to Teach-UI (one sentence - device dependent actions like URL-call or Android-Intent)
+- Added new client info to server requests (deviceId, platform, default music app etc.)
+- Fixed and improved 'Hey SEPIA' code (still some issues left)
+- Added Android ASSIST Intent listener to allow SEPIA to become default system assistant (long-press on home button)
+- Added Android Intent plugin
+- Added Android navigation bar plugin for colored soft-keys (bottom of screen)
+- Added button to store/load app settings to/from account after login
+- Support for follow-up messages from server (received after initial service 'completion')
+- Improved reconnect behavior after lost connection
+- Added server version check and incompatibility warning to start-up sequence 
+- Added onActive and onBeforeActive event queue
+- Updated CLEXI client library to v0.8.0 (with support for CLEXI http events)
+- Added CLEXI connection status indicator
+- Improved my-view updates
+- Fixed some issues related to active chat-channel and messages
+- Improved handling of well-being/pro-active notifications (e.g.: inform server of received notes to prevent duplicated messages, deliver when active, etc.)
+- Improved list scrolling on footer minimize-click
+- Improved audio player animation
+- Improvements to pop-up messages
+
 ### v0.17.0 beta - 2019.03.24
 
 - Added support for Bluetooth LE beacons to be used as remote control triggers
