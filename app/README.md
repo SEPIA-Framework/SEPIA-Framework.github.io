@@ -2,6 +2,18 @@
 
 ## Release History
 
+### v0.18.1 beta - 2019.07.18
+
+- Improved data store/load script to reduce number of writes
+- Added onChatOutputHandler for views like AO-Mode (e.g. see SEPIA answer as text in AO)
+- Added pause/resume client control for audio players and tweaked YouTube music to properly pause audio when STT is activated
+- Added support for new input command 'i18n:XY' to dynamically set input language (e.g. 'i18n:de Guten Tag' will trigger the German 'Hello' even when app language is english)
+- New share-menu activated by a long-press on the sender name in a chat message
+- Made BLE Beacon remote URL more flexible
+- Improved auto-scaling below 300px window width and tweaked tiny-mode
+- New launcher.html page to configure launch-options and automatically redirect (handy for app in browser kiosk-mode)
+- Reactivated 'application/ld+json' tag in index.html
+
 ### v0.18.0 beta - 2019.05.31
 
 - Added new 'music-search' and 'media' function to client-controls with Android MEDIA_BUTTON Intent support

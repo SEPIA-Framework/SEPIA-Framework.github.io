@@ -3,7 +3,7 @@ function sepiaFW_build_ui(){
 	var UI = {};
 	
 	//some constants
-	UI.version = "v0.18.0";
+	UI.version = "v0.18.1";
 	UI.requiresServerVersion = "2.2.2";
 	UI.JQ_RES_VIEW_IDS = "#sepiaFW-result-view, #sepiaFW-chat-output, #sepiaFW-my-view";	//a selector to get all result views e.g. $(UI.JQ_RES_VIEW_IDS).find(...) - TODO: same as $('.sepiaFW-results-container') ??
 	UI.JQ_ALL_MAIN_VIEWS = "#sepiaFW-result-view, #sepiaFW-chat-output, #sepiaFW-my-view, #sepiaFW-teachUI-editor, #sepiaFW-teachUI-manager, #sepiaFW-frame-page-1, #sepiaFW-frame-page-2"; 	//TODO: frames can have more ...
@@ -227,6 +227,15 @@ function sepiaFW_build_ui(){
 		var resultView = UI.getResultViewByName(targetViewName);
 		//add to view
 		UI.addDataToResultView(resultView, cEntry);
+
+		//show results in frame as well? (SHOW ONLY!)
+		if (message.senderType === "assistant"){
+			if (SepiaFW.frames && SepiaFW.frames.isOpen && SepiaFW.frames.canShowChatOutput()){
+				SepiaFW.frames.handleChatOutput({
+					"text": message.text
+				});
+			}
+		}
 	}
 	
 	//get/switch/show/hide active swipe-bars - TODO: can we get rid of the hard-coded dom ids?
@@ -395,6 +404,8 @@ function sepiaFW_build_ui(){
 				var urlParam = SepiaFW.tools.getURLParameter("isApp");
 				if (urlParam && urlParam == "true"){
 					urlParam = true;
+				}else if (urlParam && urlParam == "false"){
+					urlParam = false;
 				}
 				var google = window.matchMedia('(display-mode: standalone)').matches;
 				var apple = window.navigator.standalone;
@@ -412,6 +423,8 @@ function sepiaFW_build_ui(){
 			var urlParam = SepiaFW.tools.getURLParameter("isTiny");
 			if (urlParam && urlParam == "true"){
 				urlParam = true;
+			}else if (urlParam && urlParam == "false"){
+				urlParam = false;
 			}
 			if (urlParam){
 				document.documentElement.className += " sepiaFW-tiny-app";
@@ -1515,7 +1528,9 @@ function sepiaFW_build_ui(){
 		$inputBar = $('#sepiaFW-chat-controls-form');
 		if ($navBar.css('display') == 'none'){
 			$navBar.fadeIn(300);
-			$inputBar.fadeIn(300);
+			if (inputBarFullscreenFadeIn){
+				$inputBar.fadeIn(300);
+			}
 			$('.sepiaFW-carousel-pane').removeClass('full-screen');
 			$('#sepiaFW-chat-menu').removeClass('full-screen');
 			$('#sepiaFW-chat-controls').removeClass('full-screen');
@@ -1528,7 +1543,10 @@ function sepiaFW_build_ui(){
 			UI.isInterfaceFullscreen = false;
 		}else{
 			$navBar.fadeOut(300);
-			$inputBar.fadeOut(300);
+			if ($inputBar.css('display') != 'none'){
+				$inputBar.fadeOut(300);
+				inputBarFullscreenFadeIn = true;
+			}
 			$('.sepiaFW-carousel-pane').addClass('full-screen');
 			$('#sepiaFW-chat-menu').addClass('full-screen');
 			$('#sepiaFW-chat-controls').addClass('full-screen');
@@ -1546,6 +1564,7 @@ function sepiaFW_build_ui(){
 		UI.closeAllMenus();
 	}
 	UI.isInterfaceFullscreen = ($('#sepiaFW-nav-bar').css('display') == 'none');
+	var inputBarFullscreenFadeIn = false;
 	
 	//Use fullscreen API
 	UI.toggleFullscreen = function(elem){

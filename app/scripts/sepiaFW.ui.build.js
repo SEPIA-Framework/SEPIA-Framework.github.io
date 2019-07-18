@@ -440,7 +440,7 @@ function sepiaFW_build_ui_build(){
 				SepiaFW.audio.stopAlarmSound();
 			}
 			//fade audio
-			SepiaFW.audio.fadeOutMain();
+			SepiaFW.audio.fadeOut();
 			//confirmation sound?
 			if (useConfirmationSound == undefined){
 				useConfirmationSound = SepiaFW.speech.shouldPlayConfirmation();
@@ -594,7 +594,10 @@ function sepiaFW_build_ui_build(){
 					+ "</li>"
 					+ "<div id='sepiaFW-menu-ui-refresh-box'>"
 						+ "<p id='sepiaFW-menu-ui-refresh-info'>" + SepiaFW.local.g('refreshUI_info') + ":</p>"
-						+ "<button id='sepiaFW-menu-ui-refresh-btn'>" + SepiaFW.local.g('refreshUI') + "</button>"
+						+ "<div style='display:flex; justify-content:center;'>"
+							+ "<button id='sepiaFW-menu-ui-refresh-btn'>" + SepiaFW.local.g('refreshUI') + "</button>"
+							+ "<button id='sepiaFW-menu-ui-new-sepia-popup-btn'>" + SepiaFW.local.g('newSepiaWindow') + "</button>"
+						+ "</div>"
 					+ "</div>"
 				+ "</ul>";
 			centerCarouselPane.appendChild(centerPage3);
@@ -1015,6 +1018,13 @@ function sepiaFW_build_ui_build(){
 			document.getElementById("sepiaFW-menu-ui-refresh-btn").addEventListener("click", function(){
 				window.location.reload(true);
 			});
+			//Pop-up window
+			document.getElementById("sepiaFW-menu-ui-new-sepia-popup-btn").addEventListener("click", function(){
+				var h = Math.min(window.screen.availHeight, 800);
+				var w = Math.min(window.screen.availWidth, 480);
+				window.open(window.location.href, "SEPIA", "width=" + w + ",height=" + h + ",top=0,left=0");
+				//check window.location.origin before?
+			});
 			//Address home toggle
 			$('#sepiaFW-menu-adr-home').hide();
 			var firstAdrHomeOpen = true;
@@ -1342,10 +1352,49 @@ function sepiaFW_build_ui_build(){
 		
 			//add quick private message button
 			SepiaFW.ui.longPressShortPressDoubleTab(msgHead, function(){
-				//long-press - copy name to input
-				if (sender){
-					$('#sepiaFW-chat-input').val("@" + sender + " ");
-					$('#sepiaFW-chat-input').focus();
+				//different available options:
+				var copyTextButton = {
+					inputLabelOne: "Text",
+					inputOneValue: text,
+					buttonOneName: "Copy text",
+					buttonOneAction: function(btn, v1, v2, inputEle1, ie2){
+						//select text and copy
+						inputEle1.select();
+						document.execCommand("copy");
+					}
+				};
+				var copyUrlButton = {
+					buttonTwoName: "Copy share link",
+					buttonTwoAction: function(btn, v1, v2, inputEle1, ie2){
+						//build link, set it, select it and copy
+						inputEle1.value = SepiaFW.client.buildDeepLinkFromText(text);
+						inputEle1.select();
+						document.execCommand("copy");
+					}
+				};
+				var replyButton = {
+					buttonThreeName: "Reply",
+					buttonThreeAction: function(){
+						if (sender){
+							$('#sepiaFW-chat-input').val("@" + sender + " ");
+							$('#sepiaFW-chat-input').focus();
+						}
+					}
+				};
+				var abortButton = {
+					buttonFourName: "Abort",
+					buttonFourAction: function(){}
+				};
+				//long-press - copy or reply stuff
+				if (sender == SepiaFW.assistant.id){
+					//Assistant answer
+					SepiaFW.ui.showPopup("Select:", $.extend(true, {}, copyTextButton, replyButton, abortButton));
+				}else if (sender == SepiaFW.account.getUserId()){
+					//User text
+					SepiaFW.ui.showPopup("Select:", $.extend(true, {}, copyTextButton, copyUrlButton, abortButton));
+				}else{
+					//Other user
+					SepiaFW.ui.showPopup("Select:", $.extend(true, {}, copyTextButton, copyUrlButton, replyButton, abortButton));
 				}
 			},'',function(){
 				//short-press

@@ -65,6 +65,11 @@ function sepiaFW_build_client_interface(){
 	ClientInterface.SHARE_TYPE_ALARM = "alarm";
 	ClientInterface.SHARE_TYPE_LINK = "link";
 
+	//DeepLink builder
+	ClientInterface.buildDeepLinkFromText = function(text){
+		return (ClientInterface.deeplinkHostUrl + "?q=" + encodeURIComponent("i18n:" + SepiaFW.config.appLanguage + " " + text));
+	}
+
 	//check server info
 	ClientInterface.getServerInfo = function(successCallback, errorCallback){
 		if (ClientInterface.isDemoMode()){
@@ -230,15 +235,18 @@ function sepiaFW_build_webSocket_client(){
 			return false;
 		}
 	}
-	//special input commands
-	var CMD_SAYTHIS = "saythis";
-	var CMD_LINKSHARE = "linkshare";
-	//var CMD_HTTP = "http";
+	//special input commands (slash-command) and modifiers (input-modifier)
+	var CMD_SAYTHIS = "saythis";		//slash-command
+	var CMD_LINKSHARE = "linkshare";	//slash-command
+	var CMD_CLIENT_I18N = "i18n";		//input-modifier - NOTE: this usually runs client-side
+	//var CMD_HTTP = "http";			//slash-command - NOTE: this is checked server-side only
 	Client.inputHasSpecialCommand = function(inputText){
-		var regEx = new RegExp('(^' + SepiaFW.assistant.name + ' |^|\)' + '(' + CMD_SAYTHIS + '|' + CMD_LINKSHARE +') ', "i");
+		var regEx = new RegExp('(^' + SepiaFW.assistant.name + ' |^|\)' + '(' + CMD_SAYTHIS + '|' + CMD_LINKSHARE + '|' + CMD_CLIENT_I18N + ')(:\\w+\\s|\\s)', "i");
 		var checkRes = inputText.match(regEx);
-		if (checkRes && checkRes[2]){
-			return checkRes[2];
+		if (checkRes && checkRes[2] && checkRes[3]){
+			return (checkRes[2] + checkRes[3]).trim();
+		}else if (checkRes && checkRes[2]){
+			return checkRes[2].trim();
 		}else{
 			return "";
 		}
@@ -819,9 +827,6 @@ function sepiaFW_build_webSocket_client(){
 			var screenBtn = document.getElementById("sepiaFW-fullsize-btn");
 			if (screenBtn){
 				$(screenBtn).off();
-				/*$(screenBtn).on("click", function () {
-					SepiaFW.ui.toggleInterfaceFullscreen();
-				});*/
 				SepiaFW.ui.longPressShortPressDoubleTap(screenBtn, function(){
 					//long-press
 				},'',function(){
@@ -1288,6 +1293,20 @@ function sepiaFW_build_webSocket_client(){
 		//prep text
 		var text = inputText || document.getElementById("sepiaFW-chat-controls-speech-box-bubble").innerHTML || document.getElementById("sepiaFW-chat-input").value;
 		if (text && text.trim()){
+			//specials?
+			var inputSpecialCommand = Client.inputHasSpecialCommand(text);
+			var hasSpecialCommand = !!inputSpecialCommand;
+			var specialOptions = {};
+			if (hasSpecialCommand && inputSpecialCommand.indexOf(CMD_CLIENT_I18N) == 0){
+				//handle CMD_CLIENT_I18N here, don't send to server
+				text = text.replace(/^.*?(\s|$)/, "");
+				if (inputSpecialCommand.indexOf(":") > 0){
+					var modLang = inputSpecialCommand.split(":")[1];
+					specialOptions.requestLanguageModifier = modLang;
+				}
+			}
+
+			//prep. request
 			text = text.trim();
 			SepiaFW.ui.lastInput = text;
 			var receiver = "";
@@ -1305,7 +1324,7 @@ function sepiaFW_build_webSocket_client(){
 				text = res.join(" ");
 			
 			//locked receiver overwrite
-			}else if (activeChatPartner && !Client.inputHasSpecialCommand(text)){
+			}else if (activeChatPartner && !hasSpecialCommand){
 				//console.log('send to: ' + activeChatPartner);
 				receiver = activeChatPartner;
 			}
@@ -1334,6 +1353,14 @@ function sepiaFW_build_webSocket_client(){
 			var data = new Object();
 			data.dataType = "openText";
 			data = addCredentialsAndParametersToData(data);
+			
+			//special command modifiers
+			if (specialOptions.requestLanguageModifier && specialOptions.requestLanguageModifier.length == 2 
+					&& specialOptions.requestLanguageModifier != data.parameters.lang){
+				data.parameters.lang = specialOptions.requestLanguageModifier;
+				SepiaFW.debug.log("Client.sendInputText - modified language for request: " + data.parameters.lang);
+			}
+
 			var newId = (username + "-" + ++msgId);
 			msg = buildSocketMessage(username, receiver, text, "", data, "", newId, activeChannelId);
 
@@ -1547,6 +1574,11 @@ function sepiaFW_build_webSocket_client(){
 			//console.log("options " + JSON.stringify(dataset.options));
 		}
 		data = addCredentialsAndParametersToData(data);
+		//special command modifiers
+		if (dataset.lang && dataset.lang != data.parameters.lang){
+			data.parameters.lang = dataset.lang;
+			SepiaFW.debug.log("Client.sendCommand - modified language for request: " + dataset.lang);
+		}
 		if (isDirectCmd){
 			//SepiaFW.assistant.setDirectCmd();
 			data.parameters.input_type = "direct_cmd"; //switch state temporary only for this command
@@ -1918,6 +1950,17 @@ function sepiaFW_build_webSocket_client(){
 		}else{
 			if (message.senderType === "assistant"){
 				//finished - same callback as above
+			}
+		}
+		//show results in frame as well? (SHOW ONLY!)
+		if (!options.skipInsert && message.senderType === "assistant" && messageTextSpeak){
+			//some exceptions
+			if (messageTextSpeak != '<silent>'){
+				if (SepiaFW.frames && SepiaFW.frames.isOpen && SepiaFW.frames.canShowChatOutput()){
+					SepiaFW.frames.handleChatOutput({
+						"text": messageTextSpeak 	//NOTE: this text can be longer than the actual TTS text that gets trimmed sometimes
+					});
+				}
 			}
 		}
 	}
