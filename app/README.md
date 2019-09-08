@@ -2,6 +2,22 @@
 
 ## Release History
 
+### v0.19.0 beta - 2019.09.06
+
+- Partially reworked and greatly improved messenger features and UI to support channel create, join, invite (via URL), missed messages, history and more
+- Added option to change login password from settings menu (via old password)
+- Improved messaging between devices with same login but different device-ID
+- Improved handling of SEPIA universal links when posted inside SEPIA chat channels
+- Improved UX and security when interacting with SEPIA in group chats (public SEPIA messages will not automatically execute actions or play music anymore)
+- Keep keyboard open in mobile apps when 'send'-button is pressed
+- Forget last command after 60s (to prevent 'I just told you' kind of SEPIA comments after long idle time)
+- Automatically select user-preferred color scheme (read from OS) and set light or dark skin when no skin was selected before
+- Optimized 'switch-language' action 
+- Renamed 'saythis' button to 'broadcast'
+- New 'updateData' message-event handler to support arbitrary data sharing via WebSocket connection
+- Fixed a rare crash due to outdated splash-screen plugin in Android
+- Minor UI, bug and style fixes
+
 ### v0.18.1 beta - 2019.07.18
 
 - Improved data store/load script to reduce number of writes
@@ -13,6 +29,7 @@
 - Improved auto-scaling below 300px window width and tweaked tiny-mode
 - New launcher.html page to configure launch-options and automatically redirect (handy for app in browser kiosk-mode)
 - Reactivated 'application/ld+json' tag in index.html
+- Set Android target SDK to 28 (Android 9.0) and improved support including new 'network security config'
 
 ### v0.18.0 beta - 2019.05.31
 

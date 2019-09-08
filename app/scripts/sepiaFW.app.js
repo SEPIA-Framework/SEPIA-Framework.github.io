@@ -9,6 +9,7 @@ SepiaFW.config = sepiaFW_build_config();
 //"Interface" modules - NOTE: this happens after cordova's deviceReady
 SepiaFW.buildSepiaFwPlugins = function(){
 	SepiaFW.account = sepiaFW_build_account();
+	SepiaFW.account.contacts = sepiaFW_build_account_contacts();
 	SepiaFW.assistant = sepiaFW_build_assistant();
 	SepiaFW.ui = sepiaFW_build_ui();
 	SepiaFW.animate = sepiaFW_build_animate();
@@ -28,6 +29,7 @@ SepiaFW.buildSepiaFwPlugins = function(){
 	SepiaFW.webSocket = new Object();
 	SepiaFW.webSocket.common = sepiaFW_build_webSocket_common();
 	SepiaFW.webSocket.client = sepiaFW_build_webSocket_client();
+	SepiaFW.webSocket.channels = sepiaFW_build_webSocket_channels();
 	SepiaFW.client = sepiaFW_build_client_interface();
 	SepiaFW.client.controls = sepiaFW_build_client_controls();
 	SepiaFW.files = sepiaFW_build_files();
@@ -310,33 +312,49 @@ function sepiaFW_build_dataService(){
 function sepiaFW_build_tools(){
 	var Tools = {};
 	
-	//get server default local date/timeout - TODO: note that this needs to be adjusted to server settings
-	Tools.getLocalDateTime = function(){
-		var d = new Date();
+	//get client default local date/time or date/time of certain UNIX timestamp in 'server-default-format'
+	Tools.getLocalDateTime = function(unixTimeMs){
+		var d = (unixTimeMs != undefined)? new Date(unixTimeMs) : new Date();
 		var HH = addZero(d.getHours());
 		var mm = addZero(d.getMinutes());
 		var ss = addZero(d.getSeconds());
 		var dd = addZero(d.getDate());
 		var MM = addZero(d.getMonth() + 1);
 		var yyyy = d.getFullYear();
-		return '' + yyyy + '.' + MM + '.' + dd + '_' + HH + ':' + mm + ':' + ss;
+		return yyyy + '.' + MM + '.' + dd + '_' + HH + ':' + mm + ':' + ss;
 	}
-	//get server default time (only) - TODO: note that this needs to be adjusted to server settings
-	Tools.getLocalTime = function(short){
-		var d = new Date();
+	//get client default time or certain time of given UNIX timestamp in 'server-default-format'
+	Tools.getLocalTime = function(short, unixTimeMs){
+		var d = (unixTimeMs != undefined)? new Date(unixTimeMs) : new Date();
 		var HH = addZero(d.getHours());
 		var mm = addZero(d.getMinutes());
 		if (!short){
 			var ss = addZero(d.getSeconds());
-			return '' + HH + ':' + mm + ':' + ss;
+			return HH + ':' + mm + ':' + ss;		//this basically is: d.toLocaleTimeString()
 		}else{
-			return '' + HH + ':' + mm;
+			return HH + ':' + mm;
 		}
+	}
+	//get client default date or certain date of given UNIX timestamp with user-defined separator
+	Tools.getLocalDateWithCustomSeparator = function(separator, unixTimeMs){
+		var d = (unixTimeMs != undefined)? new Date(unixTimeMs) : new Date();
+		var dd = addZero(d.getDate());
+		var MM = addZero(d.getMonth() + 1);
+		var yyyy = d.getFullYear();
+		return yyyy + separator + MM + separator + dd;
 	}
 	
 	//get URL parameters
 	Tools.getURLParameter = function(name){
 		return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+	}
+	Tools.getURLParameterFromUrl = function(url, name){
+		if (url.indexOf("?") < 0){
+			return;
+		}else{
+			var search = url.replace(/.*?(\?.*)/, "$1");
+			return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(search)||[,""])[1].replace(/\+/g, '%20'))||null
+		}
 	}
 	//set or add a parameter of a given URL with encoding and return modified url
 	Tools.setParameterInURL = function(url, parameter, value){
@@ -361,6 +379,11 @@ function sepiaFW_build_tools(){
 			url = url.replace(new RegExp("(\\?)(" + parameter + "=.*?)($)"), "");
 		}
 		return url;
+	}
+
+	//get pure SHA256 hash
+	Tools.getSHA256Hash = function(data){
+		return sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(data));
 	}
 
 	//load script to element (body by default)
