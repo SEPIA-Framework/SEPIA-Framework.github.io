@@ -2,6 +2,24 @@
 
 ## Release History
 
+### v0.19.1 - 2019.10.14
+
+- Custom-buttons (defined via Teach-UI) work properly now in group-chats
+- Show a colored bell in AO mode to indicate 'you have a message in another channel'
+- Fixed some bugs related to channel-history feature, e.g. a few seconds scrolling-lock and missing/wrong day tags in chat
+- Improved audio-events tracking and handling in connection to 'hey SEPIA' wake-word
+- Added option to allow/prevent wake-word while music is playing (default: prevent, to avoid audio artifacts in some mobile clients)
+- Improved audio recorder performance and stability and fixed dynamic downsampling
+- Fixed some issues with YouTube player (sometimes 'pause music' wasn't working)
+- Added 'env' URL parameter to be able to set custom value for 'environment' variable (client info sent to server)
+- Fixed deprecated code in iOS audio processing to make build process work again (iOS 12.4, Swift 5 - native ASR still broken, but restored open-source ASR support)
+- Improved some error messages after failed login
+- Prevent multiple queued follow-up messages of same 'type' (only one will show)
+- Prevent chat names that look like user IDs to prevent accidental private messages to wrong receiver
+- Prevent auto-scrolling of chat when hidden channel-status message was added
+- Updated jquery to 3.4.1
+- Added library for voice-activity-detection (VAD, though it is not used yet)
+
 ### v0.19.0 beta - 2019.09.06
 
 - Partially reworked and greatly improved messenger features and UI to support channel create, join, invite (via URL), missed messages, history and more
