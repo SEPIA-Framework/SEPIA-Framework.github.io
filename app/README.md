@@ -2,6 +2,19 @@
 
 ## Release History
 
+### v0.20.0 - 2019.12.30
+
+- Integrated SEPIA Control HUB into settings frontpage of app (will show when user has certain role, e.g. 'tinkerer' or 'smarthomeadmin')
+- New setting for preferred temperature unit (Celsius/Fahrenheit) that can be accessed in services via user account or device settings
+- Added new page for 'device local site' to set a specific location for the client like 'home:living-room' that can be read by any smart service on the server
+- Load up to 16 custom command buttons to my-view by default (up from 10)
+- Load services config of Teach-UI from new teach-server endpoint
+- Added a help button for extended login box that redirects to SEPIA docs
+- Auto-assign a 'dark-skin' or 'light-skin' class when selecting a skin to better handle certain CSS rules
+- Basic post-message interface for apps that run inside IFrames (to be extended soon)
+- Tweaked TTS voice selection indicator depending on platform
+- Added 'env' parameter to launcher page
+
 ### v0.19.1 - 2019.10.14
 
 - Custom-buttons (defined via Teach-UI) work properly now in group-chats
