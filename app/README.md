@@ -2,6 +2,26 @@
 
 ## Release History
 
+### v0.21.0 - 2020.02.17
+
+- Introduced new headless mode (URL param. 'isHeadless=true') with support for 'settings.js' file and new remote commandline module (using CLEXI server)
+- Client will automatically switch into setup state after few seconds when in headless mode and no login is given (+ audio notification ^^)
+- Integrated new TTS engine that streams data from SEPIA server (switch via new voice engine selector in settings)
+- Added new 'ILA-Legacy' skin with custom avatar for Always-On mode :-)
+- Added new 'server-access' page for detailed connection configuration (accessible from login and settings, replaces hostname field)
+- Improved automatic hostname recognition
+- Created new icon selection popup and applied it to Teach-UI custom button field
+- Added custom GPS location to device site settings
+- Slightly improved visibility of missed chat messages
+- Improved alarm sound player to better manage other audio sources
+- New CSS options to better control status bar and navigation bar color in Android (and probably iOS)
+- Fixed bugs in view scrolling and 'switchLanguage' service-action
+- Added URL param. 'logout' to start client with automatic logout
+- Improved Teach-UI start-up to allow more pre-filled teach fields
+- Added more debug/help info for insecure-origin (SSL stuff) issues like microphone access restrictions
+- Updated CLEXI lib to v0.8.1
+- Added some IE11 polyfills
+
 ### v0.20.0 - 2019.12.30
 
 - Integrated SEPIA Control HUB into settings frontpage of app (will show when user has certain role, e.g. 'tinkerer' or 'smarthomeadmin')
