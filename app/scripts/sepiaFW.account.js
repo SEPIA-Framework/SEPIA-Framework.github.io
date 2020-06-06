@@ -1,5 +1,5 @@
 //ACCOUNT - Login, logout, login-popup etc. ...	
-function sepiaFW_build_account(){
+function sepiaFW_build_account(sepiaSessionId){
 	var Account = {};
 	
 	var userId = "";
@@ -68,6 +68,7 @@ function sepiaFW_build_account(){
 		$('#sepiaFW-menu-account-my-id').html("Demo");
 		//play sound?
 		if (Account.getUserRoles() && Account.getUserRoles()[0] == "setup"){
+			//TODO: should we play another sound when CLEXI connected?
 			SepiaFW.client.addOnActiveOneTimeAction(function(){ SepiaFW.audio.playURL("sounds/setup.mp3"); }, "setup");
 		}
 	}
@@ -194,11 +195,24 @@ function sepiaFW_build_account(){
 		return userName;
 	}
 	//get key
-	Account.getKey = function(){
+	Account.getKey = function(sessionId){
+		if (sessionId != sepiaSessionId){
+			console.error("A function requested the login key with WRONG session ID! Request was refused.");
+			alert("A function requested the login key with WRONG session ID! Request was refused.");
+			return "";
+		}
+		return getKey();
+	}
+	function getKey(){
 		return (userId + ";" + userToken);
 	}
 	//get token
-	Account.getToken = function(){
+	Account.getToken = function(sessionId){
+		if (sessionId != sepiaSessionId){
+			console.error("A function requested the login token with WRONG session ID! Request was refused.");
+			alert("A function requested the login token with WRONG session ID! Request was refused.");
+			return "";
+		}
 		return userToken;
 	}
 	//get language
@@ -498,29 +512,28 @@ function sepiaFW_build_account(){
 	
 	//-------------------------------------------------
 	
-	//Show form inside login box and hide "wait" message
-	Account.showLoginForm = function(aniTime){
-		if (aniTime != undefined){
-			$('#sepiaFW-login-form').fadeIn(aniTime);
-			$('#sepiaFW-login-wait').hide();
-		}else{
-			$('#sepiaFW-login-form').fadeIn(600);
-			$('#sepiaFW-login-wait').hide();
-		}
+	//Show form inside login box and hide "wait" message etc.
+	Account.hideSplashscreen = function(){
+		if ("splashscreen" in navigator){
+            navigator.splashscreen.hide();
+        }
+	}
+	Account.prepareLoginBoxForInput = function(aniTime){
+		Account.hideSplashscreen();
+		if (aniTime == undefined) aniTime = 600;
+		$('#sepiaFW-login-wait').hide();
+		$('#sepiaFW-login-form').fadeIn(aniTime);
+		$('#sepiaFW-login-links').fadeIn(aniTime);
+		$('#sepiaFW-login-extend-box').css({visibility: "visible"});
 	}
 	
 	//Setup login-box
 	Account.setupLoginBox = function(){
-		$('#sepiaFW-login-box').animate({
-			opacity: 1.0,
-		}, 500, function(){
-			$(this).removeClass('sepiaFW-translucent-10');
-		});
 		//demo login?
-		var isDemoLogin = SepiaFW.data.get('isDemoLogin');
-		if (isDemoLogin){
-			userRoles = [isDemoLogin];
-			skipLogin();
+		var demoLogin = SepiaFW.data.get('isDemoLogin');
+		if (demoLogin){
+			userRoles = [demoLogin];
+			skipLogin(demoLogin);
 			return;
 		}
 		//try restore from data-storage to avoid login popup - refresh required after e.g. 1 day = 1000*60*60*24
@@ -558,10 +571,7 @@ function sepiaFW_build_account(){
 			Account.login(account.userId, account.userToken, onLoginSuccess, onLoginError, onLoginDebug);
 
 		}else{
-		    if ("splashscreen" in navigator){
-                navigator.splashscreen.hide();
-            }
-			Account.showLoginForm();
+			Account.prepareLoginBoxForInput();
 		}
 		
 		//add language selector
@@ -649,7 +659,13 @@ function sepiaFW_build_account(){
 			//$('#sepiaFW-login-extend-box').hide();
 		});
 	}
-	function skipLogin(){
+	function skipLogin(demoId){
+		if (demoId && demoId == "setup"){
+			//temporarily disabled
+			SepiaFW.speech.skipTTS = true;
+			SepiaFW.wakeTriggers.useWakeWord = false;
+			SepiaFW.debug.log("Deactivated for setup: TTS, Wake-Word");
+		}
 		Account.toggleLoginBox();
 		broadcastEnterWithoutLogin();
 		Account.afterLogin();
@@ -737,10 +753,7 @@ function sepiaFW_build_account(){
 		Account.afterLogin();
 	}
 	function onLoginError(errorText){
-	    if ("splashscreen" in navigator){
-            navigator.splashscreen.hide();
-        }
-		Account.showLoginForm(0);
+		Account.prepareLoginBoxForInput(0);
 		var lBoxError = document.getElementById("sepiaFW-login-status");
 		if(lBoxError){
 			lBoxError.innerHTML = errorText;
@@ -756,9 +769,7 @@ function sepiaFW_build_account(){
 	
 	//toggle login box on off
 	Account.toggleLoginBox = function(){
-	    if ("splashscreen" in navigator){
-            navigator.splashscreen.hide();
-        }
+	    Account.hideSplashscreen();
 		//reset status text
 		var lBoxError = document.getElementById("sepiaFW-login-status");
 		if (lBoxError){
@@ -767,13 +778,12 @@ function sepiaFW_build_account(){
 		var box = document.getElementById("sepiaFW-login-box");
 		if (box && box.style.display == 'none'){
 			$("#sepiaFW-main-window").addClass("sepiaFW-translucent-10");
-			$(box).removeClass('sepiaFW-translucent-10').fadeIn(300, function(){
+			$(box).fadeIn(300, function(){
 				$(box).css({'opacity':1.0}); 		//strange bug here sometimes leaves the box translucent
 			});
 		}else if (box){
 			//box.style.display = 'none';
 			$(box).stop().fadeOut(300, function(){
-				$(box).removeClass('sepiaFW-translucent-10');
 				$(box).css({'opacity':1.0}); 		//strange bug here sometimes leaves the box translucent
 			});
 			$("#sepiaFW-main-window").removeClass("sepiaFW-translucent-10");
@@ -797,13 +807,17 @@ function sepiaFW_build_account(){
 				buttonTwoAction : function(){ location.reload(); },
 			};
 		SepiaFW.ui.showPopup('Signing out ...', config);
+
+		//stop some running stuff
+		SepiaFW.speech.stopSpeech();
+		SepiaFW.audio.stop();
 		
 		//try logout - fails silently (low prio, good idea???)
 		if (userId && userToken){
 			if (logoutAll){
-				Account.logoutAll(Account.getKey(), onLogoutSuccess, onLogoutFail, onLogoutDebug);
+				Account.logoutAll(getKey(), onLogoutSuccess, onLogoutFail, onLogoutDebug);
 			}else{
-				Account.logout(Account.getKey(), onLogoutSuccess, onLogoutFail, onLogoutDebug);
+				Account.logout(getKey(), onLogoutSuccess, onLogoutFail, onLogoutDebug);
 			}
 		}else{
 			Account.finishedLogoutActionSection('Server-logout', true);
@@ -888,7 +902,7 @@ function sepiaFW_build_account(){
 			SepiaFW.data.set('isDemoLogin', userId);
 			userRoles = [userId];
 			SepiaFW.ui.hideLoader();
-			skipLogin();
+			skipLogin(userId);
 			return;
 		}
 		//hash password
@@ -981,7 +995,7 @@ function sepiaFW_build_account(){
 			type: "oldPassword",
 			authKey: data.authKey
 		}
-		authApiCall("requestPasswordChange", Account.getKey(), requestBody, successCallback, errorCallback, debugCallback);
+		authApiCall("requestPasswordChange", getKey(), requestBody, successCallback, errorCallback, debugCallback);
 	}
 	Account.changePassword = function(data, successCallback, errorCallback, debugCallback){
 		authApiCall("changePassword", '', data, successCallback, errorCallback, debugCallback);
@@ -1091,7 +1105,7 @@ function sepiaFW_build_account(){
 		if (key){
 			data.KEY = key;
 		}else if (userId && userToken){
-			data.KEY = Account.getKey();
+			data.KEY = getKey();
 		}else{
 			if (errorCallback) errorCallback("Data transfer failed! Not authorized or missing 'KEY'");
 			return;

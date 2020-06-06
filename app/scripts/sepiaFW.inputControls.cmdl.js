@@ -6,7 +6,8 @@ function sepiaFW_build_input_controls_cmdl() {
 
     Cmdl.initialize = function(){
         
-        Cmdl.isAllowed = SepiaFW.data.get('useRemoteCmdl') || true;     //TODO: make settings button? (is only in headless settings so far)
+        var isAllowed = SepiaFW.data.get('useRemoteCmdl');
+        Cmdl.isAllowed = (isAllowed == undefined)? true : isAllowed;
         SepiaFW.debug.info("Remote commandline is " + ((Cmdl.isAllowed)? "SUPPORTED" : "NOT SUPPORTED"));
         
         //Add onActive action:
@@ -38,18 +39,38 @@ function sepiaFW_build_input_controls_cmdl() {
             }else{
                 document.removeEventListener('sepia_login_event', loginBroadcaster);
             }
+            if (Cmdl.broadcasters.speech){
+                document.addEventListener('sepia_speech_event', speechBroadcaster);
+            }else{
+                document.removeEventListener('sepia_speech_event', speechBroadcaster);
+            }
+            if (Cmdl.broadcasters.wakeWord){
+                document.addEventListener('sepia_wake_word', wakeWordBroadcaster);
+            }else{
+                document.removeEventListener('sepia_wake_word', wakeWordBroadcaster);
+            }
 
             //say hello
             broadcastEvent("event", {
                 state: "active",
                 user: getActiveUserOrDemoRole()
             });
+        }else if (SepiaFW.clexi){
+            //clean-up
+            SepiaFW.clexi.removeBroadcastListener("sepia-client");
+            document.removeEventListener('sepia_state_change', stateBroadcaster);
+            document.removeEventListener('sepia_login_event', loginBroadcaster);
+            document.removeEventListener('sepia_speech_event', speechBroadcaster);
+            document.removeEventListener('sepia_wake_word', wakeWordBroadcaster);
         }
     }
 
-    //Broadcasters to use, usually set via headless settings
+    //Broadcasters to use, usually overwritten by headless settings
     Cmdl.broadcasters = {
-        state: false
+        state: false,
+        login: false,
+        speech: false,
+        wakeWord: false
     };
     function stateBroadcaster(ev){
         if (Cmdl.broadcasters.state && ev.detail && ev.detail.state){
@@ -63,6 +84,28 @@ function sepiaFW_build_input_controls_cmdl() {
             broadcastEvent("sepia-login", {
                 note: ev.detail.note
             });
+        }
+    }
+    function speechBroadcaster(ev){
+        if (Cmdl.broadcasters.speech && ev.detail && ev.detail.type){
+            broadcastEvent("sepia-speech", {
+                type: ev.detail.type,
+                msg: ev.detail.msg
+            });
+        }
+    }
+    function wakeWordBroadcaster(ev){
+        if (Cmdl.broadcasters.wakeWord && ev.detail && ev.detail.state){
+            var d = {
+                state: ev.detail.state
+            }
+            if (ev.detail.keyword){
+                d.word = ev.detail.keyword;
+            }
+            if (ev.detail.msg){
+                d.msg = ev.detail.msg;
+            }
+            broadcastEvent("sepia-wake-word", d);
         }
     }
 
@@ -125,6 +168,23 @@ function sepiaFW_build_input_controls_cmdl() {
     //---------- SET ------------
 
     Cmdl.set = {};
+
+    Cmdl.set.wakeword = function(ev){
+        if (ev.state){
+            if (ev.state == "on" || ev.state == "active" || ev.state == "activate"){
+                SepiaFW.wakeTriggers.useWakeWord = true;
+                if (!SepiaFW.wakeTriggers.engineLoaded){
+                    SepiaFW.wakeTriggers.setupWakeWords();      //will auto-start after setup
+                }else if (!SepiaFW.wakeTriggers.isListening()){
+                    SepiaFW.wakeTriggers.listenToWakeWords();
+                }
+            }else if (ev.state == "off" || ev.state == "inactive" || ev.state == "deactivate"){
+                if (SepiaFW.wakeTriggers.engineLoaded && SepiaFW.wakeTriggers.isListening()){
+                    SepiaFW.wakeTriggers.stopListeningToWakeWords();
+                }
+            }
+        }
+    }
 
     //---------- GET ------------
 

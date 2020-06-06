@@ -2,7 +2,7 @@
 var ClexiJS = (function(){
 	var Clexi = {};
 	
-	Clexi.version = "0.8.1";
+	Clexi.version = "0.8.2";
 	Clexi.serverId = "";		//if you set this the client will check the server ID on welcome event and close connection if not identical
 	
 	//Extension subscriptions
@@ -33,9 +33,9 @@ var ClexiJS = (function(){
 	Clexi.onDebug = undefined;
 	Clexi.onError = undefined;
 	
-	Clexi.availableXtensions = {};
+	Clexi.availableXtensions = {}; 	//TODO: we should update this somehow (will only update once at welcome event)
 	
-	Clexi.pingAndConnect = function(host, onPingOrIdError, onOpen, onClose, onError, onConnecting){
+	Clexi.pingAndConnect = function(host, onPingOrIdError, onOpen, onClose, onError, onConnecting, onWelcome){
 		var url;
 		if (!host) url = location.origin;
 		else url = host.replace(/^wss/, 'https').replace(/^ws/, 'http');
@@ -47,7 +47,7 @@ var ClexiJS = (function(){
 			//console.log(data);
 			//check ID
 			if (data.id && (data.id == Clexi.serverId || (data.id == "[SECRET]" && Clexi.serverId))){
-				Clexi.connect(host, onOpen, onClose, onError, onConnecting);
+				Clexi.connect(host, onOpen, onClose, onError, onConnecting, onWelcome);
 			}else{
 				if (onPingOrIdError) onPingOrIdError({
 					code: 418,
@@ -63,7 +63,7 @@ var ClexiJS = (function(){
 		});
 	}
 	
-	Clexi.connect = function(host, onOpen, onClose, onError, onConnecting){
+	Clexi.connect = function(host, onOpen, onClose, onError, onConnecting, onWelcome){
 		//URL
 		if (host){
 			//given URL
@@ -133,15 +133,16 @@ var ClexiJS = (function(){
 				if (msg.info && msg.info.xtensions) Clexi.availableXtensions = msg.info.xtensions;
 				if (Clexi.onLog) Clexi.onLog('CLEXI server says welcome. Info: ' + JSON.stringify(msg.info));
 				if (msg.code && msg.code == 401){
-					//server requires correct ID for authentication
+					//server requires correct ID for authentication - This is "the" security feature (see comment below)
 					Clexi.close();
 				//check server ID
-				}else if (Clexi.serverId && (Clexi.serverId != msg.info.id)){
+				}else if (Clexi.serverId && msg.info.id && (Clexi.serverId != msg.info.id)){
 					//NOTE: the server might not necessarily refuse connections with wrong ID (depends on settings), but we will if ID is given.
 					//Obviously this is NOT a security feature but a server ID filter ;-)
 					Clexi.close();
 				}else{
 					readyToAcceptEvents = true;
+					if (onWelcome) onWelcome(msg.info);
 				}
 			}
 		};
@@ -167,7 +168,7 @@ var ClexiJS = (function(){
 			if (!requestedClose){
 				//try reconnect?
 				if (Clexi.doAutoReconnect){
-					autoReconnect(host, onOpen, onClose, onError, onConnecting);
+					autoReconnect(host, onOpen, onClose, onError, onConnecting, onWelcome);
 				}
 			}else{
 				if (reconnectTimer) clearTimeout(reconnectTimer);
@@ -184,7 +185,7 @@ var ClexiJS = (function(){
 		}
 	}
 	
-	function autoReconnect(host, onOpen, onClose, onError, onConnecting){
+	function autoReconnect(host, onOpen, onClose, onError, onConnecting, onWelcome){
 		reconnectTry++;
 		var delay = Math.min(reconnectTry*reconnectTry*reconnectBaseDelay, reconnectMaxDelay);
 		//TODO: we could/should check navigator.onLine here ...
@@ -192,7 +193,7 @@ var ClexiJS = (function(){
 		reconnectTimer = setTimeout(function(){
 			if (!isConnected && !requestedClose){
 				if (Clexi.onLog) Clexi.onLog('CLEXI reconnecting after unexpected close. Try: ' + reconnectTry);
-				Clexi.connect(host, onOpen, onClose, onError, onConnecting);
+				Clexi.connect(host, onOpen, onClose, onError, onConnecting, onWelcome);
 			}
 		}, delay);
 	}

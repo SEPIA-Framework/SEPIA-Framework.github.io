@@ -2,6 +2,30 @@
 
 ## Release History
 
+### v0.22.0 - 2020.06.06
+
+- Major updates to Teach-UI to make creation of custom commands easier and more intuitive including examples and input pop-up for parameter data
+- Added function to open Teach-UI via long-press on custom command button to edit command (uses new server endpoint, see below)
+- Exported **wake-word** configuration to 'wakeWord.js' file (folder 'xtensions'), implemented switching of Porcupine engine (v1.4-1.6) and added all free wake-words (>40). Instructions included in folder.
+- Updates for new weather service including new icons, styles and card updates
+- Load new TTS voices list from SEPIA server (TTS endpoint) + smaller TTS fixes
+- New skin 'historic future' as homage to 80s science fiction including **new avatar** for always-on mode 
+- Fixed bugs in 'geocoder' module and related errors in my-view page update
+- Fixed a bug in speech recognition that could sometimes prevent the result from loading at first try
+- Updated CLEXI lib to v0.8.2, added support for 'runtime-commands' (e.g to handle DIY client reboot and shutdown) and fixed a bug in CLEXI connection
+- Added broadcasting of speech events via CLEXI connection (intended for DIY client e.g. to set LED status lights)
+- Added support for integrated speech recognition in Firefox Nightly (currently requires activation of 'media.webspeech.recognition.enable' and 'media.webspeech.recognition.force_enable' flags in FF)
+- Improved security by restricting access to certain SEPIA library functions via session token and by escaping all HTML code inside plain chat messages (includes adjustments to handle new chat server behavior)
+- Improved 'inputControls' module, fixed gamepad support and remote trigger
+- Improved handling of 'lastAudioStream' and stream title
+- Added proper chat labels (indicators that show when messages were posted) for 'today' and improved 'UI.showInfo'
+- Improved 'intent://' handling of Android inApp browser
+- Added URL param 'autoSetup' (similar to headless-mode) to load settings.js at start and enter setup mode after 8s if no user is logged in
+- Added basic web-worker interface that can be used to run code in background thread
+- Optimized app start-up, initial page and skin loading
+- Improved logger (for dev tools console)
+- Smaller and bigger skin and style tweaks all over the place (skin upgrades, Firefox scrollbar support, etc.)
+
 ### v0.21.0 - 2020.02.17
 
 - Introduced new headless mode (URL param. 'isHeadless=true') with support for 'settings.js' file and new remote commandline module (using CLEXI server)

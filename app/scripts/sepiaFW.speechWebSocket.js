@@ -43,6 +43,15 @@ function sepiaFW_build_speechWebSocket(){
 	
 	//--------broadcast methods----------
 
+	//speech event dispatcher
+	function dispatchSpeechEvent(eventType, eventMsg){
+		var event = new CustomEvent('sepia_speech_event', { detail: {
+			type: eventType,
+			msg: eventMsg
+		}});
+		document.dispatchEvent(event);
+	}
+
 	//NOTE: this is a clone of SepiaFW.speech broadcasting ... we should access the originals directly
 	function broadcastRequestedAsrStart(){
 		//EXAMPLE: 
@@ -70,7 +79,14 @@ function sepiaFW_build_speechWebSocket(){
 	}
 	function broadcastWrongAsrSettings(){
 		//EXAMPLE:
-		SepiaFW.ui.showInfo(SepiaFW.local.g('asrSettingsProblem'));
+		var msg = SepiaFW.local.g('asrSettingsProblem');
+		if (!SepiaFW.ui.isSecureContext){
+			msg += " " + SepiaFW.local.g('possible_reason_origin_unsecure') 
+				+ " - <a href='https://github.com/SEPIA-Framework/sepia-docs/wiki/SSL-for-your-Server' target=_blank style='color: inherit;'>" 
+				+ SepiaFW.local.g('help') + "!</a>";
+		}
+		SepiaFW.ui.showInfo(msg);
+		dispatchSpeechEvent("asr_error", msg);
 	}
 	function broadcastNoAsrSupport(){
 		//EXAMPLE: 
@@ -82,16 +98,19 @@ function sepiaFW_build_speechWebSocket(){
 				+ SepiaFW.local.g('help') + "!</a>";
 		}
 		SepiaFW.ui.showInfo(msg);
+		dispatchSpeechEvent("asr_error", msg);
 	}
 	function broadcastMissingServerInfo(){
 		//EXAMPLE: 
 		SepiaFW.animate.assistant.idle('asrMissingServer');
 		SepiaFW.ui.showInfo("ASR - " + SepiaFW.local.g('asrMissingServer'));
+		dispatchSpeechEvent("asr_error", "missing server info");
 	}
 	function broadcastConnectionError(){
 		//EXAMPLE: 
 		SepiaFW.animate.assistant.idle('noConnectionToServer');
 		SepiaFW.ui.showInfo("ASR - " + SepiaFW.local.g('noConnectionToServer'));
+		dispatchSpeechEvent("asr_error", "no connection to server");
 	}
 	
 	//---------------- INTERFACE ------------------
@@ -154,6 +173,7 @@ function sepiaFW_build_speechWebSocket(){
 				if (!abortRecognition){
 					broadcastAsrFinished();
 					callback_final(partialPersistentTranscript);
+					dispatchSpeechEvent("asr_result", partialPersistentTranscript);
 				}else{
 					//error_callback('E0? - unknown error!');
 					//all good I guess
@@ -257,6 +277,7 @@ function sepiaFW_build_speechWebSocket(){
 						Speech.stopRecording();
 						if (!abortRecognition){
 							callback_final(finalTranscript);
+							dispatchSpeechEvent("asr_result", finalTranscript);
 						}else{
 							callback_interim(finalTranscript);
 						}
