@@ -76,7 +76,7 @@ function sepiaFW_build_dataService(){
 	if ('hasStorageAccess' in document){
 		document.hasStorageAccess().then(function(hasAccess){
 			hasStorageAccess = hasAccess;
-			if (!hasAccess){
+			if (hasAccess === false){
 				SepiaFW.debug.err("Localstorage access restriced, probably due to third-party-cookies policy. You can add a page exception in your browser settings.");
 				window.addEventListener('click', requestStorageAccess);
 			}
