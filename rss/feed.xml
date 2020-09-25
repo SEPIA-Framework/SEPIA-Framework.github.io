@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+	<title>S.E.P.I.A. Assistant News</title>
+	<link>https://twitter.com/sepia_fw</link>
+	<description>News about the S.E.P.I.A. Open-Assistant framework and related topics</description>
+	<language>en</language>
+	<category>Open-source technology</category>
+	<copyright>SEPIA Framework CC BY</copyright>
+	<pubDate>Fri, 25 Sep 2020 07:43:19 GMT</pubDate>
+	<item>
+		<title>New RSS feed for SEPIA updates</title>
+		<link>https://github.com/SEPIA-Framework/sepia-docs</link>
+		<description>SEPIA Home v2.5.1 will offer selected SEPIA related news via this RSS feed. You will be able to see them in the technology section of the SEPIA news service as well.</description>
+		<pubDate>Fri, 25 Sep 2020 08:06:19 GMT</pubDate>
+	</item>
+	<item>
+		<title>A closer look at the new SEPIA app skin "Historic Future"</title>
+		<link>https://twitter.com/sepia_fw/status/1283417579420299275</link>
+		<description>#DidYouKnow that the latest SEPIA client app has a new skin that is called "Historic Future"? It even has a custom avatar. Inspiration came right out of the 80s #StarTrek #LCARS system.</description>
+	</item>
+	<item>
+		<title>Testing of new Text-To-Speech options</title>
+		<link>https://twitter.com/bytemind_de/status/1276837376753532929</link>
+		<description>Mozilla is constantly improving their open-source Text-To-Speech (TTS) engine and released a new version a while ago. Is it already an interesting option for the SEPIA framework?</description>
+	</item>
+	<item>
+		<title>SEPIA "skill store" with Corona service</title>
+		<link>https://twitter.com/sepia_fw/status/1272821000909074433</link>
+		<description>Did you know that the SEPIA Open-Assistant framework has a little "skill store" as well? Newest addition is a #Corona data service that loads ECDC numbers for recent cases and more. v2.5.0 has added some #health related news as well!</description>
+	</item>
+	<item>
+		<title>SEPIA Home v2.5.0 Release</title>
+		<link>https://github.com/SEPIA-Framework/sepia-installation-and-setup/releases/tag/v2.5.0</link>
+		<description>I'm pleased to officially announce the release of SEPIA Home v2.5.0. This time its about more of everything, #smarthome interfaces, #TTS voices, wake words, improved UX, a new skin + avatar and much more.</description>
+	</item>
+</channel>
+</rss> 
