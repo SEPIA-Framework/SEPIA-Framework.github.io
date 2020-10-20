@@ -7,7 +7,13 @@
 	<language>en</language>
 	<category>Open-source technology</category>
 	<copyright>SEPIA Framework CC BY</copyright>
-	<pubDate>Fri, 25 Sep 2020 07:43:19 GMT</pubDate>
+	<pubDate>Tue, 20 Oct 2020 23:34:10 GMT</pubDate>
+	<item>
+		<title>SEPIA Home v2.5.1 Release</title>
+		<link>https://github.com/SEPIA-Framework/sepia-installation-and-setup/releases/tag/v2.5.1</link>
+		<description>After more than 4 months in the making SEPIA Home v2.5.1 has finally been released today and this time it puts the focus on stability and new features for the SEPIA client like client-to-client communication, custom HTML voice widgets, new style options, stability improvements and much more.</description>
+		<pubDate>Tue, 20 Oct 2020 23:34:10 GMT</pubDate>
+	</item>
 	<item>
 		<title>New RSS feed for SEPIA updates</title>
 		<link>https://github.com/SEPIA-Framework/sepia-docs</link>
