@@ -2,6 +2,10 @@
 
 ## Release History
 
+### v0.23.1 - 2020.10.22 - (Android only)
+
+- Hot-fix to improve microphone error messages e.g. when no speech was detected or input was canceled
+
 ### v0.23.0 - 2020.10.21
 
 - Added support for PWA (progressive web app) feature of browsers/OS via new basic service worker and PWA manifest file
