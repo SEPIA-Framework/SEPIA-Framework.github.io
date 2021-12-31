@@ -12,11 +12,11 @@ echo ""
 echo "Welcome to the SEPIA-Framework!"
 echo ""
 echo "This little script will help you to setup your environment and download SEPIA-Home (the server stack of SEPIA)."
-echo "If you are using a fresh Raspbian installation please follow steps 1 to 4 and make sure they complete successfully."
+echo "If you are using a fresh Raspberry Pi OS installation please follow steps 1 to 4 and make sure they complete successfully."
 echo "If you know what you are doing feel free to skip some steps as needed ;-)"
 echo "More help can be found here: https://github.com/SEPIA-Framework/sepia-docs/wiki"
 echo ""
-echo "Tested with: Raspberry Pi OS 'bullseye' 32bit (2021-12-10)"
+echo "Tested with: Raspberry Pi OS 'bullseye' 32/64bit (2021-12-31)"
 while true; do
 	echo ""
 	echo "Please choose next step:"
@@ -25,6 +25,7 @@ while true; do
 	echo "3: Download SEPIA-Home bundle version: $SEPIA_VERSION"
 	echo "4: Extract SEPIA-Home to '~/SEPIA' (currently required home folder for SEPIA)"
 	echo "5: Optional: Install NGINX reverse-proxy"
+	echo "6: Start setup (~/SEPIA/setup.sh)"
 	echo ""
 	read -p "Enter a number plz (0 to exit): " option
 	echo ""
@@ -54,7 +55,7 @@ while true; do
 	then
 		# INSTALL zip, unzip, curl, procps, etc.
 		sudo apt-get update
-		sudo apt-get install -y zip unzip curl procps ca-certificates
+		sudo apt-get install -y zip unzip curl git procps ca-certificates
 		
 		# DOWNLOAD SEPIA Custom-Bundle
 		
@@ -88,13 +89,21 @@ while true; do
 	elif [ $option = "5" ] 
 	then
 		# INSTALL NGINX
-
 		echo 'Installing nginx reverse-proxy ...'
 		sudo apt-get install software-properties-common libssl-dev
 		sudo apt-get install nginx
 		echo "------------------------"
 		echo "DONE. To create a SEPIA Nginx config and set up SSL run 'bash setup-nginx.sh' inside your SEPIA-Home folder"
 		echo "------------------------"
+
+	elif [ $option = "6" ] 
+	then
+		# SEPIA SETUP
+		clear
+		echo 'Starting SEPIA setup ...'
+		cd ~/SEPIA
+		bash setup.sh
+		exit
 
 	else
 		echo "------------------------"
