@@ -35,7 +35,7 @@ while true; do
 	elif [ $option = "1" ]
 	then
 		# INSTALL JAVA OPENJDK 11
-		sudo apt-get update
+		sudo apt update
 		sudo apt-get install -y openjdk-11-jdk-headless ca-certificates-java
 		echo "------------------------"
 		echo "DONE."
@@ -54,7 +54,7 @@ while true; do
 	elif [ $option = "3" ] 
 	then
 		# INSTALL zip, unzip, curl, procps, etc.
-		sudo apt-get update
+		sudo apt update
 		sudo apt-get install -y zip unzip curl git procps ca-certificates
 		
 		# DOWNLOAD SEPIA Custom-Bundle
