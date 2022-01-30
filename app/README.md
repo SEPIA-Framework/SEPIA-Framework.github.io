@@ -2,6 +2,25 @@
 
 ## Release History
 
+### v0.24.1 - 2021.10.30
+
+- Added support for new 'shared-access' permissions and new settings page to allow other users limited access to specific devices and remote-actions
+- Added new 'remote media player' buttons to quickly control media on other clients (start, stop, skip)
+- Added support for Porcupine 2.0 and custom wake-words. Create wake-words via Porcupine console and use with free-tier access key + updated wake-word settings page
+- Updated web-audio lib and speech module to respond a bit more snappy and better handle timeouts, connection issues and no-speech events
+- Updated CLEXI client to v0.9.0 and introduced GPIO interface to control for example LED arrays or read hardware buttons + added "clexiGpioInterface" section to settings.js
+- Added remote terminal functions (CLEXI) to set/get/test microphone (gain, mictest) + added new debug page to STT settings
+- Implemented 'Config.appRegionCode' to enable region specific service actions for same languages
+- Improved avatar and app styles for example to better indicate wake-word activate state
+- Updated input-controls view and improved Bluetooth BLE beacon security with "known addresses" check 
+- New skins: 'Funky Sunrise' and 'The Vectors'
+- Improved landscape, big-screen and tiny mode + better handling of screen-size changes
+- Send optional 'info.data' to frame functions 'onOpen' and 'onFinishSetup'
+- Android: Updated app to meet the new Play Store requirements and adapt to Android 11 intent restrictions. NOTE: Some custom intents might not be allowed anymore :-/.
+- Fixed a bug that made expired timers disappear and return in UI unwantedly
+- Added new 'hasTouch' URL parameter to force touch-UI tweaks
+- Smaller bug fixes and tweaks
+
 ### v0.24.0 - 2021.10.14
 
 - Complete rework of audio system and switch to new **SEPIA Web-Audio library**:

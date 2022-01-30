@@ -123,8 +123,7 @@ function sepiaFW_build_frames(){
 		}
 
 		//on open
-		if(onOpen) onOpen();
-		//TODO: add data
+		if(onOpen) onOpen(info.data);
 		
 		//trigger page-change to refresh content
 		if (Frames.currentScope && (Frames.currentScope.onFramePageChange || Frames.currentScope.onPaneChange)){
@@ -222,8 +221,7 @@ function sepiaFW_build_frames(){
 
 			//on finish setup
 			onFinishSetup = getFunctionOrScopeEntry(info.onFinishSetup, "onFinishSetup", info.autoFillFrameEvents);
-			if(onFinishSetup) onFinishSetup();
-			//TODO: add data
+			if(onFinishSetup) onFinishSetup(info.data);
 
 			if (finishCallback) finishCallback();
         
