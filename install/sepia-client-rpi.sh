@@ -15,10 +15,9 @@ read -p "Press any key to continue (or CTRL+C to abort)."
 echo ""
 # Use master or dev?
 BRANCH="master"
-PACKAGE="sepia_client_rpi_raspbian_buster.zip"
+PACKAGE="sepia_client_raspberrypi_os.zip"
 if [ -n "$1" ] && [ "$1" = "dev" ]; then
 	BRANCH="dev"
-	PACKAGE="sepia_client_raspberrypi_os.zip"
 fi
 echo "Creating folder '~/install' ..."
 mkdir -p ~/install && cd ~/install
