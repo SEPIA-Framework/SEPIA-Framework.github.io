@@ -7,7 +7,19 @@
 	<language>en</language>
 	<category>Open-source technology</category>
 	<copyright>SEPIA Framework CC BY</copyright>
-	<pubDate>Tue, 20 Oct 2020 23:34:10 GMT</pubDate>
+	<pubDate>Mon, 04 Apr 2022 00:45:00 GMT</pubDate>
+	<item>
+		<title>SEPIA Home v2.6.1 Release</title>
+		<link>https://github.com/SEPIA-Framework/sepia-installation-and-setup/releases/tag/v2.6.1</link>
+		<description>After the humongous update from last October that introduced the new web-audio, speech-recognition and media-player interfaces SEPIA-Home v2.6.1 is a smaller release with a lot of incremental improvements. Yet it includes some exciting new features as well like shared-access, custom wake-words and hardware LED support. Check out the release notes to get a full overview.</description>
+		<pubDate>Sun, 30 Jan 2022 22:10:00 GMT</pubDate>
+	</item>
+	<item>
+		<title>SEPIA Home v2.6.0 Release</title>
+		<link>https://github.com/SEPIA-Framework/sepia-installation-and-setup/releases/tag/v2.6.0</link>
+		<description>It took almost a full year to finish this update but SEPIA-Home v2.6.0 has finally been released. It is packed with amazing new features that will greatly enhance the overall voice-UI experience and pave the way for many new possibilities to customize and extend your own open-source assistant.</description>
+		<pubDate>Thu, 14 Oct 2021 20:15:00 GMT</pubDate>
+	</item>
 	<item>
 		<title>SEPIA Home v2.5.1 Release</title>
 		<link>https://github.com/SEPIA-Framework/sepia-installation-and-setup/releases/tag/v2.5.1</link>
