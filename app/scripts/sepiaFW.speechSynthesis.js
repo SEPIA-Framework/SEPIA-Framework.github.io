@@ -13,7 +13,7 @@ function sepiaFW_build_speech_synthesis(Speech, sepiaSessionId){
 	var speechWaitingForResult = false;
 	var speechWaitingForStop = false;
 	var stopSpeechTimeout;
-	Speech.isNativeTtsSupported = (SepiaFW.ui.isCordova)? ('TTS' in window) : ('speechSynthesis' in window);
+	Speech.isNativeTtsSupported = (SepiaFW.ui.isCordova)? ('TTS' in window) : ('speechSynthesis' in window);	//TODO: this might need adjustments if Web Speech API status changes
 	Speech.isHtmlTtsSupported = ($('#sepiaFW-audio-speaker').length && $('#sepiaFW-audio-speaker')[0].canPlayType && $('#sepiaFW-audio-speaker')[0].canPlayType("audio/mp3"));	//set WAV?
 	Speech.isTtsSupported = Speech.isNativeTtsSupported || Speech.isHtmlTtsSupported;
 	SepiaFW.debug.log("TTS: Supported interfaces: native=" + Speech.isNativeTtsSupported + ", sepia=" + Speech.isHtmlTtsSupported + ".");
@@ -353,6 +353,8 @@ function sepiaFW_build_speech_synthesis(Speech, sepiaSessionId){
 	Speech.refreshVoice = function(){
 		if (voices && voices.length > 0){
 			selectedVoice = undefined;
+			selectedVoiceObject = {};
+			$('#sepiaFW-menu-select-voice').val(selectedVoice);
 			setVoiceOnce();
 		}
 	}
@@ -493,7 +495,11 @@ function sepiaFW_build_speech_synthesis(Speech, sepiaSessionId){
 			}else{
 				utterance.lang = Speech.getLongLanguageCode(Speech.getLanguage());
 				//set voice if valid one was selected
-				if (selectedVoiceObject && selectedVoiceObject.name) utterance.voice = selectedVoiceObject;
+				if (selectedVoiceObject && selectedVoiceObject.name){
+					utterance.voice = selectedVoiceObject;
+				}else{
+					utterance.voice = undefined;
+				}
 			}
 			utterance.pitch = 1.0;  	//accepted values: 0-2 inclusive, default value: 1
 			utterance.rate = 1.0; 		//accepted values: 0.1-10 inclusive, default value: 1

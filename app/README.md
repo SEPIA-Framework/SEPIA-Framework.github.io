@@ -2,7 +2,34 @@
 
 ## Release History
 
-### v0.24.1 - 2021.10.30
+### v0.24.2 - 2022.05.08
+
+- Added virtual keyboard for DIY clients with touchscreen + 'virtualKeyboard' URL parameter
+- Remember media player volume and added option 'playerVolume' to settings file
+- Added support for remote media volume control with new slider component
+- Added volume control for Youtube player widget
+- Added Teach-UI basic command import/export + support for file drag & drop
+- Added new settings option for 'defaultNewsRegion' + append 'defaultNewsRegion' and 'appRegionCode' to assistant requests
+- New avatar 'Proto' + improved avatar code
+- New skins 'Blue Canary', 'Odyssey AI' and 'Vectors Reloaded' + style tweaks
+- New URL parameter 'skinId'
+- Improved 'awaitDialog' timer to reset properly and increased awaitDialog time from 15s to 20s
+- Added CLEXI GPIO events for audio 'eventEffectsOn' and 'eventEffectsOff' + fixed a bug in LED control
+- Fixed a shared remote-actions bug for 'play-on' music-cards
+- Fixed a bug in 'stt-socket-worker' to properly handle 'no-speech' events
+- Fixed a bug in microphone test function for invalid rms values
+- Updated Porcupine to v2.1 (replaced v2.0)
+- Added pages for Porcupine wake-word format conversion and activation restore ('xtensions' folder)
+- Improved settings import/export with new 'UI.showFileImportAndViewPopup' component
+- Improved storing and loading of app-settings from server (account-data)
+- Added 'environment' to settings file and read at start (if no URL parameter is given)
+- Improved login-retry timer
+- Updated web-audio lib to v0.9.11 with better pre-load cache and error handling
+- Updated CLEXI lib to v0.9.1 and implemented basic 'clexi.requestStateRefresh'
+- Improved iOS build script (still beta)
+- Smaller fixes and code tweaks (credits, dual-screen, onchange listeners, input events, etc.)
+
+### v0.24.1 - 2022.01.30
 
 - Added support for new 'shared-access' permissions and new settings page to allow other users limited access to specific devices and remote-actions
 - Added new 'remote media player' buttons to quickly control media on other clients (start, stop, skip)
