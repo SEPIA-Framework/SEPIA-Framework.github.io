@@ -2,6 +2,33 @@
 
 ## Release History
 
+### v0.25.0 - 2022.10.31
+
+- New custom skin feature and theme editor, including one light and dark template
+- Added better support for safe-areas of display (e.g. iPhone notch) and ability to add new custom borders
+- New 'dialog_task' variable to be able to optimize client and services depending on defined 'tasks'
+- Added support for STT 'task'-based custom models and improved STT settings view
+- Improved widgets (custom views/frames) interface and added support for per-widget 'activitySettings' like language and task
+- New time-event card icons to indicate "next", "expired" and "faulty"
+- Optimized web-manifest and changed default PWA display mode from 'fullscreen' to 'standalone'
+- Android: Completely refactored and optimized build setup + set official target to Android 12L
+- Android: Added support for TTS native-engine voice selection
+- Android: New and improved in-app browser with theme support
+- Android: Prevent back-button action when login or pop-up is open
+- Android: Implemented several fixes required to support Android 12 (and potentially Android 13)
+- iOS PWA: Greatly improved PWA experience on iOS with fixes for splash-screen, safe-areas, overscrolling, sound initialization, error handling and more. Safari is still buggy though.
+- Improved 'notify' module, new close-button for web-based OS notifications and added features to prepare for PWA background support (wip)
+- Optimized landscape-mode for Teach-UI
+- Improved media-devices settings view
+- Renamed 'Big-screen mode' setting to "Limit screen-size", reversed logic and improved default setting
+- Allow abort of 'setup-mode' to enable on-screen login (e.g. via virtual keyboard) in DIY clients (usually in 'pseudo-headless' mode)
+- Split short-cuts 'fullscreen' button into two buttons. One for UI (will always show up) and screen (shows up when supported)
+- Set black theme and safe-area colors when entering AO mode
+- Further reduced background music volume during speech input (applies to browser clients only)
+- New UI framework functions like 'ui.build.helpButton' or 'tools.escapeHtmlAndSanitize' and several smaller bug fixes
+- A lot of smaller look and style fixes and tweaks (+ optimized background images etc.)
+
+
 ### v0.24.2 - 2022.05.08
 
 - Added virtual keyboard for DIY clients with touchscreen + 'virtualKeyboard' URL parameter
