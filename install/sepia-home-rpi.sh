@@ -67,7 +67,7 @@ while true; do
 		if [ -x "$(command -v apt)" ]; then
 			echo "Checking packages: zip unzip curl git procps ca-certificates"
 			sudo apt update
-			sudo apt-get install -y zip unzip curl git procps ca-certificates
+			sudo apt install -y zip unzip curl git procps ca-certificates
 		else
 			echo "Recommended packages: zip unzip curl git procps ca-certificates"
 		fi
