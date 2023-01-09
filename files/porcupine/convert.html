@@ -121,8 +121,7 @@
 					console.log("array:", arrayAsString);
 					result.value = arrayAsString;
 				}else if (fileType == "ppn"){
-					var arrayAsString = convertUint8ArrayToString(convertBinaryToUint8Array(fileData));
-					console.log("array:", arrayAsString);
+					var arrayAsString = "[" + fileData + "]";
 					result.value = arrayAsString;
 				}else{
 					console.error("Unknown file type");
@@ -233,13 +232,18 @@
 			//read file
 			const reader = new FileReader();
 			reader.addEventListener("load", function(){
-				fileContent.value = reader.result;
+				if (fileType == "ppn"){
+					var uint8 = new Uint8Array(reader.result);
+					fileContent.value = uint8.toString();
+				}else{
+					fileContent.value = reader.result;
+				}
 			}, false);
 			reader.addEventListener("error", function(){
 				fileContent.value = "ERROR";
 			}, false);
 			if (fileType == "ppn"){
-				reader.readAsBinaryString(file);	//NOTE: we can use 'readAsArrayBuffer' and skip conversion
+				reader.readAsArrayBuffer(file);	//NOTE: alternatively use 'readAsBinaryString'
 			}else{
 				reader.readAsText(file, 'utf-8');
 			}
@@ -256,18 +260,6 @@
 				return bytes;
 			}catch (error){
 				console.error("Converting base64 string to Uint8Array bytes array failed", error);
-				fileContent.value = "ERROR: " + (error && error.message);
-			}
-		}
-		function convertBinaryToUint8Array(decoded){
-			try {
-				var bytes = new Uint8Array(decoded.length);
-				for (var i = 0; i < decoded.length; ++i){
-					bytes[i] = decoded.charCodeAt(i);
-				}
-				return bytes;
-			}catch (error){
-				console.error("Converting binary string to Uint8Array bytes array failed", error);
 				fileContent.value = "ERROR: " + (error && error.message);
 			}
 		}
