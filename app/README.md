@@ -2,6 +2,17 @@
 
 ## Release History
 
+### v0.25.2 - 2026.03.08
+
+- New menu option for start-up view + settings support (defaultStartUpView)
+- Added export/batch-import feature for Teach-UI commands
+- New 'zoomFactor' URL param. + some aria-label fixes
+- New skin 'Earth'
+- New sounds and improved sound select on 'Hey SEPIA' page
+- Improved stability of Frames loader
+- Handle multi-task models in STT-settings UI
+- Several smaller tweaks and fixes
+
 ### v0.25.0 - 2022.10.31
 
 - New custom skin feature and theme editor, including one light and dark template
@@ -27,7 +38,6 @@
 - Further reduced background music volume during speech input (applies to browser clients only)
 - New UI framework functions like 'ui.build.helpButton' or 'tools.escapeHtmlAndSanitize' and several smaller bug fixes
 - A lot of smaller look and style fixes and tweaks (+ optimized background images etc.)
-
 
 ### v0.24.2 - 2022.05.08
 
